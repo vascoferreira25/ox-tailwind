@@ -1,0 +1,954 @@
+;; ox-tailwind.el --- Tailwind.css Back-End for Org Export Engine -*- lexical-binding: t -*-
+
+;; Author: Vasco Ferreira <vasco_mmf@hotmail.com>
+;; Maintainer: Vasco Ferreira <vasco_mmf@hotmail.com>
+;; Created: 07 Mar 2020
+;; Keywords: tailwind.css org-mode html-export
+;; Homepage: TODO: github page
+;; Package-Requires: ((dash "2.17.0") (ox-html))
+
+;; This file is not part of GNU Emacs.
+
+;;; Commentary:
+
+;; This html export backend uses tailwind.css classes to export all the org-mode
+;; elements. This way it is you will be able to quickly and effortlessly change
+;; the layout, colors and look of the website.
+;;
+;; The html document has the following default layout:
+;;
+;; ---------------------------------------------------
+;; |                      Header                     |
+;; ---------------------------------------------------
+;; |Table of Contents|                               |
+;; |                 |                               |
+;; |     Sidebar     |              Body             |
+;; |                 |                               |
+;; |                 |                               |
+;; ---------------------------------------------------
+;; |                      Footer                     |
+;; ---------------------------------------------------
+;;
+;; HACK: You have to replace the class `.table' in Tailwind.css
+;; as it collides with the `.table' class in Prims.js.
+;; For example, replace `.table' with `.ttable', there is only one occurence.
+;;
+;; You can change the look of the exported HTML by redefining the values of the
+;; classes. All the classes start with `org-tailwind-class-'. To change the
+;; contents of the elements you can change the following variables:
+;; - `org-tailwind-title'
+;; - `org-tailwind-head-files'
+;; - `org-tailwind-header'
+;; - `org-tailwind-footer'
+;; - `org-tailwind-sidebar'
+;; - `org-tailwind-bottom-files'
+;;
+;; Prism.js needs the following plugins:
+;; - line highlight
+;; - line numbers
+;; - autolinker
+;; - file highlight
+;; - show language
+;; - jsonp highlight
+;; - inline colors
+;; - previewers
+;; - autoloader
+;; - command-line
+;; - toolbar
+;; - copy to clipboard button
+;; - download button
+;; - match braces
+;; - diff highlight
+
+;;; Code:
+
+;;; Dependencies:
+
+(require 'ox-html)
+(require 'dash)
+
+;;; Element Classes
+
+;; Headings
+
+(defcustom org-tailwind-class-h1
+  "mt-32 text-6xl"
+  "Tailwind.css classes for Heading 1")
+
+(defcustom org-tailwind-class-h2
+  "mt-20 text-5xl"
+  "Tailwind.css classes for Heading 2")
+
+(defcustom org-tailwind-class-h3
+  "mt-12 text-4xl"
+  "Tailwind.css classes for Heading 3")
+
+(defcustom org-tailwind-class-h4
+  "mt-8 text-3xl"
+  "Tailwind.css classes for Heading 4")
+
+(defcustom org-tailwind-class-h5
+  "mt-6 text-2xl"
+  "Tailwind.css classes for Heading 5")
+
+(defcustom org-tailwind-class-h6
+  "mt-4 text-xl"
+  "Tailwind.css classes for Heading 6")
+
+;; Text elements
+
+(defcustom org-tailwind-class-bold
+  ""
+  "Tailwind.css classes for the HTML BOLD attribute")
+
+(defcustom org-tailwind-class-italic
+  ""
+  "Tailwind.css classes for the HTML ITALIC attribute.")
+
+(defcustom org-tailwind-class-underlined
+  "underline"
+  "Tailwind.css classes for the HTML UNDERLINE attribute.")
+
+(defcustom org-tailwind-class-code
+  "m-1 px-2 border-solid border-2 rounded-md border-green-500 text-green-500 bg-gray-300"
+  "Tailwind.css classes for the HTML UNDERLINE attribute.")
+
+(defcustom org-tailwind-class-example
+  "my-4 px-4 border-solid border-2 rounded-md border-green-500 text-green-500 bg-gray-300"
+  "Tailwind.css classes for the HTML EXAMPLE-BLOCK.")
+
+(defcustom org-tailwind-class-verbatim
+  "m-1 px-4 border-solid border-2 rounded-md border-green-500 text-green-500 bg-gray-300"
+  "Tailwind.css classes for the HTML VERBATIM attribute.")
+
+(defcustom org-tailwind-class-pre
+  "rainbow-braces my-4 px-4 border-solid border-2 rounded-md border-green-500"
+  "Tailwind.css classes for the HTML SRC-BLOCK.")
+
+(defcustom org-tailwind-class-link
+  "text-green-500 hover:text-green-900"
+  "Tailwind.css classes for the HTML LINK attribute.")
+
+(defcustom org-tailwind-class-blockquote
+  "my-4 px-4 border-solid border-2 rounded-md border-green-500"
+  "Tailwind.css classes for the HTML BLOCKQUOTE block.")
+
+(defcustom org-tailwind-class-paragraph
+  "my-4"
+  "Tailwind.css classes for the HTML PARAGRAPH.")
+
+(defcustom org-tailwind-class-image
+  "border-solid border-2 rounded-md border-green-500"
+  "Tailwind.css classes for the HTML IMAGE.")
+
+(defcustom org-tailwind-class-video
+  "border-solid border-2 rounded-md border-green-500"
+  "Tailwind.css classes for the HTML VIDEO.")
+
+(defcustom org-tailwind-class-toc-items
+  "hover:bg-green-500"
+  "Tailwind.css classes for the HTML Table of Contents items.")
+
+(defcustom org-tailwind-class-top-button
+  "float-right -mt-6 underline text-green-500 font-bold"
+  "Tailwind.css classes for the HTML go to TOP button.")
+
+;; Page Divs
+
+(defcustom org-tailwind-class-body
+  "flex flex-col h-screen"
+  "Tailwind.css classes for the HTML BODY.")
+
+(defcustom org-tailwind-class-header
+  "w-full bg-green-500 shadow-2xl items-center h-16"
+  "Tailwind.css classes for the HTML HEADER.")
+
+(defcustom org-tailwind-class-sidebar
+  "px-24 pt-20 lg:fixed lg:w-64 lg:p-4 lg:overflow-y-auto lg:inset-y-0 lg:mt-16 lg:mb-6"
+  "Tailwind.css classes for the HTML SIDEBAR.")
+
+(defcustom org-tailwind-class-content
+  "flex flex-col lg:flex-row overflow-y-auto"
+  "Tailwind.css classes for the HTML CONTENT.")
+
+(defcustom org-tailwind-class-content-container
+  "flex-grow px-20 lg:ml-64 lg:px-40 lg:overflow-x-auto"
+  "Tailwind.css classes for the HTML contents CONTAINER.")
+
+(defcustom org-tailwind-class-footer
+  "h-16 bg-green-500 text-center"
+  "Tailwind.css classes for the HTML FOOTER.")
+
+;; Lists
+
+(defcustom org-tailwind-class-ordered-list
+  "list-decimal"
+  "Tailwind.css classes for the HTML ORDERED list.")
+
+(defcustom org-tailwind-class-ordered-list-item
+  "ml-10"
+  "Tailwind.css classes for the HTML ordered list ITEM.")
+
+(defcustom org-tailwind-class-unordered-list
+  "list-disc"
+  "Tailwind.css classes for the HTML UNORDERED list.")
+
+(defcustom org-tailwind-class-unordered-list-item
+  "ml-10"
+  "Tailwind.css classes for the HTML unordered list ITEM.")
+
+(defcustom org-tailwind-class-description-list
+  ""
+  "Tailwind.css classes for the HTML DESCRIPTION list.")
+
+(defcustom org-tailwind-class-description-list-title
+  ""
+  "Tailwind.css classes for the HTML DESCRIPTION title.")
+
+(defcustom org-tailwind-class-description-list-item
+  "ml-10"
+  "Tailwind.css classes for the HTML description list ITEM.")
+
+;; Table
+
+(defcustom org-tailwind-class-table
+  "table-auto"
+  "Tailwind.css classes for the HTML TABLE.")
+
+(defcustom org-tailwind-class-table-header-row
+  ""
+  "Tailwind.css classes for the HTML table HEADER-ROW.")
+
+(defcustom org-tailwind-class-table-header-cell
+  "px-4 py-2 font-bold text-center"
+  "Tailwind.css classes for the HTML table HEADER-CELL.")
+
+(defcustom org-tailwind-class-table-body-row
+  ""
+  "Tailwind.css classes for the HTML table BODY-ROW.")
+
+(defcustom org-tailwind-class-table-body-cell
+  "border px-4 py-2"
+  "Tailwind.css classes for the HTML table BODY-CELL.")
+
+;; Special Blocks
+
+(defcustom org-tailwind-class-mermaid-block
+  "my-4 p-4 border-solid border-4 rounded-md border-green-500"
+  "Tailwind.css classes for the HTML MERMAID block.")
+
+(defcustom org-tailwind-class-details-block
+  "m-4 p-8 border-solid border rounded-md border-purple-500"
+  "Tailwind.css classes for the HTML DETAILS block.")
+
+(defcustom org-tailwind-class-details-title
+  "text-purple-500 font-bold"
+  "Tailwind.css classes for the HTML details block TITLE.")
+
+(defcustom org-tailwind-class-tip-block
+  "m-4 p-8 border-solid border-8 rounded-md border-teal-500"
+  "Tailwind.css classes for the HTML TIP block.")
+
+(defcustom org-tailwind-class-tip-title
+  "text-teal-500 font-bold"
+  "Tailwind.css classes for the HTML tip block TITLE.")
+
+(defcustom org-tailwind-class-warning-block
+  "m-4 p-8 border-solid border-8 rounded-md border-yellow-500"
+  "Tailwind.css classes for the HTML WARNING block.")
+
+(defcustom org-tailwind-class-warning-title
+  "text-yellow-500 font-bold"
+  "Tailwind.css classes for the HTML warning block TITLE.")
+
+(defcustom org-tailwind-class-danger-block
+  "m-4 p-8 border-solid border-8 rounded-md border-red-500"
+  "Tailwind.css classes for the HTML DANGER block.")
+
+(defcustom org-tailwind-class-danger-title
+  "text-red-500 font-bold"
+  "Tailwind.css classes for the HTML danger block TITLE.")
+
+;;; Templates
+
+(defcustom org-tailwind-title
+  "Notes & Guides"
+  "Title of HTML page.")
+
+(defcustom org-tailwind-head-files
+  "<!-- Tailwind CSS -->
+<link href=\"./css/tailwind.min.css\" rel=\"stylesheet\">
+
+<!-- Prism Css -->
+<link href=\"./css/prism_tomorrow.css\" rel=\"stylesheet\" />
+
+<!-- Mathjax -->
+<script src=\"./js/polyfill.min.js\"></script>
+<script id=\"MathJax-script\" async
+        src=\"./js/tex-mml-chtml.js\">
+</script>
+
+<!-- Other Settings -->
+<style>
+.mermaid > svg {margin: auto;}
+.line-highlight {
+    background: linear-gradient(to right, hsla(0, 0%, 100%, 0.1) 70%, hsla(157.4, 100%, 51%, 0.04));
+}
+</style>
+
+<!-- Your CSS file should come here -->
+"
+  "Links to be imported on the head of the HTML file.")
+
+(defcustom org-tailwind-header
+  "<nav class=\"flex items-center justify-between flex-wrap p-6\">
+  <div class=\"flex items-center flex-no-shrink mr-6\">
+    <span class=\"font-semibold text-xl tracking-tight\">Logo</span>
+  </div>
+  <div class=\"w-full block flex-grow lg:flex lg:items-center lg:w-auto\">
+    <div class=\"text-sm lg:flex-grow\">
+      <a href=\"./index.html\" class=\"block mt-4 lg:inline-block lg:mt-0\">
+        Home
+      </a>
+    </div>
+    <div>
+    </div>
+  </div>
+</nav>"
+  "Contents of header in HTML.")
+
+(defcustom org-tailwind-sidebar
+  "<div id=\"toc\"></div>"
+  "Contents of sidebar in HTML.")
+
+(defcustom org-tailwind-footer
+  "<p>Made by Vasco Ferreira</p>"
+  "Contents of footer in HTML.")
+
+(defcustom org-tailwind-bottom-files
+  "<script src=\"./js/prism.js\"></script>
+<script src=\"./js/mermaid.min.js\"></script>
+<script>mermaid.initialize({startOnLoad:true});</script>"
+  "Javascript files to be imported at the bottom of the HTML file.")
+
+(defcustom org-tailwind-javascript
+  (format
+   "function getElementsByTagNames(list,obj) {
+	if (!obj) var obj = document;
+	var tagNames = list.split(',');
+	var resultArray = new Array();
+	for (var i=0;i<tagNames.length;i++) {
+		var tags = obj.getElementsByTagName(tagNames[i]);
+		for (var j=0;j<tags.length;j++) {
+			resultArray.push(tags[j]);
+		}
+	}
+	var testNode = resultArray[0];
+	if (!testNode) return [];
+	if (testNode.sourceIndex) {
+		resultArray.sort(function (a,b) {
+				return a.sourceIndex - b.sourceIndex;
+		});
+	}
+	else if (testNode.compareDocumentPosition) {
+		resultArray.sort(function (a,b) {
+				return 3 - (a.compareDocumentPosition(b) & 6);
+		});
+	}
+	return resultArray;
+}
+
+function createTOC() {
+	var z = document.getElementById('toc');;
+	var toBeTOCced = getElementsByTagNames('h1,h2,h3,h4,h5');
+	if (toBeTOCced.length < 2) return false;
+
+	// Add go to top button
+	var top = document.createElement('a');
+	top.innerHTML = 'Top';
+	top.href = '#top';
+	top.className += 'top %s';
+	z.appendChild(top);
+
+	for (var i=0;i<toBeTOCced.length;i++) {
+		var tmp = document.createElement('a');
+		tmp.innerHTML = toBeTOCced[i].innerHTML;
+		tmp.className = 'p-2';
+    tmp.className += ' %s';
+		z.appendChild(tmp);
+		if (toBeTOCced[i].nodeName == 'H1')
+			tmp.className += ' block mt-4 ml-0';
+		if (toBeTOCced[i].nodeName == 'H2')
+			tmp.className += ' block mt-2 ml-4';
+		if (toBeTOCced[i].nodeName == 'H3')
+			tmp.className += ' block mt-2 ml-8';
+		if (toBeTOCced[i].nodeName == 'H4')
+			tmp.className += ' block mt-2 ml-12';
+		if (toBeTOCced[i].nodeName == 'H5')
+			tmp.className += ' block mt-2 ml-16';
+		if (toBeTOCced[i].nodeName == 'H6')
+			tmp.className += ' block mt-2 ml-20';
+		var headerId = toBeTOCced[i].id || 'link' + i;
+		tmp.href = '#' + headerId;
+		toBeTOCced[i].id = headerId;
+	}
+}
+
+createTOC();"
+   org-tailwind-class-top-button
+   org-tailwind-class-toc-items)
+  "Javascript code needed in the HTML file.")
+
+(defcustom org-tailwind-html-template
+      "<!doctype html>
+<html lang=\"en\">
+<head>
+  <meta charset=\"utf-8\">
+  <title>%s</title>
+  %s
+</head>
+<body class=\"%s\">
+
+<div id=\"header\" class=\"%s\">
+%s
+</div>
+
+<div id=\"content\" class=\"top %s\">
+  <div id=\"sidebar\" class=\"%s\">
+  %s
+  </div>
+
+  <div id=\"content-container\" class=\"%s\">
+  <div id=\"top\"></div>
+  %s
+  </div>
+</div>
+
+<div id=\"footer\" class=\"%s\">
+%s
+</div>
+
+<script>
+%s
+</script>
+
+%s
+
+</body>
+</html>
+"
+      "Default HTML template.
+The default template needs the format place for the following
+values, in this order:
+
+- page title
+- head files
+- body classes
+- header classes
+- header contents
+- content classes
+- sidebar classes
+- sidebar contents
+- content-container classes
+- contents
+- footer classes
+- footer contents
+- bottom page javascript
+- bottom page files.")
+
+;;; Transcode Elements
+
+(defun org-tailwind-inner-template (contents info)
+  "Define the template for the CONTENTS inside Headings.
+By not doing anything to the contents, it exports the elements at the root level."
+  contents)
+
+(defun org-tailwind-template (contents info)
+  "Format the HTML Template and add the CONTENTS of the export."
+  (format org-tailwind-html-template
+          org-tailwind-title
+          org-tailwind-head-files
+          org-tailwind-class-body
+          org-tailwind-class-header
+          org-tailwind-header
+          org-tailwind-class-content
+          org-tailwind-class-sidebar
+          org-tailwind-sidebar
+          org-tailwind-class-content-container
+          contents
+          org-tailwind-class-footer
+          org-tailwind-footer
+          org-tailwind-javascript
+          org-tailwind-bottom-files))
+
+(defun org-tailwind-bold (bold contents info)
+  "Transcode BOLD from Org to HTML."
+  (format "<strong class=\"%s\">%s</strong>" org-tailwind-class-bold contents))
+
+(defun org-tailwind-italic (italic contents info)
+  "Transcode ITALIC from Org to HTML."
+  (format "<em class=\"%s\">%s</em>" org-tailwind-class-italic contents))
+
+(defun org-tailwind-strike-through (strike-through contents info)
+  "Transcode STRIKE-THROUGH from Org to HTML."
+  (format "<del class=\"%s\">%s</del>" org-tailwind-class-italic contents))
+
+(defun org-tailwind-underlined (underlined contents info)
+  "Transcode UNDERLINED from Org to HTML."
+  (format "<span class=\"%s\">%s</span>" org-tailwind-class-underlined contents))
+
+(defun org-tailwind-code (code contents info)
+  "Transcode CODE from Org to HTML."
+  (let ((code-text (org-element-property :value code)))
+    (format "<code class=\"%s\">%s</code>" org-tailwind-class-code code-text)))
+
+(defun org-tailwind-verbatim (verbatim contents info)
+  "Transcode VERBATIM from Org to HTML."
+  (let ((code-text (org-element-property :value verbatim)))
+    (format "<code class=\"%s\">%s</code>" org-tailwind-class-verbatim code-text)))
+
+(defun org-tailwind-plain-text (plain-text info)
+  "Transcode PLAIN-TEXT from Org to HTML."
+  plain-text)
+
+(defun org-tailwind-paragraph (paragraph contents info)
+  "Transcode PARAGRAPH from Org to HTML."
+  (let* ((parent (org-element-property :parent paragraph))
+         (parent-type (org-element-property :type parent))
+         (ancestor (org-element-property :parent parent))
+         (ancestor-type (org-element-property :type ancestor)))
+    (cond ((equalp parent-type "mermaid") contents)
+          ((equalp ancestor-type 'descriptive)
+           (format "<dd class=\"%s\">%s</dd>"
+                   org-tailwind-class-description-list-item contents))
+          (t (format "<p class=\"%s\">%s</p>" org-tailwind-class-paragraph contents)))))
+
+(defun org-tailwind-link (link contents info)
+  "Transcode LINK from Org to HTML."
+  (let* ((path (org-element-property :path link))
+         (type (org-element-property :type link))
+         (file-extension (file-name-extension path))
+         (link-tag "<a class=\"%s\" href=\"%s\">%s</a>")
+         (video-tag "<video class=\"%s\" controls> <source src=\"%s\" type=\"video/%s\"> </video>")
+         (image-tag "<img class=\"%s\" src=\"%s\">"))
+    (cond
+     ;; Is the link a video
+     ((or (equalp file-extension "mp4")
+          (equalp file-extension "avi")
+          (equalp file-extension "mkv")
+          (equalp file-extension "mpeg4")
+          (equalp file-extension "3gp"))
+      (format video-tag
+              org-tailwind-class-video
+              path
+              file-extension))
+     ;; Is the link an image
+     ((or (equalp file-extension "png")
+          (equalp file-extension "svg")
+          (equalp file-extension "jpg")
+          (equalp file-extension "jpeg")
+          (equalp file-extension "gif")
+          (equalp file-extension "bmp"))
+      (format image-tag
+              org-tailwind-class-image
+              path))
+     ;; Is the link an org file
+     ((equalp file-extension "org")
+      (format link-tag
+              org-tailwind-class-link
+              (concat type ":" (replace-regexp-in-string "\.org" "\.html" path))
+              contents))
+     ;; Any other link
+     (t (format link-tag
+                org-tailwind-class-link
+                (concat type ":" path)
+                contents)))))
+
+(defun org-tailwind-blockquote (blockquote contents info)
+  "Transcode BLOCKQUOTE from Org to HTML."
+  (format "<blockquote class=\"%s\">%s</blockquote>" org-tailwind-class-blockquote contents))
+
+(defun org-tailwind--get-header (header src-block)
+  "Transverse the SRC-BLOCK and get the headers.
+The keys and values are both strings."
+  (let* ((src-block-properties (-partition-by-header 'keywordp (nth 1 src-block)))
+         (header-block (assoc :header src-block-properties))
+         (header-string (nth 0 (nth 1 header-block)))
+         ;; TODO: Split string break this that have spaces in between
+         ;; replace it
+         (header-list (split-string header-string " "))
+         (header-alist (-partition 2 header-list)))
+    (nth 1 (assoc header header-alist))))
+
+(defvar org-tailwind--src-block-open
+  "<pre class=\"%s\" data-filter-output=\"(out)\" %s>"
+  "Opening tag of code block for Prism.js
+It has two format places:
+- Tailwind.css classes
+- other attribute.")
+
+(defvar org-tailwind--src-block-close
+  "<code class=\"language-%s\">%s</code></pre>"
+  "Closing tag of code block for Prism.js
+It has two format places:
+- language
+- code text")
+
+(defun org-tailwind-command-line-block (src-block contents info)
+  "Transcode SRC-BLOCK with command line language to a custom Prism.js code block."
+  (let* ((code-text (org-element-property :value src-block))
+         (language (org-element-property :language src-block))
+         (user (org-tailwind--get-header ":user" src-block))
+         (host (org-tailwind--get-header ":host" src-block))
+         (attributes (format " data-user=%s data-host=%s %s"
+                             user
+                             host
+                               "")))
+    (message "HEADER: %s" (org-element-property :header src-block))
+    (concat
+     (format org-tailwind--src-block-open
+             (concat "command-line " org-tailwind-class-pre)
+             attributes)
+     (format org-tailwind--src-block-close
+             language
+             code-text))))
+
+(defun org-tailwind-src-block (src-block contents info)
+  "Transcode SRC-BLOCK from Org to HTML."
+  (let* ((code-text (org-element-property :value src-block))
+         (language (org-element-property :language src-block))
+         (highlight-lines (org-tailwind--get-header ":highlight" src-block))
+         (attributes (format " data-line=%s"
+                             (if (not (equalp highlight-lines ""))
+                                 highlight-lines
+                               ""))))
+    (concat
+     (format org-tailwind--src-block-open
+             (concat "line-numbers " org-tailwind-class-pre)
+             attributes)
+     (format org-tailwind--src-block-close
+             language
+             code-text)))
+  )
+
+;; TODO: handle `:file' headers data-src="myfile.js"
+;; TODO: handle download file data-jsonp
+(defun org-tailwind-src-block-select (src-block contents info)
+  "Transcode SRC-BLOCK from Org to HTML."
+  (let* ((language (org-element-property :language src-block)))
+    (cond
+     ;; If it is a command line language,
+     ((or (equalp language "sh")
+          (equalp language "shell")
+          (equalp language "bash")
+          (equalp language "ps")
+          (equalp language "powershell"))
+      (org-tailwind-command-line-block src-block contents info))
+     ;; If it is a programming language
+     (t (org-tailwind-src-block src-block contents info)))))
+
+(defun org-tailwind-example-block (example-block contents info)
+  "Transcode EXAMPLE-BLOCK from Org to HTML."
+  (let ((code (org-html-format-code example-block info))
+        (code-text (org-element-property :value example-block))
+        (language (org-element-property :language example-block))
+        (highlight-lines (org-element-property :highlight example-block)))
+    (format "<pre class=\"%s\"><code class=\"language-%s\">%s</pre></code>"
+            org-tailwind-class-example language code-text)))
+
+(defun org-tailwind-special-block (special-block contents info)
+  "Transcode SPECIAL-BLOCK from Org to HTML.
+There are 4 types of blocks:
+- Details
+- Tip
+- Warning
+- Danger"
+  (message "SPECIAL BLOCK: %s" (org-tailwind--get-header ":summary" special-block))
+  ;; HACK: In order not to add the p tags in paragraph if the special-block's
+  ;; type is `mermaid', change the paragraph block directly
+  (let* ((type (org-element-property :type special-block)))
+    (cond ((equalp type "mermaid")
+           (format "<div class=\"mermaid %s\">%s</div>"
+                   org-tailwind-class-mermaid-block
+                   contents))
+          ;; TODO: process title as summary
+          ((equalp type "details")
+           (format "<details class=\"%s\"><summary>%s</summary>%s</details>"
+                   org-tailwind-class-details-block
+                   (org-tailwind--get-header :summary special-block)
+                   contents))
+          ((equalp type "tip")
+           (format "<div class=\"tip %s\">%s</div>"
+                   org-tailwind-class-tip-block
+                   contents))
+          ((equalp type "warning")
+           (format "<div class=\"tip %s\">%s</div>"
+                   org-tailwind-class-warning-block
+                   contents))
+          ((equalp type "danger")
+           (format "<div class=\"tip %s\">%s</div>"
+                   org-tailwind-class-danger-block
+                   contents))
+          (t (org-html-special-block special-block contents info)))))
+
+(defun org-tailwind-format-header (level text contents)
+  "Return the corresponding HTML heading level of the Org LEVEL."
+  (let ((header "<h%s class=\"%s\">%s</h%s>%s" ))
+    (cond ((eq level 1) (format header level org-tailwind-class-h1 text level contents))
+          ((eq level 2) (format header level org-tailwind-class-h2 text level contents))
+          ((eq level 3) (format header level org-tailwind-class-h3 text level contents))
+          ((eq level 4) (format header level org-tailwind-class-h4 text level contents))
+          ((eq level 5) (format header level org-tailwind-class-h5 text level contents))
+          ((eq level 6) (format header level org-tailwind-class-h6 text level contents))
+          (t ""))))
+
+(defun org-tailwind-headline (headline contents info)
+  "Transcode HEADLINE from Org to HTML."
+  (let* ((text (org-element-property :raw-value headline))
+         (level (org-export-get-relative-level headline info)))
+    (org-tailwind-format-header level text contents)))
+
+(defun org-tailwind-table-cell (table-cell contents info)
+  "Transcode TABLE-CELL from Org to HTML.
+If TABLE-CELL is part of the table header, return the HTML table
+cell with `th'. Return `td' otherwise."
+  (if (org-export-table-row-in-header-p (org-export-get-parent table-cell) info)
+      (format "<th class=\"%s\">%s</th>" org-tailwind-class-table-header-cell contents)
+    (format "<td class=\"%s\">%s</td>" org-tailwind-class-table-body-cell contents)))
+
+(defun org-tailwind-table-row (table-row contents info)
+  "Transcode TABLE-ROW from Org to HTML.
+First, check the group of the TABLE-ROW, in this case it will be
+either `thead' or `tbody'. Second, check if it is the first row
+of the group. If it is, add the corresponding opening HTML tag.
+In the case of being the last row of the group, add the closing
+tag. If it is neither, return the row without group tags."
+  (let* ((header '("<thead>" . "</thead>"))
+         (body '("<tbody>" . "</tbody>"))
+         (row '("<tr class=\"%s\">" . "</tr>"))
+         (row-group (org-export-table-row-group table-row info))
+         (is-first-row-p (org-export-table-row-starts-rowgroup-p table-row info))
+         (is-last-row-p (org-export-table-row-ends-rowgroup-p table-row info)))
+    ;; As there are multiple types of rows, e.g., separator rows,
+    ;; check if the row is a normal row
+    (when (eq (org-element-property :type table-row) 'standard)
+      ;; If row is in the table header
+      (if (eq row-group 1)
+          (cond
+           ;; Is the first row of the header
+           ((not (eq is-first-row-p nil))
+            (concat (car header)
+                    "\n"
+                    (format (car row) org-tailwind-class-table-header-row)
+                    contents
+                    (cdr row)))
+           ;; Is the last row of the header
+           ((not (eq is-last-row-p nil))
+            (concat (format (car row) org-tailwind-class-table-header-row)
+                    contents
+                    (cdr row)
+                    "\n" (cdr header)))
+           ;; Is in the middle of header
+           (t (concat (format (car row) org-tailwind-class-table-header-row)
+                      contents
+                      (cdr row))))
+        ;; If row is in the table body
+        (cond
+         ;; Is the first row of the body
+         ((not (eq is-first-row-p nil))
+          (concat (car body)
+                  "\n"
+                  (format (car row) org-tailwind-class-table-body-row)
+                  contents
+                  (cdr row)))
+         ;; Is the last row of the body
+         ((not (eq is-last-row-p nil))
+          (concat (format (car row) org-tailwind-class-table-body-row)
+                  contents
+                  (cdr row)
+                  "\n" (cdr body)))
+         ;; Is in the middle of the body
+         (t (concat (format (car row) org-tailwind-class-table-body-row)
+                    contents
+                    (cdr row))))))))
+
+(defun org-tailwind-table (table contents info)
+  "Transcode TABLE from Org to HTML."
+  (format "<table class=\"%s\">%s</table>" org-tailwind-class-table contents))
+
+(defun org-tailwind-plain-list (plain-list contents _info)
+  "Transcode PLAIN-LIST from Org to HTML.
+There are three types of lists:
+- Ordered Lists;
+- Unordered Lists and
+- Description Lists."
+  (let* ((type (pcase (org-element-property :type plain-list)
+                 (`ordered "ol")
+                 (`unordered "ul")
+                 (`descriptive "dl")
+                 (other (error "Unknown HTML list type: %s" other)))))
+    (format "<%s class=\"%s\">\n%s</%s>"
+            type
+            (cond ((equalp type "ol") org-tailwind-class-ordered-list)
+                  ((equalp type "ul") org-tailwind-class-unordered-list)
+                  ((equalp type "dl") org-tailwind-class-description-list))
+            contents
+            type)))
+
+(defun org-tailwind-format-list-item (contents type checkbox info
+					   &optional term-counter-id headline)
+  "Format a list item into the corresponding HTML tag."
+  (pcase type
+    (`ordered
+     (format "<li class=\"%s\">%s</li>\n"
+     org-tailwind-class-ordered-list-item contents))
+    (`unordered
+     (format "<li class=\"%s\">%s</li>\n"
+     org-tailwind-class-unordered-list-item contents))
+    (`descriptive
+     (format "<dt class=\"%s\">%s</dt>\n%s"
+             org-tailwind-class-description-list-title
+             term-counter-id
+             contents))))
+
+(defun org-tailwind-item (item contents info)
+  "Transcode an ITEM element from Org to HTML."
+  (let* ((plain-list (org-export-get-parent item))
+         (type (org-element-property :type plain-list))
+         (counter (org-element-property :counter item))
+         (checkbox (org-element-property :checkbox item))
+         (tag (let ((tag (org-element-property :tag item)))
+                (and tag (org-export-data tag info)))))
+    (org-tailwind-format-list-item
+     contents type checkbox info (or tag counter))))
+
+(defun org-tailwind-section (section contents info)
+  "Return the contents of SECTION as is."
+  contents)
+
+;;; Define backend
+(setq org-babel-default-header-args
+      (cons '(:highlight . "")
+            (assq-delete-all :highlight org-babel-default-header-args)))
+
+(org-export-define-backend 'tailwind
+  '((bold . org-tailwind-bold)
+    (center-block . org-html-center-block)
+    (clock . org-html-clock)
+    (code . org-tailwind-code)
+    (drawer . org-html-drawer)
+    (dynamic-block . org-html-dynamic-block)
+    (entity . org-html-entity)
+    (example-block . org-tailwind-example-block)
+    (export-block . org-html-export-block)
+    (export-snippet . org-html-export-snippet)
+    (fixed-width . org-html-fixed-width)
+    (footnote-definition . org-html-footnote-definition)
+    (footnote-reference . org-html-footnote-reference)
+    (headline . org-tailwind-headline)
+    (horizontal-rule . org-html-horizontal-rule)
+    (inline-src-block . org-html-inline-src-block)
+    (inlinetask . org-html-inlinetask)
+    (inner-template . org-tailwind-inner-template)
+    (italic . org-tailwind-italic)
+    (item . org-tailwind-item)
+    (keyword . org-html-keyword)
+    (latex-environment . org-html-latex-environment)
+    (latex-fragment . org-html-latex-fragment)
+    (line-break . org-html-line-break)
+    (link . org-tailwind-link)
+    (node-property . org-html-node-property)
+    (paragraph . org-tailwind-paragraph)
+    (plain-list . org-tailwind-plain-list)
+    (plain-text . org-tailwind-plain-text)
+    (planning . org-html-planning)
+    (property-drawer . org-html-property-drawer)
+    (quote-block . org-tailwind-blockquote)
+    (radio-target . org-html-radio-target)
+    (section . org-tailwind-section)
+    (special-block . org-tailwind-special-block)
+    (src-block . org-tailwind-src-block-select)
+    (statistics-cookie . org-html-statistics-cookie)
+    (strike-through . org-tailwind-strike-through)
+    (subscript . org-html-subscript)
+    (superscript . org-html-superscript)
+    (table . org-tailwind-table)
+    (table-cell . org-tailwind-table-cell)
+    (table-row . org-tailwind-table-row)
+    (target . org-html-target)
+    (template . org-tailwind-template)
+    (timestamp . org-html-timestamp)
+    (underline . org-tailwind-underlined)
+    (verbatim . org-tailwind-verbatim)
+    (verse-block . org-html-verse-block))
+  :menu-entry
+  '(?x "Export to HTML with ox-tailwind Back-End"
+       ((?H "As HTML buffer" org-tailwind-export-as-html)
+        (?h "As HTML file" org-tailwind-export-to-html)))
+  :options-alist
+  '())
+
+
+;;;###autoload
+(defun org-tailwind-export-as-html
+    (&optional async subtreep visible-only body-only ext-plist)
+  "Export current buffer to a TAILWIND HTML buffer.
+Export as `org-html-export-as-html' does, with slimhtml
+org-export-backend.
+If narrowing is active in the current buffer, only export its
+narrowed part.
+If a region is active, export that region.
+A non-nil optional argument ASYNC means the process should happen
+asynchronously.  The resulting buffer should be accessible
+through the `org-export-stack' interface.
+When optional argument SUBTREEP is non-nil, export the sub-tree
+at point, extracting information from the headline properties
+first.
+When optional argument VISIBLE-ONLY is non-nil, don't export
+contents of hidden elements.
+When optional argument BODY-ONLY is non-nil, only write code
+between \"<body>\" and \"</body>\" tags.
+EXT-PLIST, when provided, is a property list with external
+parameters overriding Org default settings, but still inferior to
+file-local settings.
+Export is done in a buffer named \"*Org TAILWIND export*\", which
+will be displayed when `org-export-show-temporary-export-buffer'
+is non-nil."
+  (interactive)
+  (org-export-to-buffer 'tailwind "*Org TAILWIND Export*"
+    async subtreep visible-only body-only ext-plist
+    (lambda () (set-auto-mode t))))
+
+;;;###autoload
+(defun org-tailwind-export-to-html (&optional async subtreep visible-only body-only ext-plist)
+  "Export current buffer to an HTML file.
+Export as `org-html-export-as-html' does, with slimhtml
+org-export-backend.
+If narrowing is active in the current buffer, only export its
+narrowed part.
+If a region is active, export that region.
+A non-nil optional argument ASYNC means the process should happen
+asynchronously.  The resulting file should be accessible through
+the `org-export-stack' interface.
+When optional argument SUBTREEP is non-nil, export the sub-tree
+at point, extracting information from the headline properties
+first.
+When optional argument VISIBLE-ONLY is non-nil, don't export
+contents of hidden elements.
+When optional argument BODY-ONLY is non-nil, only write code
+between \"<body>\" and \"</body>\" tags.
+EXT-PLIST, when provided, is a property list with external
+parameters overriding Org default settings, but still inferior to
+file-local settings.
+Return output file's name."
+  (interactive)
+  (let* ((extension ".html")
+         (file (org-export-output-file-name extension subtreep))
+         (org-export-coding-system org-html-coding-system))
+    (org-export-to-file 'tailwind file
+      async subtreep visible-only body-only ext-plist)))
+
+
+(provide 'ox-tailwind)
+
+;;; ox-tailwind.el ends here
