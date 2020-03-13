@@ -67,36 +67,104 @@
 (require 'ox-html)
 (require 'dash)
 
+;;; Define backend
+
+(org-export-define-backend 'tailwind
+  '((bold . org-tailwind-bold)
+    (center-block . org-html-center-block)
+    (clock . org-html-clock)
+    (code . org-tailwind-code)
+    (drawer . org-html-drawer)
+    (dynamic-block . org-html-dynamic-block)
+    (entity . org-html-entity)
+    (example-block . org-tailwind-example-block)
+    (export-block . org-html-export-block)
+    (export-snippet . org-html-export-snippet)
+    (fixed-width . org-html-fixed-width)
+    (footnote-definition . org-html-footnote-definition)
+    (footnote-reference . org-html-footnote-reference)
+    (headline . org-tailwind-headline)
+    (horizontal-rule . org-html-horizontal-rule)
+    (inline-src-block . org-html-inline-src-block)
+    (inlinetask . org-html-inlinetask)
+    (inner-template . org-tailwind-inner-template)
+    (italic . org-tailwind-italic)
+    (item . org-tailwind-item)
+    (keyword . org-html-keyword)
+    (latex-environment . org-html-latex-environment)
+    (latex-fragment . org-html-latex-fragment)
+    (line-break . org-html-line-break)
+    (link . org-tailwind-link)
+    (node-property . org-html-node-property)
+    (paragraph . org-tailwind-paragraph)
+    (plain-list . org-tailwind-plain-list)
+    (plain-text . org-tailwind-plain-text)
+    (planning . org-html-planning)
+    (property-drawer . org-html-property-drawer)
+    (quote-block . org-tailwind-blockquote)
+    (radio-target . org-html-radio-target)
+    (section . org-tailwind-section)
+    (special-block . org-tailwind-special-block)
+    (src-block . org-tailwind-src-block-select)
+    (statistics-cookie . org-html-statistics-cookie)
+    (strike-through . org-tailwind-strike-through)
+    (subscript . org-html-subscript)
+    (superscript . org-html-superscript)
+    (table . org-tailwind-table)
+    (table-cell . org-tailwind-table-cell)
+    (table-row . org-tailwind-table-row)
+    (target . org-html-target)
+    (template . org-tailwind-template)
+    (timestamp . org-html-timestamp)
+    (underline . org-tailwind-underlined)
+    (verbatim . org-tailwind-verbatim)
+    (verse-block . org-html-verse-block))
+  :menu-entry
+  '(?x "Export to HTML with ox-tailwind Back-End"
+       ((?H "As HTML buffer" org-tailwind-export-as-html)
+        (?h "As HTML file" org-tailwind-export-to-html)
+        (?o "As HTML file and open"
+            (lambda (a s v b)
+              (if a (org-tailwind-export-to-html t s v b)
+                (org-open-file (org-tailwind-export-to-html nil s v b)))))))
+  :options-alist
+  ;; Define keywords like this:
+  ;; - (:key-name "PROPERTY-NAME" CONDITION DEFAULT)
+  ;; Get the keywords like this:
+  ;; - (plist-get (org-export-get-environment 'tailwind) :key-name)
+  '((:title "TITLE" nil "Notes & Guides")
+    (:html-title "HTML-TITLE:" nil "Notes & Guides")))
+
 ;;; Element Classes
 
 ;; Headings
 
 (defcustom org-tailwind-class-h1
-  "mt-32 text-6xl text-gray-700"
+  "mt-32 mb-6 text-6xl text-gray-700"
   "Tailwind.css classes for Heading 1")
 
 (defcustom org-tailwind-class-h2
-  "mt-20 ml-4 text-5xl text-gray-700"
+  "mt-20 mb-6 text-5xl text-gray-700"
   "Tailwind.css classes for Heading 2")
 
 (defcustom org-tailwind-class-h3
-  "mt-12 ml-8 text-4xl text-gray-700"
+  "mt-12 mb-6 text-4xl text-gray-700"
   "Tailwind.css classes for Heading 3")
 
 (defcustom org-tailwind-class-h4
-  "mt-8 ml-12 text-3xl text-gray-700"
+  "mt-8 mb-6 text-3xl text-gray-700"
   "Tailwind.css classes for Heading 4")
 
 (defcustom org-tailwind-class-h5
-  "mt-6 ml-16 text-2xl text-gray-700"
+  "mt-6 mb-6 text-2xl text-gray-700"
   "Tailwind.css classes for Heading 5")
 
 (defcustom org-tailwind-class-h6
-  "mt-4 ml-20 text-xl text-gray-700"
+  "mt-4 mb-6 text-xl text-gray-700"
   "Tailwind.css classes for Heading 6")
 
 (defcustom org-tailwind-class-h7
-  "mt-2 ml-24 text-lg text-gray-700"
+  "mt-2 mb-6 text-lg text-gray-700"
   "Tailwind.css classes for Heading 7 and beyond.")
 
 ;; Text elements
@@ -134,11 +202,11 @@
   "Tailwind.css classes for the HTML LINK attribute.")
 
 (defcustom org-tailwind-class-blockquote
-  "my-4 px-4 border-solid border-2 rounded-md border-green-500 bg-gray-300"
+  "my-4 px-4 border-solid border-l-8 border-2 rounded-md border-gray-500 bg-gray-300"
   "Tailwind.css classes for the HTML BLOCKQUOTE block.")
 
 (defcustom org-tailwind-class-paragraph
-  "my-4"
+  "my-2"
   "Tailwind.css classes for the HTML PARAGRAPH.")
 
 (defcustom org-tailwind-class-image
@@ -164,11 +232,11 @@
   "Tailwind.css classes for the HTML BODY.")
 
 (defcustom org-tailwind-class-header
-  "w-full bg-gray-900 text-gray-400 shadow-2xl items-center h-16"
+  "w-full border-b-2 border-gray-500 bg-gray-900 text-gray-400 shadow-2xl items-center h-16"
   "Tailwind.css classes for the HTML HEADER.")
 
 (defcustom org-tailwind-class-sidebar
-  "px-24 pt-20 lg:fixed lg:w-64 lg:p-4 lg:overflow-y-auto lg:inset-y-0 lg:mt-16 lg:mb-6"
+  "px-24 pt-20 lg:border-r-2 lg:border-gray-900 lg:fixed lg:w-64 lg:p-4 lg:overflow-y-auto lg:inset-y-0 lg:mt-16 lg:mb-6"
   "Tailwind.css classes for the HTML SIDEBAR.")
 
 (defcustom org-tailwind-class-content
@@ -176,11 +244,11 @@
   "Tailwind.css classes for the HTML CONTENT.")
 
 (defcustom org-tailwind-class-content-container
-  "flex-grow px-4 sm:px-10 md:px-20 lg:ml-64 lg:px-64 lg:overflow-x-auto"
+  "flex-grow px-4 mb-8 sm:px-10 md:px-20 lg:ml-64 lg:px-64 lg:overflow-x-auto"
   "Tailwind.css classes for the HTML contents CONTAINER.")
 
 (defcustom org-tailwind-class-footer
-  "h-16 bg-gray-900 text-gray-400 text-center"
+  "fixed bottom-0 w-full h-8 bg-gray-900 text-gray-400 text-center"
   "Tailwind.css classes for the HTML FOOTER.")
 
 ;; Lists
@@ -242,11 +310,11 @@
 ;; Special Blocks
 
 (defcustom org-tailwind-class-mermaid-block
-  "my-4 p-4 border-solid border-2 rounded-md border-green-500"
+  "my-4 p-4"
   "Tailwind.css classes for the HTML MERMAID block.")
 
 (defcustom org-tailwind-class-details-block
-  "my-4 p-8 border-solid border-2 rounded-md border-purple-500"
+  "my-4 p-8 border-solid border-l-8 border-2 rounded-md border-purple-500"
   "Tailwind.css classes for the HTML DETAILS block.")
 
 (defcustom org-tailwind-class-details-title
@@ -254,7 +322,7 @@
   "Tailwind.css classes for the HTML details block TITLE.")
 
 (defcustom org-tailwind-class-tip-block
-  "my-4 p-8 border-solid border-2 rounded-md border-teal-500"
+  "my-4 p-8 border-solid border-l-8 border-2 rounded-md border-teal-500"
   "Tailwind.css classes for the HTML TIP block.")
 
 (defcustom org-tailwind-class-tip-title
@@ -262,7 +330,7 @@
   "Tailwind.css classes for the HTML tip block TITLE.")
 
 (defcustom org-tailwind-class-warning-block
-  "my-4 p-8 border-solid border-2 rounded-md border-yellow-500"
+  "my-4 p-8 border-solid border-l-8 border-2 rounded-md border-yellow-500"
   "Tailwind.css classes for the HTML WARNING block.")
 
 (defcustom org-tailwind-class-warning-title
@@ -270,7 +338,7 @@
   "Tailwind.css classes for the HTML warning block TITLE.")
 
 (defcustom org-tailwind-class-danger-block
-  "my-4 p-8 border-solid border-2 rounded-md border-red-500"
+  "my-4 p-8 border-solid border-l-8 border-2 rounded-md border-red-500"
   "Tailwind.css classes for the HTML DANGER block.")
 
 (defcustom org-tailwind-class-danger-title
@@ -620,8 +688,8 @@ It has two format places:
               "data-filter-output=\"(out)\" "
               ;; Add user and host names
               (format " data-user=\"%s\" data-host=\"%s\""
-                      username
-                      hostname)
+                      (if username username "user")
+                      (if hostname hostname "localhost"))
               (if highlight-lines
                   (format " data-line=\"%s\"" highlight-lines)
                 "")
@@ -875,70 +943,6 @@ There are three types of lists:
   "Return the contents of SECTION as is."
   contents)
 
-;;; Define backend
-
-(org-export-define-backend 'tailwind
-  '((bold . org-tailwind-bold)
-    (center-block . org-html-center-block)
-    (clock . org-html-clock)
-    (code . org-tailwind-code)
-    (drawer . org-html-drawer)
-    (dynamic-block . org-html-dynamic-block)
-    (entity . org-html-entity)
-    (example-block . org-tailwind-example-block)
-    (export-block . org-html-export-block)
-    (export-snippet . org-html-export-snippet)
-    (fixed-width . org-html-fixed-width)
-    (footnote-definition . org-html-footnote-definition)
-    (footnote-reference . org-html-footnote-reference)
-    (headline . org-tailwind-headline)
-    (horizontal-rule . org-html-horizontal-rule)
-    (inline-src-block . org-html-inline-src-block)
-    (inlinetask . org-html-inlinetask)
-    (inner-template . org-tailwind-inner-template)
-    (italic . org-tailwind-italic)
-    (item . org-tailwind-item)
-    (keyword . org-html-keyword)
-    (latex-environment . org-html-latex-environment)
-    (latex-fragment . org-html-latex-fragment)
-    (line-break . org-html-line-break)
-    (link . org-tailwind-link)
-    (node-property . org-html-node-property)
-    (paragraph . org-tailwind-paragraph)
-    (plain-list . org-tailwind-plain-list)
-    (plain-text . org-tailwind-plain-text)
-    (planning . org-html-planning)
-    (property-drawer . org-html-property-drawer)
-    (quote-block . org-tailwind-blockquote)
-    (radio-target . org-html-radio-target)
-    (section . org-tailwind-section)
-    (special-block . org-tailwind-special-block)
-    (src-block . org-tailwind-src-block-select)
-    (statistics-cookie . org-html-statistics-cookie)
-    (strike-through . org-tailwind-strike-through)
-    (subscript . org-html-subscript)
-    (superscript . org-html-superscript)
-    (table . org-tailwind-table)
-    (table-cell . org-tailwind-table-cell)
-    (table-row . org-tailwind-table-row)
-    (target . org-html-target)
-    (template . org-tailwind-template)
-    (timestamp . org-html-timestamp)
-    (underline . org-tailwind-underlined)
-    (verbatim . org-tailwind-verbatim)
-    (verse-block . org-html-verse-block))
-  :menu-entry
-  '(?x "Export to HTML with ox-tailwind Back-End"
-       ((?H "As HTML buffer" org-tailwind-export-as-html)
-        (?h "As HTML file" org-tailwind-export-to-html)))
-  :options-alist
-  ;; Define keywords like this:
-  ;; - (:key-name "PROPERTY-NAME" CONDITION DEFAULT)
-  ;; Get the keywords like this:
-  ;; - (plist-get (org-export-get-environment 'tailwind) :key-name)
-  '((:title "TITLE" nil "Notes & Guides")
-    (:html-title "HTML-TITLE:" nil "Notes & Guides")))
-
 ;;;###autoload
 (defun org-tailwind-export-as-html
     (&optional async subtreep visible-only body-only ext-plist)
@@ -992,11 +996,31 @@ parameters overriding Org default settings, but still inferior to
 file-local settings.
 Return output file's name."
   (interactive)
-  (let* ((extension ".html")
+  (let* ((extension (concat
+                     (when (> (length org-html-extension) 0) ".")
+                     (or (plist-get ext-plist :html-extension)
+                         org-html-extension
+                         "html")))
          (file (org-export-output-file-name extension subtreep))
          (org-export-coding-system org-html-coding-system))
     (org-export-to-file 'tailwind file
       async subtreep visible-only body-only ext-plist)))
+
+;;;###autoload
+(defun org-tailwind-publish-to-html (plist filename pub-dir)
+  "Publish an org file to HTML.
+
+FILENAME is the filename of the Org file to be published.  PLIST
+is the property list for the given project.  PUB-DIR is the
+publishing directory.
+
+Return output file name."
+  (org-publish-org-to 'tailwind filename
+                      (concat (when (> (length org-html-extension) 0) ".")
+                              (or (plist-get plist :html-extension)
+                                  org-html-extension
+                                  "html"))
+                      plist pub-dir))
 
 (provide 'ox-tailwind)
 
