@@ -650,7 +650,7 @@ By not doing anything to the contents, it exports the elements at the root level
       (format "<p class=\"%s\">%s %s</p>"
               org-tailwind-class-paragraph
               (org-tailwind-checkbox checkbox)
-              (and (org-string-nw-p contents) (org-trim contents))))
+              contents))
      (t (format "<p class=\"%s\">%s</p>"
                 org-tailwind-class-paragraph
                 contents)))))
