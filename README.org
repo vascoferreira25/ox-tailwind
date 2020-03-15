@@ -196,7 +196,7 @@ tree /F /a
 **** Danger
 
    #+NAME: Danger Title
-   #+begin_tip org
+   #+begin_danger org
    These blocks can contain other blocks.
    
    Code in a shell?
@@ -209,7 +209,7 @@ cd c:/emacs/bin/runemacs.exe
    #+END_SRC
    
    Cool! Isn't it?
-   #+end_tip
+   #+end_danger
 
 **** Custom Attributes
      These blocks have custom attributes that you can specify:

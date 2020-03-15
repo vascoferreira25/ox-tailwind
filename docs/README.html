@@ -1,0 +1,439 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Notes & Guides</title>
+  <!-- Tailwind CSS -->
+<link href="./css/tailwind.min.css" rel="stylesheet"/>
+
+<!-- Prism Css -->
+<link href="./css/prism_tomorrow.css" rel="stylesheet" />
+
+<!-- Mathjax -->
+<script type="text/javascript" async
+  src="./mathjax/tex-mml-chtml.js">
+</script>
+
+<!-- Other Settings -->
+<style>
+.mermaid > svg {margin: auto;}
+.line-highlight {
+    background: linear-gradient(to right, hsla(0, 0%, 100%, 0.1) 70%, hsla(157.4, 100%, 51%, 0.04));
+}
+</style>
+
+<!-- Your CSS file should come here -->
+<link href="./css/style.css" rel="stylesheet" />
+
+</head>
+<body class="flex flex-col h-screen">
+
+<div id="header" class="w-full border-b-2 border-gray-500 bg-gray-900 text-gray-400 shadow-2xl items-center h-16">
+
+<nav class="flex items-center justify-between flex-wrap p-4">
+<div class="flex items-center flex-no-shrink mr-6">
+  <span class="font-semibold text-xl tracking-tight">
+    <a href="./index.html">Notes</a>
+  </span>
+</div>
+  <div class="block flex-grow lg:flex lg:items-center lg:w-auto">
+    <div class="text-sm lg:flex-grow">
+      <a href="#top" class="font-bold block mt-4 mr-4 float-right lg:inline-block lg:mt-0">
+      Top
+    </a>
+    </div>
+    <div>
+    </div>
+  </div>
+</nav>
+</div>
+
+<div id="content" class="top flex flex-col lg:flex-row overflow-y-auto">
+  <div id="sidebar" class="px-24 pt-20 lg:border-r-2 lg:border-gray-900 lg:fixed lg:w-64 lg:p-4 lg:overflow-y-auto lg:inset-y-0 lg:mt-16 lg:mb-6">
+  <div id="toc"></div>
+  </div>
+
+  <div id="content-container" class="flex-grow px-4 mb-8 sm:px-10 md:px-20 lg:ml-64 lg:px-64 lg:overflow-x-auto">
+    <div id="top"></div>
+    <h1 class="mt-32 mb-6 text-6xl text-gray-700">Org-Tailwind Export Back-End</h1><p class="my-2">Hi, this back-end has the purpose of allowing easy customization of the HTML
+output. Although it is called <code class="m-1 px-2 border-solid border rounded-md border-green-500 text-green-500 bg-gray-300">Tailwind</code>, the only thing that it does is
+allowing you to customize the classes of the HTML and exporting a more
+barebones HTML (It does not create as many <code class="m-1 px-2 border-solid border rounded-md border-green-500 text-green-500 bg-gray-300">divs</code> and <code class="m-1 px-2 border-solid border rounded-md border-green-500 text-green-500 bg-gray-300">sections</code> as the normal
+HTML export back-end).
+</p>
+
+<p class="my-2">Instead of using Tailwind.css you can just name the classes of the elements and
+import your own css (or edit <code class="m-1 px-2 border-solid border rounded-md border-green-500 text-green-500 bg-gray-300">./css/styles.css</code>).
+</p>
+
+<h2 class="mt-20 mb-6 text-5xl text-gray-700">Installation</h2><p class="my-2">To install this back-end, clone this repo into your packages or private
+folder in <code class="m-1 px-2 border-solid border rounded-md border-green-500 text-green-500 bg-gray-300">~/.emacs.d</code>
+</p>
+
+<pre class="command-line rainbow-braces my-20 px-4 border-solid border-2 rounded-md border-green-500"  data-filter-output="(out)"  data-user="user" data-host="hostname"><code class="language-shell">git clone https://github.com/vascoferreira25/org-tailwind ~/.emacs.d/private
+(out)Cloning into '~/.emacs.d/private'...
+(out)remote: Enumerating objects: 49, done.
+(out)remote: Counting objects: 100% (49/49), done.
+(out)remote: Compressing objects: 100% (40/40), done.
+(out)remote: Total 49 (delta 20), reused 28 (delta 8), pack-reused 0
+(out)Unpacking objects: 100% (49/49), done.
+</code></pre>
+
+<p class="my-2">Add the following to your <code class="m-1 px-2 border-solid border rounded-md border-green-500 text-green-500 bg-gray-300">config.el</code> or <code class="m-1 px-2 border-solid border rounded-md border-green-500 text-green-500 bg-gray-300">.spacemacs</code> file:
+</p>
+
+<pre class="line-numbers rainbow-braces my-20 px-4 border-solid border-2 rounded-md border-green-500"   ><code class="language-elisp">  (load-file "~/.emacs.d/private/ox-tailwind/ox-tailwind.el")
+</code></pre>
+
+<p class="my-2">For Spacemacs, load the file in the user configuration function:
+</p>
+
+<pre class="line-numbers rainbow-braces my-20 px-4 border-solid border-2 rounded-md border-green-500"    data-line="8"><code class="language-elisp">(defun dotspacemacs/user-config ()
+  "Configuration for user code:
+This function is called at the very end of Spacemacs startup, after layer
+configuration.
+Put your configuration code here, except for variables that should be set
+before packages are loaded."
+  ;; ...
+  (load-file "~/.emacs.d/private/ox-tailwind/ox-tailwind.el")
+  ;; ...
+  )
+</code></pre>
+
+<p class="my-2">Then export your org file with the ox-tailwind back-end:
+</p>
+
+<p class="my-2">In Spacemacs you would use <code class="m-1 px-2 border-solid border rounded-md border-green-500 text-green-500 bg-gray-300">, e e</code> for the export menu and then <code class="m-1 px-2 border-solid border rounded-md border-green-500 text-green-500 bg-gray-300">x h</code>.
+</p>
+
+<h2 class="mt-20 mb-6 text-5xl text-gray-700">Notes output directory</h2><p class="my-2">In order for the export to be functional when offline,
+you need to put the needed files in the output folder.
+</p>
+
+<p class="my-2">The files used in the HTML file are:
+</p>
+<ul class="list-disc my-8"><li class="ml-10"><p class="my-2"><a class="text-green-500 hover:text-green-900" href="https://prismjs.com/">Prism.js</a>
+</p>
+</li>
+<li class="ml-10"><p class="my-2"><a class="text-green-500 hover:text-green-900" href="https://www.mathjax.org/">Mathjax</a>
+</p>
+</li>
+<li class="ml-10"><p class="my-2"><a class="text-green-500 hover:text-green-900" href="https://tailwindcss.com/">Tailwind CSS</a>
+</p>
+</li>
+</ul>
+
+<p class="my-2">This is the directory structure of the export folder:
+</p>
+
+<pre class="command-line rainbow-braces my-20 px-4 border-solid border-2 rounded-md border-green-500"  data-filter-output="(out)"  data-user="your-username" data-host="your-hostname" data-line="3-5,15,18,20-23"><code class="language-powershell">tree /F /a
+(out)C:/path/to/your_notes/out/
+(out)|   # The HTML export
+(out)|   index.html
+(out)|   
+(out)+---css
+(out)|       prism.css
+(out)|       prism_coy.css
+(out)|       prism_default.css
+(out)|       prism_okaidia.css
+(out)|       prism_solarized_light.css
+(out)|       prism_tomorrow.css
+(out)|       prism_twilight.css
+(out)|       tailwind.min.css
+(out)|       style.css # Your css file
+(out)|       
+(out)+---files
+(out)|       # Your attachments
+(out)+---img
+(out)|       # Your image files
+(out)|       spacemacs_1.png
+(out)|       spacemacs_2.png
+(out)|       
+(out)+---js
+(out)|       clipboard.min.js
+(out)|       mermaid.min.js
+(out)|       polyfill.min.js
+(out)|       prism.js
+(out)|       tex-mml-chtml.js
+(out)|       
+(out)\---mathjax
+(out)    |   # Mathjax Files
+</code></pre>
+
+<h2 class="mt-20 mb-6 text-5xl text-gray-700">Elements</h2><h3 class="mt-12 mb-6 text-4xl text-gray-700">Markup</h3><h4 class="mt-8 mb-6 text-3xl text-gray-700">Text</h4><p class="my-2"><strong class="">Bold Text</strong>
+</p>
+
+<p class="my-2"><em class="">Italic Text</em> 
+</p>
+
+<p class="my-2"><span class="underline">Underlined Text</span> 
+</p>
+
+<p class="my-2"><del class="">Strike Through</del>
+</p>
+
+<p class="my-2"><code class="m-1 px-4 border-solid border rounded-md border-red-500 text-red-500 bg-gray-300">Verbatim</code>
+</p>
+
+<p class="my-2"><code class="m-1 px-2 border-solid border rounded-md border-green-500 text-green-500 bg-gray-300">Inline code</code>
+</p>
+
+<p class="my-2"><a class="text-green-500 hover:text-green-900" href="file:./index.html">HyperLinks</a>
+</p>
+
+<h4 class="mt-8 mb-6 text-3xl text-gray-700">Lists</h4><h5 class="mt-6 mb-6 text-2xl text-gray-700">Ordered List</h5><ol class="list-decimal my-8"><li class="ml-10"><p class="my-2">Item number 1
+</p>
+<ol class="list-decimal my-8"><li class="ml-10"><p class="my-2">Item number 1.1
+</p>
+</li>
+<li class="ml-10"><p class="my-2">Item number 1.2
+</p>
+</li>
+<li class="ml-10"><p class="my-2">Item number 1.3
+</p>
+</li>
+</ol>
+</li>
+<li class="ml-10"><p class="my-2">Item number 2
+</p>
+</li>
+<li class="ml-10"><p class="my-2">Item number 3
+</p>
+</li>
+<li class="ml-10"><p class="my-2">Item number 4
+</p>
+</li>
+<li class="ml-10"><p class="my-2">Item number 5
+</p>
+</li>
+</ol>
+
+<h5 class="mt-6 mb-6 text-2xl text-gray-700">Unordered List</h5><ul class="list-disc my-8"><li class="ml-10"><p class="my-2">Like
+</p>
+<ul class="list-disc my-8"><li class="ml-10"><p class="my-2">This
+</p>
+<ul class="list-disc my-8"><li class="ml-10"><p class="my-2">One
+</p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+<h5 class="mt-6 mb-6 text-2xl text-gray-700">Description List</h5><dl class="my-8"><dt class="font-bold">Tip Blocks</dt><dd class="ml-10">Are for displaying tips.
+</dd>
+<dt class="font-bold">Warning Blocks</dt><dd class="ml-10">Are for displaying warnings.
+</dd>
+<dt class="font-bold">Danger Blocks</dt><dd class="ml-10">Are for displaying dangers. 
+</dd>
+</dl>
+
+<h4 class="mt-8 mb-6 text-3xl text-gray-700">Tables</h4><table class="table-auto m-auto"><thead><tr class="text-gray-600 border"><th class="px-4 py-2 font-bold text-center">A</th><th class="px-4 py-2 font-bold text-center">B</th><th class="px-4 py-2 font-bold text-center">C</th></tr>
+<tbody><tr class="hover:bg-green-200"><td class="border px-4 py-2">1</td><td class="border px-4 py-2">2</td><td class="border px-4 py-2">3</td></tr>
+<tr class="hover:bg-green-200"><td class="border px-4 py-2">4</td><td class="border px-4 py-2">5</td><td class="border px-4 py-2">6</td></tr>
+<tr class="hover:bg-green-200"><td class="border px-4 py-2">7</td><td class="border px-4 py-2">8</td><td class="border px-4 py-2">9</td></tr></tbody>
+</table><p class="mx-20 text-center italic">This is an example table and description</p>
+
+<h3 class="mt-12 mb-6 text-4xl text-gray-700">Formulas</h3><p class="my-2">Inline formulas: \(\sum_{i=0}^n i^2 = \frac{(n^2+n)(2n+1)}{6}\)
+</p>
+
+<p class="my-2">\[\sum_{i=0}^n i^2 = \frac{(n^2+n)(2n+1)}{6}\]
+</p>
+
+<h3 class="mt-12 mb-6 text-4xl text-gray-700">Blocks</h3><h4 class="mt-8 mb-6 text-3xl text-gray-700">Blockquote</h4><blockquote class="my-4 px-4 border-solid border-l-8 border-2 rounded-md border-gray-500 bg-gray-300"><p class="my-2">Once upon a time..........
+I forgot the rest.
+</p>
+</blockquote>
+
+<h4 class="mt-8 mb-6 text-3xl text-gray-700">Source Blocks</h4><p class="my-2">This block fetches a file from the Github API.
+</p>
+
+<pre class="line-numbers rainbow-braces my-20 px-4 border-solid border-2 rounded-md border-green-500"    data-line="2,6-8,11-20,48-51" data-jsonp="https://api.github.com/repos/vascoferreira25/discord-bot/contents/src/main/core.cljs" language-clojure><code class="language-clojure">
+</code></pre>
+
+<h3 class="mt-12 mb-6 text-4xl text-gray-700">Custom Blocks</h3><p class="my-2">There are four custom blocks: <code class="m-1 px-2 border-solid border rounded-md border-green-500 text-green-500 bg-gray-300">details</code>, <code class="m-1 px-2 border-solid border rounded-md border-green-500 text-green-500 bg-gray-300">tip</code>, <code class="m-1 px-2 border-solid border rounded-md border-green-500 text-green-500 bg-gray-300">warning</code> and <code class="m-1 px-2 border-solid border rounded-md border-green-500 text-green-500 bg-gray-300">danger</code> and
+these blocks can contain other elements. In order to get syntax highlighting
+while editing in Emacs, use <code class="m-1 px-2 border-solid border rounded-md border-green-500 text-green-500 bg-gray-300">org</code> as language.
+</p>
+
+<h4 class="mt-8 mb-6 text-3xl text-gray-700">Details</h4><details class="my-4 p-8 border-solid border-l-8 border-2 rounded-md border-purple-500"><summary class="my-2">Details</summary><p class="my-2">All the stuff in here will be hidden ....
+</p>
+</details>
+
+<h4 class="mt-8 mb-6 text-3xl text-gray-700">Tip</h4><div class="tip my-4 p-8 border-solid border-l-8 border-2 rounded-md border-teal-500"><p class="text-teal-500 font-bold"></p><p class="my-2">Tip text.
+</p>
+</div>
+
+<h4 class="mt-8 mb-6 text-3xl text-gray-700">Warning</h4><div class="warning my-4 p-8 border-solid border-l-8 border-2 rounded-md border-yellow-500"><p class="text-yellow-500 font-bold"></p><p class="my-2">Warning text.
+</p>
+</div>
+
+<h4 class="mt-8 mb-6 text-3xl text-gray-700">Danger</h4><div class="danger my-4 p-8 border-solid border-l-8 border-2 rounded-md border-red-500"><p class="text-red-500 font-bold">Danger Title</p><p class="my-2">These blocks can contain other blocks.
+</p>
+
+<p class="my-2">Code in a shell?
+</p>
+
+<pre class="command-line rainbow-braces my-20 px-4 border-solid border-2 rounded-md border-green-500"  data-filter-output="(out)"  data-user="org-tailwind" data-host="remote.host.com"><code class="language-shell">cd c:/emacs/bin/runemacs.exe
+(out)I rocks!
+</code></pre>
+
+<p class="my-2">Cool! Isn't it?
+</p>
+</div>
+
+<h4 class="mt-8 mb-6 text-3xl text-gray-700">Custom Attributes</h4><p class="my-2">These blocks have custom attributes that you can specify:
+</p>
+<dl class="my-8"><dt class="font-bold">Source code</dt><ul class="list-disc my-8"><li class="ml-10"><p class="my-2"><code class="m-1 px-2 border-solid border rounded-md border-green-500 text-green-500 bg-gray-300">#+ATTR_HIGHLIGHT</code>: lines to highlight in the source code, e.g. <code class="m-1 px-2 border-solid border rounded-md border-green-500 text-green-500 bg-gray-300">1,5-10,12</code>
+</p>
+</li>
+<li class="ml-10"><p class="my-2"><code class="m-1 px-2 border-solid border rounded-md border-green-500 text-green-500 bg-gray-300">#+ATTR_USERNAME</code>: username to show in command-line blocks, e.g. <code class="m-1 px-2 border-solid border rounded-md border-green-500 text-green-500 bg-gray-300">vascoferreira</code>
+</p>
+</li>
+<li class="ml-10"><p class="my-2"><code class="m-1 px-2 border-solid border rounded-md border-green-500 text-green-500 bg-gray-300">#+ATTR_HOSTNAME</code>: hostname to show in command-line blocks, e.g. <code class="m-1 px-2 border-solid border rounded-md border-green-500 text-green-500 bg-gray-300">localhost</code>
+</p>
+</li>
+<li class="ml-10"><p class="my-2"><code class="m-1 px-2 border-solid border rounded-md border-green-500 text-green-500 bg-gray-300">#+ATTR_FETCH</code>: fetch files from the Github API
+</p>
+</li>
+<li class="ml-10"><p class="my-2"><code class="m-1 px-2 border-solid border rounded-md border-green-500 text-green-500 bg-gray-300">#+ATTR_FILEPATH</code>: get files and add a download button, it uses HTTP so, no local files.
+</p>
+</li>
+</ul>
+<dt class="font-bold">Custom blocks</dt><ul class="list-disc my-8"><li class="ml-10"><p class="my-2"><code class="m-1 px-2 border-solid border rounded-md border-green-500 text-green-500 bg-gray-300">#+NAME</code>: the title of the block
+</p>
+</li>
+</ul>
+<dt class="font-bold">Tables</dt><ul class="list-disc my-8"><li class="ml-10"><p class="my-2"><code class="m-1 px-2 border-solid border rounded-md border-green-500 text-green-500 bg-gray-300">#+NAME</code>: the description of the table
+</p>
+</li>
+</ul>
+</dl>
+
+<h4 class="mt-8 mb-6 text-3xl text-gray-700">Mermaids</h4><p class="my-2">There are also mermaids.
+</p>
+
+<h5 class="mt-6 mb-6 text-2xl text-gray-700">Diagram</h5><div class="mermaid my-4 p-4">sequenceDiagram
+    participant Alice
+    participant Bob
+    Alice->>John: Hello John, how are you?
+    loop Healthcheck
+        John->>John: Fight against hypochondria
+    end
+    Note right of John: Rational thoughts <br/>prevail!
+    John-->>Alice: Great!
+    John->>Bob: How about you?
+    Bob-->>John: Jolly good!
+</div>
+
+<h5 class="mt-6 mb-6 text-2xl text-gray-700">Gantt Chart</h5><div class="mermaid my-4 p-4">gantt
+dateFormat  YYYY-MM-DD
+title Adding GANTT diagram to mermaid
+
+section A section
+Completed task            :done,    des1, 2014-01-06,2014-01-08
+Active task               :active,  des2, 2014-01-09, 3d
+Future task               :         des3, after des2, 5d
+Future task2               :         des4, after des3, 5d
+
+section Critical tasks
+Completed task in the critical line :crit, done, 2014-01-06,24h
+Implement parser and jison          :crit, done, after des1, 2d
+Create tests for parser             :crit, active, 3d
+Future task in critical line        :crit, 5d
+Create tests for renderer           :2d
+Add to mermaid                      :1d
+
+section Documentation
+Describe gantt syntax               :active, a1, after des1, 3d
+Add gantt diagram to demo page      :after a1  , 20h
+Add another diagram to demo page    :doc1, after a1  , 48h
+
+section Last section
+Describe gantt syntax               :after doc1, 3d
+Add gantt diagram to demo page      : 20h
+Add another diagram to demo page    : 48h
+</div>
+
+<h2 class="mt-20 mb-6 text-5xl text-gray-700">Customization</h2>
+
+  </div>
+</div>
+
+<div id="footer" class="fixed bottom-0 w-full h-8 bg-gray-900 text-gray-400 text-center">
+<p>Made by Vasco Ferreira</p>
+</div>
+
+<script>
+function getElementsByTagNames(list,obj) {
+	if (!obj) var obj = document;
+	var tagNames = list.split(',');
+	var resultArray = new Array();
+	for (var i=0;i < tagNames.length;i++) {
+		var tags = obj.getElementsByTagName(tagNames[i]);
+		for (var j=0;j < tags.length;j++) {
+			resultArray.push(tags[j]);
+		}
+	}
+	var testNode = resultArray[0];
+	if (!testNode) return [];
+	if (testNode.sourceIndex) {
+		resultArray.sort(function (a,b) {
+				return a.sourceIndex - b.sourceIndex;
+		});
+	}
+	else if (testNode.compareDocumentPosition) {
+		resultArray.sort(function (a,b) {
+				return 3 - (a.compareDocumentPosition(b) & 6);
+		});
+	}
+	return resultArray;
+}
+
+function createTOC() {
+	var z = document.getElementById('toc');;
+	var toBeTOCced = getElementsByTagNames('h1,h2,h3,h4,h5');
+	if (toBeTOCced.length < 2) return false;
+
+	// Add go to top button
+	var top = document.createElement('a');
+	top.innerHTML = 'Top';
+	top.href = '#top';
+	top.className += 'top float-right -mt-8 underline text-green-500 font-bold';
+	// z.appendChild(top);
+
+	for (var i=0;i < toBeTOCced.length;i++) {
+		var tmp = document.createElement('a');
+		tmp.innerHTML = toBeTOCced[i].innerHTML;
+		tmp.className = 'p-2';
+		z.appendChild(tmp);
+		if (toBeTOCced[i].nodeName == 'H1')
+			tmp.className += ' block mt-2 ml-0';
+		if (toBeTOCced[i].nodeName == 'H2')
+			tmp.className += ' block ml-4';
+		if (toBeTOCced[i].nodeName == 'H3')
+			tmp.className += ' block ml-8';
+		if (toBeTOCced[i].nodeName == 'H4')
+			tmp.className += ' block ml-12';
+		if (toBeTOCced[i].nodeName == 'H5')
+			tmp.className += ' block ml-16';
+		if (toBeTOCced[i].nodeName == 'H6')
+			tmp.className += ' block ml-20';
+    tmp.className += ' text-sm hover:bg-green-300';
+
+		var headerId = toBeTOCced[i].id || 'link' + i;
+		tmp.href = '#' + headerId;
+		toBeTOCced[i].id = headerId;
+	}
+}
+
+createTOC();
+</script>
+
+<script src="./js/prism.js"></script>
+<script src="./js/mermaid.min.js"></script>
+<script>mermaid.initialize({startOnLoad:true});</script>
+
+</body>
+</html>

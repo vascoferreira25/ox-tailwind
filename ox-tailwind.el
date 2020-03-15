@@ -189,29 +189,25 @@
   "m-1 px-4 border-solid border rounded-md border-red-500 text-red-500 bg-gray-300"
   "Tailwind.css classes for the HTML VERBATIM attribute.")
 
-(defcustom org-tailwind-class-example
-  "my-4 px-4 border-solid border-2 rounded-md border-green-500 text-green-500 bg-gray-300"
-  "Tailwind.css classes for the HTML EXAMPLE-BLOCK.")
-
-(defcustom org-tailwind-class-pre
-  "rainbow-braces my-4 px-4 border-solid border-2 rounded-md border-green-500"
-  "Tailwind.css classes for the HTML SRC-BLOCK.")
-
 (defcustom org-tailwind-class-link
   "text-green-500 hover:text-green-900"
   "Tailwind.css classes for the HTML LINK attribute.")
-
-(defcustom org-tailwind-class-blockquote
-  "my-4 px-4 border-solid border-l-8 border-2 rounded-md border-gray-500 bg-gray-300"
-  "Tailwind.css classes for the HTML BLOCKQUOTE block.")
 
 (defcustom org-tailwind-class-paragraph
   "my-2"
   "Tailwind.css classes for the HTML PARAGRAPH.")
 
+(defcustom org-tailwind-class-image-div
+  "my-12"
+  "Tailwind.css classes for the HTML image DIV.")
+
 (defcustom org-tailwind-class-image
-  "border-solid border-2 rounded-md border-green-500"
+  "mx-auto max-w-full max-h-full border-solid border-2 rounded-md border-green-500"
   "Tailwind.css classes for the HTML IMAGE.")
+
+(defcustom org-tailwind-class-image-description
+  "mx-20 text-center italic"
+  "Tailwind.css classes for the HTML image DESCRIPTION.")
 
 (defcustom org-tailwind-class-video
   "border-solid border-2 rounded-md border-green-500"
@@ -223,7 +219,12 @@
 
 (defcustom org-tailwind-class-top-button
   "float-right -mt-8 underline text-green-500 font-bold"
-  "Tailwind.css classes for the HTML go to TOP button.")
+  "Tailwind.css classes for the HTML go to TOP button.
+There are already some prefixed classes:
+- p-2
+- block
+- mt-2
+- ml-0")
 
 ;; Page Divs
 
@@ -307,14 +308,36 @@
   "border px-4 py-2"
   "Tailwind.css classes for the HTML table BODY-CELL.")
 
+;; Blocks
+
+(defcustom org-tailwind-class-example
+  "my-12 px-4 border-solid border-2 rounded-md border-green-500 text-green-500 bg-gray-300"
+  "Tailwind.css classes for the HTML EXAMPLE-BLOCK.")
+
+(defcustom org-tailwind-class-src-container
+  "my-12 border-solid border-2 rounded-md border-green-500"
+  "Tailwind.css classes for the HTML SRC-BLOCK.")
+
+(defcustom org-tailwind-class-pre
+  "rainbow-braces -m-2"
+  "Tailwind.css classes for the HTML SRC-BLOCK.")
+
+(defcustom org-tailwind-class-blockquote
+  "my-12 px-4 border-solid border-l-8 border-2 rounded-md border-gray-500 bg-gray-300"
+  "Tailwind.css classes for the HTML BLOCKQUOTE block.")
+
 ;; Special Blocks
 
 (defcustom org-tailwind-class-mermaid-block
-  "my-4 p-4"
+  "my-12 p-4 max-w-full max-h-full"
+  "Tailwind.css classes for the HTML MERMAID block.")
+
+(defcustom org-tailwind-class-mermaid-block-description
+  "mx-20 text-center italic"
   "Tailwind.css classes for the HTML MERMAID block.")
 
 (defcustom org-tailwind-class-details-block
-  "my-4 p-8 border-solid border-l-8 border-2 rounded-md border-purple-500"
+  "my-12 p-8 border-solid border-l-8 border-2 rounded-md border-purple-500"
   "Tailwind.css classes for the HTML DETAILS block.")
 
 (defcustom org-tailwind-class-details-title
@@ -322,7 +345,7 @@
   "Tailwind.css classes for the HTML details block TITLE.")
 
 (defcustom org-tailwind-class-tip-block
-  "my-4 p-8 border-solid border-l-8 border-2 rounded-md border-teal-500"
+  "my-12 p-8 border-solid border-l-8 border-2 rounded-md border-teal-500"
   "Tailwind.css classes for the HTML TIP block.")
 
 (defcustom org-tailwind-class-tip-title
@@ -330,7 +353,7 @@
   "Tailwind.css classes for the HTML tip block TITLE.")
 
 (defcustom org-tailwind-class-warning-block
-  "my-4 p-8 border-solid border-l-8 border-2 rounded-md border-yellow-500"
+  "my-12 p-8 border-solid border-l-8 border-2 rounded-md border-yellow-500"
   "Tailwind.css classes for the HTML WARNING block.")
 
 (defcustom org-tailwind-class-warning-title
@@ -338,7 +361,7 @@
   "Tailwind.css classes for the HTML warning block TITLE.")
 
 (defcustom org-tailwind-class-danger-block
-  "my-4 p-8 border-solid border-l-8 border-2 rounded-md border-red-500"
+  "my-12 p-8 border-solid border-l-8 border-2 rounded-md border-red-500"
   "Tailwind.css classes for the HTML DANGER block.")
 
 (defcustom org-tailwind-class-danger-title
@@ -346,21 +369,6 @@
   "Tailwind.css classes for the HTML danger block TITLE.")
 
 ;;; Templates
-
-(defcustom org-tailwind-logo
-  "<div class=\"flex items-center flex-no-shrink mr-6\">
-  <span class=\"font-semibold text-xl tracking-tight\">
-    <a href=\"./index.html\">Notes</a>
-  </span>
-</div>"
-  "Logo placeholder in the navbar.
-Can be an HTML element.")
-
-(defcustom org-tailwind-nav-items
-  "<a href=\"#top\" class=\"font-bold block mt-4 mr-4 float-right lg:inline-block lg:mt-0\">
-      Top
-    </a>"
-  "Define the links to show on the NAVBAR.")
 
 (defcustom org-tailwind-head-files
   "<!-- Tailwind CSS -->
@@ -370,6 +378,13 @@ Can be an HTML element.")
 <link href=\"./css/prism_tomorrow.css\" rel=\"stylesheet\" />
 
 <!-- Mathjax -->
+<script>
+MathJax = {
+  tex: {
+  	processEscapes: true
+  }
+}
+</script>
 <script type=\"text/javascript\" async
   src=\"./mathjax/tex-mml-chtml.js\">
 </script>
@@ -388,17 +403,22 @@ Can be an HTML element.")
   "Links to be imported on the head of the HTML file.")
 
 (defcustom org-tailwind-header
-  (format "
-<nav class=\"flex items-center justify-between flex-wrap p-4\">
-%s
+  "<nav class=\"flex items-center justify-between flex-wrap p-4\">
+  <div class=\"flex items-center flex-no-shrink mr-6\">
+    <span class=\"font-semibold text-xl tracking-tight\">
+      <a href=\"./index.html\">Notes</a>
+    </span>
+  </div>
   <div class=\"block flex-grow lg:flex lg:items-center lg:w-auto\">
     <div class=\"text-sm lg:flex-grow\">
-      %s
+      <a href=\"#top\" class=\"font-bold block mt-4 mr-4 float-right lg:inline-block lg:mt-0\">
+        Top
+      </a>
     </div>
     <div>
     </div>
   </div>
-</nav>" org-tailwind-logo org-tailwind-nav-items)
+</nav>"
   "Contents of header in HTML.")
 
 (defcustom org-tailwind-sidebar
@@ -416,7 +436,6 @@ Can be an HTML element.")
   "Javascript files to be imported at the bottom of the HTML file.")
 
 (defcustom org-tailwind-javascript
-  (format
    "function getElementsByTagNames(list,obj) {
 	if (!obj) var obj = document;
 	var tagNames = list.split(',');
@@ -480,8 +499,6 @@ function createTOC() {
 }
 
 createTOC();"
-   org-tailwind-class-top-button
-   org-tailwind-class-toc-items)
   "Javascript code needed in the HTML file.")
 
 (defcustom org-tailwind-html-template
@@ -513,6 +530,7 @@ createTOC();"
 %s
 </div>
 
+</script>
 <script>
 %s
 </script>
@@ -563,7 +581,9 @@ By not doing anything to the contents, it exports the elements at the root level
           contents
           org-tailwind-class-footer
           org-tailwind-footer
-          org-tailwind-javascript
+          (format org-tailwind-javascript
+                  org-tailwind-class-top-button
+                  org-tailwind-class-toc-items)
           org-tailwind-bottom-files))
 
 (defun org-tailwind-bold (bold contents info)
@@ -596,26 +616,56 @@ By not doing anything to the contents, it exports the elements at the root level
   "Transcode PLAIN-TEXT from Org to HTML."
   plain-text)
 
+(defun org-tailwind-checkbox (checkbox)
+  "Format a checkbox item into the corresponding HTML tag."
+  (let ((checkbox-tag "<input type=\"checkbox\" disabled %s>"))
+    (pcase checkbox
+      (`on (format checkbox-tag "checked"))
+      (`off (format checkbox-tag "unchecked"))
+      (_ (format checkbox-tag "unchecked")))))
+
 (defun org-tailwind-paragraph (paragraph contents info)
   "Transcode PARAGRAPH from Org to HTML."
   (let* ((parent (org-element-property :parent paragraph))
          (parent-type (org-element-property :type parent))
          (ancestor (org-element-property :parent parent))
-         (ancestor-type (org-element-property :type ancestor)))
-    (cond ((equalp parent-type "mermaid") contents)
-          ((equalp ancestor-type 'descriptive)
-           (format "<dd class=\"%s\">%s</dd>"
-                   org-tailwind-class-description-list-item contents))
-          (t (format "<p class=\"%s\">%s</p>" org-tailwind-class-paragraph contents)))))
+         (ancestor-type (org-element-property :type ancestor))
+         (checkbox (org-element-property :checkbox parent))
+         (is-checkbox-p (unless (equalp checkbox nil) t))
+         (is-image-p (string-match-p "<img " contents)))
+    (cond
+     ;; For Mermaid.js return raw text
+     ((equalp parent-type "mermaid") contents)
+     ;; For Descriptive types, surround with `dd' tag
+     ((equalp ancestor-type 'descriptive)
+      (format "<dd class=\"%s\">%s</dd>"
+              org-tailwind-class-description-list-item
+              contents))
+     ;; Put image inside a div with description
+     (is-image-p (format "<div class=\"%s\">%s</div>"
+                         org-tailwind-class-image-div
+                         contents))
+     ;; If is a checkbox
+     (is-checkbox-p
+      (format "<p class=\"%s\">%s %s</p>"
+              org-tailwind-class-paragraph
+              (org-tailwind-checkbox checkbox)
+              (and (org-string-nw-p contents) (org-trim contents))))
+     (t (format "<p class=\"%s\">%s</p>"
+                org-tailwind-class-paragraph
+                contents)))))
 
 (defun org-tailwind-link (link contents info)
   "Transcode LINK from Org to HTML."
   (let* ((path (org-element-property :path link))
          (type (org-element-property :type link))
+         (parent (org-element-property :parent link))
+         (description (org-element-property :name parent))
          (file-extension (file-name-extension path))
          (link-tag "<a class=\"%s\" href=\"%s\">%s</a>")
          (video-tag "<video class=\"%s\" controls> <source src=\"%s\" type=\"video/%s\"/> </video>")
-         (image-tag "<img class=\"%s\" src=\"%s\"/>"))
+         (image-description "<p class=\"%s\">%s</p>")
+         (image-tag "<img class=\"%s\" src=\"%s\"/>%s"))
     (cond
      ;; Is the link a video
      ((or (equalp file-extension "mp4")
@@ -638,7 +688,12 @@ By not doing anything to the contents, it exports the elements at the root level
           (equalp file-extension "bmp"))
       (format image-tag
               org-tailwind-class-image
-              path))
+              path
+              (if description
+                  (format image-description
+                          org-tailwind-class-image-description
+                          description)
+                "")))
      ;; Is the link an org file
      ((equalp file-extension "org")
       (format link-tag
@@ -656,14 +711,14 @@ By not doing anything to the contents, it exports the elements at the root level
   (format "<blockquote class=\"%s\">%s</blockquote>" org-tailwind-class-blockquote contents))
 
 (defvar org-tailwind--src-block-open
-  "<pre class=\"%s\"  %s>"
+  "<div class=\"%s\"><pre class=\"%s\"  %s>"
   "Opening tag of code block for Prism.js
 It has two format places:
 - Tailwind.css classes
 - other attribute.")
 
 (defvar org-tailwind--src-block-close
-  "<code class=\"language-%s\">%s</code></pre>"
+  "<code class=\"language-%s\">%s</code></pre></div>"
   "Closing tag of code block for Prism.js
 It has two format places:
 - language
@@ -683,7 +738,8 @@ It has two format places:
          (highlight-lines (org-tailwind--get-attribute :attr_highlight src-block)))
     (concat
      (format org-tailwind--src-block-open
-             (concat "command-line " org-tailwind-class-pre)
+             org-tailwind-class-src-container
+             (concat "command-line " )
              (concat
               "data-filter-output=\"(out)\" "
               ;; Add user and host names
@@ -711,6 +767,7 @@ It has two format places:
          (fetch-code (org-tailwind--get-attribute :attr_fetch src-block)))
     (concat
      (format org-tailwind--src-block-open
+             org-tailwind-class-src-container
              (concat "line-numbers " org-tailwind-class-pre)
              (concat " "
                      (if highlight-lines
@@ -763,9 +820,11 @@ There are 4 types of blocks:
   (let* ((type (org-element-property :type special-block))
          (name (org-element-property :name special-block)))
     (cond ((equalp type "mermaid")
-           (format "<div class=\"mermaid %s\">%s</div>"
+           (format "<div class=\"%s\"><div class=\"mermaid\">%s</div><p class=\"%s\">%s</p></div>"
                    org-tailwind-class-mermaid-block
-                   contents))
+                   contents
+                   org-tailwind-class-mermaid-block-description
+                   name))
           ;; TODO: process title as summary
           ((equalp type "details")
            (format "<details class=\"%s\"><summary class=\"%s\">%s</summary>%s</details>"
@@ -893,7 +952,7 @@ tag. If it is neither, return the row without group tags."
                         name)
               ""))))
 
-(defun org-tailwind-plain-list (plain-list contents _info)
+(defun org-tailwind-plain-list (plain-list contents info)
   "Transcode PLAIN-LIST from Org to HTML.
 There are three types of lists:
 - Ordered Lists;
@@ -915,18 +974,18 @@ There are three types of lists:
 (defun org-tailwind-format-list-item (contents type checkbox info
 					   &optional term-counter-id headline)
   "Format a list item into the corresponding HTML tag."
-  (pcase type
-    (`ordered
-     (format "<li class=\"%s\">%s</li>"
-     org-tailwind-class-ordered-list-item contents))
-    (`unordered
-     (format "<li class=\"%s\">%s</li>"
-     org-tailwind-class-unordered-list-item contents))
-    (`descriptive
-     (format "<dt class=\"%s\">%s</dt>%s"
-             org-tailwind-class-description-list-title
-             term-counter-id
-             contents))))
+  (cond
+   ((equalp type `ordered)
+    (format "<li class=\"%s\">%s</li>"
+            org-tailwind-class-ordered-list-item contents))
+   ((equalp type `unordered)
+    (format "<li class=\"%s\">%s</li>"
+            org-tailwind-class-unordered-list-item contents))
+   ((equalp type `descriptive)
+    (format "<dt class=\"%s\">%s</dt>%s"
+            org-tailwind-class-description-list-title
+            term-counter-id
+            contents))))
 
 (defun org-tailwind-item (item contents info)
   "Transcode an ITEM element from Org to HTML."
