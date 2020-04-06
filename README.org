@@ -11,7 +11,7 @@ import your own css (or edit ~./css/styles.css~).
 
 ** Light Theme
 
-Check the [[https://vascoferreira25.github.io/ox-tailwind/index.html][Light Theme]].
+Check the [[https://vascoferreira25.github.io/ox-tailwind/][Light Theme]].
 
 ** Dark Theme
 
@@ -212,7 +212,10 @@ The files used in the HTML file are:
 - [[https://www.mathjax.org/][Mathjax]]
 - [[https://tailwindcss.com/][Tailwind CSS]]
 
-  This is the directory structure of the export folder:
+Just copy the folders inside ~/docs/~ folder of this repository
+into your ~/out/~ folder.
+
+This is the directory structure of the export folder:
    
 #+ATTR_USERNAME: your-username
 #+ATTR_HOSTNAME: your-hostname
