@@ -64,6 +64,7 @@
 
 ;;; Dependencies:
 
+(require 'cl)
 (require 'ox-html)
 (require 'dash)
 
@@ -135,238 +136,343 @@
   '((:title "TITLE" nil "Notes & Guides")
     (:html-title "HTML-TITLE:" nil "Notes & Guides")))
 
+
+;; tailwind group
+
+(defgroup ox-tailwind nil
+  "Classes for the html elements."
+  :group 'classes)
+
+
 ;;; Element Classes
 
 ;; Headings
 
 (defcustom org-tailwind-class-h1
   "mt-32 mb-6 text-6xl text-gray-700"
-  "Tailwind.css classes for Heading 1")
+  "Tailwind.css classes for Heading 1"
+  :type '(string))
 
 (defcustom org-tailwind-class-h2
   "mt-20 mb-6 text-5xl text-gray-700"
-  "Tailwind.css classes for Heading 2")
+  "Tailwind.css classes for Heading 2"
+  :type '(string))
 
 (defcustom org-tailwind-class-h3
   "mt-12 mb-6 text-4xl text-gray-700"
-  "Tailwind.css classes for Heading 3")
+  "Tailwind.css classes for Heading 3"
+  :type '(string))
 
 (defcustom org-tailwind-class-h4
   "mt-8 mb-6 text-3xl text-gray-700"
-  "Tailwind.css classes for Heading 4")
+  "Tailwind.css classes for Heading 4"
+  :type '(string))
 
 (defcustom org-tailwind-class-h5
   "mt-6 mb-6 text-2xl text-gray-700"
-  "Tailwind.css classes for Heading 5")
+  "Tailwind.css classes for Heading 5"
+  :type '(string))
 
 (defcustom org-tailwind-class-h6
   "mt-4 mb-6 text-xl text-gray-700"
-  "Tailwind.css classes for Heading 6")
+  "Tailwind.css classes for Heading 6"
+  :type '(string))
 
 (defcustom org-tailwind-class-h7
   "mt-2 mb-6 text-lg text-gray-700"
-  "Tailwind.css classes for Heading 7 and beyond.")
+  "Tailwind.css classes for Heading 7 and beyond."
+  :type '(string))
+
 
 ;; Text elements
 
 (defcustom org-tailwind-class-bold
   ""
-  "Tailwind.css classes for the HTML BOLD attribute")
+  "Tailwind.css classes for the HTML BOLD attribute"
+  :type '(string))
 
 (defcustom org-tailwind-class-italic
   ""
-  "Tailwind.css classes for the HTML ITALIC attribute.")
+  "Tailwind.css classes for the HTML ITALIC attribute."
+  :type '(string))
 
 (defcustom org-tailwind-class-underlined
   "underline"
-  "Tailwind.css classes for the HTML UNDERLINE attribute.")
+  "Tailwind.css classes for the HTML UNDERLINE attribute."
+  :type '(string))
 
 (defcustom org-tailwind-class-code
-  "m-1 px-2 border-solid border rounded-md border-green-500 text-green-500 bg-gray-300"
-  "Tailwind.css classes for the HTML UNDERLINE attribute.")
+  "m-1 px-2 border-solid border rounded-md border-gray-500 text-green-500 bg-gray-300"
+  "Tailwind.css classes for the HTML UNDERLINE attribute."
+  :type '(string))
 
 (defcustom org-tailwind-class-verbatim
-  "m-1 px-4 border-solid border rounded-md border-red-500 text-red-500 bg-gray-300"
-  "Tailwind.css classes for the HTML VERBATIM attribute.")
+  "m-1 px-4 border-solid border rounded-md border-gray-500 text-red-500 bg-gray-300"
+  "Tailwind.css classes for the HTML VERBATIM attribute."
+  :type '(string))
 
 (defcustom org-tailwind-class-link
   "text-green-500 hover:text-green-900"
-  "Tailwind.css classes for the HTML LINK attribute.")
+  "Tailwind.css classes for the HTML LINK attribute."
+  :type '(string))
 
 (defcustom org-tailwind-class-paragraph
   "my-2"
-  "Tailwind.css classes for the HTML PARAGRAPH.")
+  "Tailwind.css classes for the HTML PARAGRAPH."
+  :type '(string))
 
 (defcustom org-tailwind-class-image-div
   "my-12"
-  "Tailwind.css classes for the HTML image DIV.")
+  "Tailwind.css classes for the HTML image DIV."
+  :type '(string))
 
 (defcustom org-tailwind-class-image
   "mx-auto max-w-full max-h-full border-solid border-2 rounded-md border-green-500"
-  "Tailwind.css classes for the HTML IMAGE.")
+  "Tailwind.css classes for the HTML IMAGE."
+  :type '(string))
 
 (defcustom org-tailwind-class-image-description
   "mx-20 text-center italic"
-  "Tailwind.css classes for the HTML image DESCRIPTION.")
+  "Tailwind.css classes for the HTML image DESCRIPTION."
+  :type '(string))
 
 (defcustom org-tailwind-class-video
   "border-solid border-2 rounded-md border-green-500"
-  "Tailwind.css classes for the HTML VIDEO.")
+  "Tailwind.css classes for the HTML VIDEO."
+  :type '(string))
 
 (defcustom org-tailwind-class-toc-items
   "text-sm hover:bg-green-300"
-  "Tailwind.css classes for the HTML Table of Contents items.")
+  "Tailwind.css classes for the HTML Table of Contents items."
+  :type '(string))
 
-(defcustom org-tailwind-class-top-button
-  "float-right -mt-8 underline text-green-500 font-bold"
-  "Tailwind.css classes for the HTML go to TOP button.
-There are already some prefixed classes:
-- p-2
-- block
-- mt-2
-- ml-0")
-
-;; Page Divs
-
-(defcustom org-tailwind-class-body
-  "flex flex-col h-screen"
-  "Tailwind.css classes for the HTML BODY.")
-
-(defcustom org-tailwind-class-header
-  "w-full border-b-2 border-gray-500 bg-gray-900 text-gray-400 shadow-2xl items-center h-16"
-  "Tailwind.css classes for the HTML HEADER.")
-
-(defcustom org-tailwind-class-sidebar
-  "px-24 pt-20 lg:border-r-2 lg:border-gray-900 lg:fixed lg:w-64 lg:p-4 lg:overflow-y-auto lg:inset-y-0 lg:mt-16 lg:mb-6"
-  "Tailwind.css classes for the HTML SIDEBAR.")
-
-(defcustom org-tailwind-class-content
-  "flex flex-col lg:flex-row overflow-y-auto"
-  "Tailwind.css classes for the HTML CONTENT.")
-
-(defcustom org-tailwind-class-content-container
-  "flex-grow px-4 mb-8 sm:px-10 md:px-20 lg:ml-64 lg:px-64 lg:overflow-x-auto"
-  "Tailwind.css classes for the HTML contents CONTAINER.")
-
-(defcustom org-tailwind-class-footer
-  "fixed bottom-0 w-full h-8 bg-gray-900 text-gray-400 text-center"
-  "Tailwind.css classes for the HTML FOOTER.")
 
 ;; Lists
 
 (defcustom org-tailwind-class-ordered-list
   "list-decimal my-8"
-  "Tailwind.css classes for the HTML ORDERED list.")
+  "Tailwind.css classes for the HTML ORDERED list."
+  :type '(string))
 
 (defcustom org-tailwind-class-ordered-list-item
   "ml-10"
-  "Tailwind.css classes for the HTML ordered list ITEM.")
+  "Tailwind.css classes for the HTML ordered list ITEM."
+  :type '(string))
 
 (defcustom org-tailwind-class-unordered-list
   "list-disc my-8"
-  "Tailwind.css classes for the HTML UNORDERED list.")
+  "Tailwind.css classes for the HTML UNORDERED list."
+  :type '(string))
 
 (defcustom org-tailwind-class-unordered-list-item
   "ml-10"
-  "Tailwind.css classes for the HTML unordered list ITEM.")
+  "Tailwind.css classes for the HTML unordered list ITEM."
+  :type '(string))
 
 (defcustom org-tailwind-class-description-list
   "my-8"
-  "Tailwind.css classes for the HTML DESCRIPTION list.")
+  "Tailwind.css classes for the HTML DESCRIPTION list."
+  :type '(string))
 
 (defcustom org-tailwind-class-description-list-title
   "font-bold"
-  "Tailwind.css classes for the HTML DESCRIPTION title.")
+  "Tailwind.css classes for the HTML DESCRIPTION title."
+  :type '(string))
 
 (defcustom org-tailwind-class-description-list-item
   "ml-10"
-  "Tailwind.css classes for the HTML description list ITEM.")
+  "Tailwind.css classes for the HTML description list ITEM."
+  :type '(string))
+
 
 ;; Table
 
 (defcustom org-tailwind-class-table-name
   "mx-20 text-center italic"
-  "Tailwind.css classes for the HTML table NAME.")
+  "Tailwind.css classes for the HTML table NAME."
+  :type '(string))
 
 (defcustom org-tailwind-class-table
-  "table-auto m-auto"
-  "Tailwind.css classes for the HTML TABLE.")
+  "table-auto m-auto my-12"
+  "Tailwind.css classes for the HTML TABLE."
+  :type '(string))
 
 (defcustom org-tailwind-class-table-header-row
   "text-gray-600 border"
-  "Tailwind.css classes for the HTML table HEADER-ROW.")
+  "Tailwind.css classes for the HTML table HEADER-ROW."
+  :type '(string))
 
 (defcustom org-tailwind-class-table-header-cell
   "px-4 py-2 font-bold text-center"
-  "Tailwind.css classes for the HTML table HEADER-CELL.")
+  "Tailwind.css classes for the HTML table HEADER-CELL."
+  :type '(string))
 
 (defcustom org-tailwind-class-table-body-row
   "hover:bg-green-200"
-  "Tailwind.css classes for the HTML table BODY-ROW.")
+  "Tailwind.css classes for the HTML table BODY-ROW."
+  :type '(string))
 
 (defcustom org-tailwind-class-table-body-cell
-  "border px-4 py-2"
-  "Tailwind.css classes for the HTML table BODY-CELL.")
+  "border border-solid border-gray-400 px-4 py-2"
+  "Tailwind.css classes for the HTML table BODY-CELL."
+  :type '(string))
+
+(defcustom org-tailwind-class-table-empty-body-cell
+  "border px-2 py-2"
+  "Tailwind.css classes for the HTML table EMPTY BODY-CELL."
+  :type '(string))
+
 
 ;; Blocks
 
+(defcustom org-tailwind-class-example-container
+  "my-12 border-solid border-2 rounded-md border-green-500"
+  "Tailwind.css classes for the HTML EXAMPLE-BLOCK CONTAINER."
+  :type '(string))
+
 (defcustom org-tailwind-class-example
-  "my-12 px-4 border-solid border-2 rounded-md border-green-500 text-green-500 bg-gray-300"
-  "Tailwind.css classes for the HTML EXAMPLE-BLOCK.")
+  "text-green-500 bg-gray-300"
+  "Tailwind.css classes for the HTML EXAMPLE-BLOCK."
+  :type '(string))
 
 (defcustom org-tailwind-class-src-container
   "my-12 border-solid border-2 rounded-md border-green-500"
-  "Tailwind.css classes for the HTML SRC-BLOCK.")
+  "Tailwind.css classes for the HTML SRC-BLOCK CONTAINER."
+  :type '(string))
 
 (defcustom org-tailwind-class-pre
-  "rainbow-braces -m-2"
-  "Tailwind.css classes for the HTML SRC-BLOCK.")
+  "rainbow-braces"
+  "Tailwind.css classes for the HTML SRC-BLOCK."
+  :type '(string))
 
 (defcustom org-tailwind-class-blockquote
   "my-12 px-4 border-solid border-l-8 border-2 rounded-md border-gray-500 bg-gray-300"
-  "Tailwind.css classes for the HTML BLOCKQUOTE block.")
+  "Tailwind.css classes for the HTML BLOCKQUOTE block."
+  :type '(string))
+
 
 ;; Special Blocks
 
 (defcustom org-tailwind-class-mermaid-block
-  "my-12 p-4 max-w-full max-h-full"
-  "Tailwind.css classes for the HTML MERMAID block.")
+  "my-12 p-4 max-w-full max-h-full bg-white rounded-md"
+  "Tailwind.css classes for the HTML MERMAID block."
+  :type '(string))
 
 (defcustom org-tailwind-class-mermaid-block-description
   "mx-20 text-center italic"
-  "Tailwind.css classes for the HTML MERMAID block.")
+  "Tailwind.css classes for the HTML MERMAID block."
+  :type '(string))
 
 (defcustom org-tailwind-class-details-block
   "my-12 p-8 border-solid border-l-8 border-2 rounded-md border-purple-500"
-  "Tailwind.css classes for the HTML DETAILS block.")
+  "Tailwind.css classes for the HTML DETAILS block."
+  :type '(string))
 
 (defcustom org-tailwind-class-details-title
   "text-purple-500 font-bold"
-  "Tailwind.css classes for the HTML details block TITLE.")
+  "Tailwind.css classes for the HTML details block TITLE."
+  :type '(string))
 
 (defcustom org-tailwind-class-tip-block
   "my-12 p-8 border-solid border-l-8 border-2 rounded-md border-teal-500"
-  "Tailwind.css classes for the HTML TIP block.")
+  "Tailwind.css classes for the HTML TIP block."
+  :type '(string))
 
 (defcustom org-tailwind-class-tip-title
   "text-teal-500 font-bold"
-  "Tailwind.css classes for the HTML tip block TITLE.")
+  "Tailwind.css classes for the HTML tip block TITLE."
+  :type '(string))
 
 (defcustom org-tailwind-class-warning-block
   "my-12 p-8 border-solid border-l-8 border-2 rounded-md border-yellow-500"
-  "Tailwind.css classes for the HTML WARNING block.")
+  "Tailwind.css classes for the HTML WARNING block."
+  :type '(string))
 
 (defcustom org-tailwind-class-warning-title
   "text-yellow-500 font-bold"
-  "Tailwind.css classes for the HTML warning block TITLE.")
+  "Tailwind.css classes for the HTML warning block TITLE."
+  :type '(string))
 
 (defcustom org-tailwind-class-danger-block
   "my-12 p-8 border-solid border-l-8 border-2 rounded-md border-red-500"
-  "Tailwind.css classes for the HTML DANGER block.")
+  "Tailwind.css classes for the HTML DANGER block."
+  :type '(string))
 
 (defcustom org-tailwind-class-danger-title
   "text-red-500 font-bold"
-  "Tailwind.css classes for the HTML danger block TITLE.")
+  "Tailwind.css classes for the HTML danger block TITLE."
+  :type '(string))
+
+
+;; Page Divs
+
+(defcustom org-tailwind-class-body
+  "flex flex-col h-screen text-gray-700"
+  "Tailwind.css classes for the HTML BODY."
+  :type '(string))
+
+(defcustom org-tailwind-class-header
+  "w-full border-b border-gray-500
+shadow-md items-center h-16"
+  "Tailwind.css classes for the HTML HEADER."
+  :type '(string))
+
+(defcustom org-tailwind-class-sidebar
+  "px-24 pt-20 lg:border-r lg:border-gray-500 lg:fixed lg:w-64
+lg:p-4 lg:overflow-y-auto lg:inset-y-0 lg:mt-16 lg:mb-8"
+  "Tailwind.css classes for the HTML SIDEBAR."
+  :type '(string))
+
+(defcustom org-tailwind-class-content
+  "flex flex-col lg:flex-row overflow-y-auto"
+  "Tailwind.css classes for the HTML CONTENT."
+  :type '(string))
+
+(defcustom org-tailwind-class-content-container
+  "flex-grow px-4 py-12 mb-8 sm:px-8 md:px-12 lg:ml-64 lg:px-12
+lg:overflow-x-auto xl:px-32"
+  "Tailwind.css classes for the HTML contents CONTAINER."
+  :type '(string))
+
+(defcustom org-tailwind-class-inner-container
+  "px-16 py-12 mb-12 shadow-2xl border border-solid border-gray-400 rounded-md"
+  "Tailwind.css classes for the HTML inner container."
+  :type '(string))
+
+(defcustom org-tailwind-class-footer
+  "fixed bottom-0 w-full border-t border-solid border-gray-500 h-8 text-center"
+  "Tailwind.css classes for the HTML FOOTER."
+  :type '(string))
+
+(defcustom org-tailwind-class-top-button
+  "float-right tracking-tight font-bold mt-1"
+  "Tailwind.css classes for the HTML go to TOP button.
+There are already some prefixed classes:
+- p-2
+- block
+- mt-2
+- ml-0"
+  :type '(string))
+
+(defcustom org-tailwind-class-search-bar
+  "float-right mx-4 w-1/6 rounded-lg px-4 py-1 border-solid
+border-2 border-gray-700 text-gray-400 focus:border-green-500
+focus:text-gray-700"
+  "Tailwind.css classes for the HTML SEARCH BAR."
+  :type '(string))
+
+(defcustom org-tailwind-class-search-bar-results-list
+  "z-50 absolute w-5/6 sm:w-4/6 md:w-3/6 lg:w-2/6 xl:w-1/6
+right-0 mt-8 mr-12 bg-white p-4 shadow-lg border
+border-solid border-gray-500 rounded-md"
+  "Tailwind.css classes for the HTML RESULTS LIST."
+  :type '(string))
+
+(defcustom org-tailwind-class-search-bar-results-item
+  "p-2 block rounded-md hover:bg-green-300"
+  "Tailwind.css classes for the HTML RESULTS ITEM. Don't break the line."
+  :type '(string))
+
 
 ;;; Templates
 
@@ -399,8 +505,12 @@ MathJax = {
 
 <!-- Your CSS file should come here -->
 <link href=\"./css/style.css\" rel=\"stylesheet\" />
+
+<!-- Toc tree file -->
+<script src=\"./js/toc_tree.js\"></script>
 "
-  "Links to be imported on the head of the HTML file.")
+  "Links to be imported on the head of the HTML file."
+  :type '(string))
 
 (defcustom org-tailwind-header
   "<nav class=\"flex items-center justify-between flex-wrap p-4\">
@@ -411,29 +521,36 @@ MathJax = {
   </div>
   <div class=\"block flex-grow lg:flex lg:items-center lg:w-auto\">
     <div class=\"text-sm lg:flex-grow\">
-      <a href=\"#top\" class=\"font-bold block mt-4 mr-4 float-right lg:inline-block lg:mt-0\">
+      <a href=\"#top\" class=\"%s\">
         Top
       </a>
-    </div>
-    <div>
+      <input id=\"search-bar\" onkeyup=\"search()\"
+      onfocusin='showResults()'
+      class=\"%s\" placeholder=\"Search...\"/>
+      <ul id=\"search-bar-results\"
+      class=\"%s\" style=\"display: none;\"></ul>
     </div>
   </div>
 </nav>"
-  "Contents of header in HTML.")
+  "Contents of header in HTML."
+  :type '(string))
 
 (defcustom org-tailwind-sidebar
   "<div id=\"toc\"></div>"
-  "Contents of sidebar in HTML.")
+  "Contents of sidebar in HTML."
+  :type '(string))
 
 (defcustom org-tailwind-footer
-  "<p>Made by Vasco Ferreira</p>"
-  "Contents of footer in HTML.")
+  "<p>Exported with ox-tailwind</p>"
+  "Contents of footer in HTML."
+  :type '(string))
 
 (defcustom org-tailwind-bottom-files
   "<script src=\"./js/prism.js\"></script>
 <script src=\"./js/mermaid.min.js\"></script>
 <script>mermaid.initialize({startOnLoad:true});</script>"
-  "Javascript files to be imported at the bottom of the HTML file.")
+  "Javascript files to be imported at the bottom of the HTML file."
+  :type '(string))
 
 (defcustom org-tailwind-javascript
    "function getElementsByTagNames(list,obj) {
@@ -490,7 +607,7 @@ function createTOC() {
 			tmp.className += ' block ml-16';
 		if (toBeTOCced[i].nodeName == 'H6')
 			tmp.className += ' block ml-20';
-    tmp.className += ' %s';
+                tmp.className += ' %s';
 
 		var headerId = toBeTOCced[i].id || 'link' + i;
 		tmp.href = '#' + headerId;
@@ -498,8 +615,62 @@ function createTOC() {
 	}
 }
 
-createTOC();"
-  "Javascript code needed in the HTML file.")
+createTOC();
+
+// Populate search bar
+let searchBar = document.getElementById('search-bar')
+let searchBarResults = document.getElementById('search-bar-results')
+for(let i = 0; i < tocTree.length; i++) {
+    let heading = tocTree[i]
+    let item = document.createElement('li')
+    let link = document.createElement('a')
+    link.href = heading.file + '#link' + heading.index
+    link.className = \"%s\"
+    link.style.display = 'none'
+
+    if (heading.name === heading.parent) {
+        link.innerText = heading.name
+    } else {
+        link.innerText = heading.name + ' > ' + heading.parent
+    }
+
+    item.appendChild(link)
+    searchBarResults.appendChild(item)
+}
+
+// Show results on search bar focus
+function showResults(){
+    searchBarResults.style.display = ''
+}
+
+function hideResults(){
+    searchBarResults.style.display = 'none'
+    searchBar.value = ''
+}
+
+// Search Bar
+function search(){
+    let searchBar = document.getElementById('search-bar')
+    let filter = searchBar.value.toUpperCase()
+    let count = 0
+
+    let searchResults = searchBarResults.getElementsByTagName('li')
+
+    for(let i = 0; i < searchResults.length; i++) {
+        let link = searchResults[i].getElementsByTagName('a')[0]
+        let txtValue = link.textContent || link.innerText
+
+        if (txtValue.toUpperCase().indexOf(filter) > -1 && count < 10) {
+            link.style.display = ''
+            count += 1
+        } else {
+            link.style.display = 'none'
+        }
+    }
+}
+"
+  "Javascript code needed in the HTML file."
+  :type '(string))
 
 (defcustom org-tailwind-html-template
       "<!doctype html>
@@ -515,14 +686,16 @@ createTOC();"
 %s
 </div>
 
-<div id=\"content\" class=\"top %s\">
+<div id=\"content\" class=\"top %s\" onclick=\"hideResults()\">
   <div id=\"sidebar\" class=\"%s\">
   %s
   </div>
 
   <div id=\"content-container\" class=\"%s\">
     <div id=\"top\"></div>
-    %s
+    <div id=\"inner-container\" class=\"%s\">
+      %s
+    </div>
   </div>
 </div>
 
@@ -553,11 +726,14 @@ values, in this order:
 - sidebar classes
 - sidebar contents
 - content-container classes
+- inner-container classes
 - contents
 - footer classes
 - footer contents
 - bottom page javascript
-- bottom page files.")
+- bottom page files."
+      :type '(string))
+
 
 ;;; Transcode Elements
 
@@ -573,17 +749,22 @@ By not doing anything to the contents, it exports the elements at the root level
           org-tailwind-head-files
           org-tailwind-class-body
           org-tailwind-class-header
-          org-tailwind-header
+          (format org-tailwind-header
+                  org-tailwind-class-top-button
+                  org-tailwind-class-search-bar
+                  org-tailwind-class-search-bar-results-list)
           org-tailwind-class-content
           org-tailwind-class-sidebar
           org-tailwind-sidebar
           org-tailwind-class-content-container
+          org-tailwind-class-inner-container
           contents
           org-tailwind-class-footer
           org-tailwind-footer
           (format org-tailwind-javascript
                   org-tailwind-class-top-button
-                  org-tailwind-class-toc-items)
+                  org-tailwind-class-toc-items
+                  org-tailwind-class-search-bar-results-item)
           org-tailwind-bottom-files))
 
 (defun org-tailwind-bold (bold contents info)
@@ -604,13 +785,19 @@ By not doing anything to the contents, it exports the elements at the root level
 
 (defun org-tailwind-code (code contents info)
   "Transcode CODE from Org to HTML."
-  (let ((code-text (org-element-property :value code)))
-    (format "<code class=\"%s\">%s</code>" org-tailwind-class-code code-text)))
+  (let* ((code-text (org-element-property :value code))
+        (escaped-text (let* ((r1 (replace-regexp-in-string "<" "&lt;" code-text))
+                             (r2 (replace-regexp-in-string ">" "&gt;" r1)))
+                        r2)))
+    (format "<code class=\"%s\">%s</code>" org-tailwind-class-code escaped-text)))
 
 (defun org-tailwind-verbatim (verbatim contents info)
   "Transcode VERBATIM from Org to HTML."
-  (let ((code-text (org-element-property :value verbatim)))
-    (format "<code class=\"%s\">%s</code>" org-tailwind-class-verbatim code-text)))
+  (let* ((code-text (org-element-property :value verbatim))
+        (escaped-text (let* ((r1 (replace-regexp-in-string "<" "&lt;" code-text))
+                             (r2 (replace-regexp-in-string ">" "&gt;" r1)))
+                        r2)))
+    (format "<code class=\"%s\">%s</code>" org-tailwind-class-verbatim escaped-text)))
 
 (defun org-tailwind-plain-text (plain-text info)
   "Transcode PLAIN-TEXT from Org to HTML."
@@ -711,7 +898,7 @@ By not doing anything to the contents, it exports the elements at the root level
   (format "<blockquote class=\"%s\">%s</blockquote>" org-tailwind-class-blockquote contents))
 
 (defvar org-tailwind--src-block-open
-  "<div class=\"%s\"><pre class=\"%s\"  %s>"
+  "<div class=\"%s\"><pre class=\"%s\" %s>"
   "Opening tag of code block for Prism.js
 It has two format places:
 - Tailwind.css classes
@@ -761,6 +948,9 @@ It has two format places:
 (defun org-tailwind-src-block (src-block contents info)
   "Transcode SRC-BLOCK from Org to HTML."
   (let* ((code-text (org-element-property :value src-block))
+         (escaped-text (let* ((r1 (replace-regexp-in-string "<" "&lt;" code-text))
+                              (r2 (replace-regexp-in-string ">" "&gt;" r1)))
+                         r2))
          (language (org-element-property :language src-block))
          (filepath (org-tailwind--get-attribute :attr_filepath src-block))
          (highlight-lines (org-tailwind--get-attribute :attr_highlight src-block))
@@ -783,7 +973,7 @@ It has two format places:
                        "")))
      (format org-tailwind--src-block-close
              language
-             code-text))))
+             escaped-text))))
 
 (defun org-tailwind-src-block-select (src-block contents info)
   "Transcode SRC-BLOCK from Org to HTML."
@@ -805,8 +995,12 @@ It has two format places:
         (code-text (org-element-property :value example-block))
         (language (org-element-property :language example-block))
         (highlight-lines (org-element-property :highlight example-block)))
-    (format "<pre class=\"%s\"><code class=\"language-%s\">%s</code></pre>"
-            org-tailwind-class-example language code-text)))
+    (format "<div class=\"%s\">
+<pre class=\"%s\"><code class=\"language-%s\">%s</code></pre></div>"
+            org-tailwind-class-example-container
+            org-tailwind-class-example
+            (if language language "")
+            code-text)))
 
 (defun org-tailwind-special-block (special-block contents info)
   "Transcode SPECIAL-BLOCK from Org to HTML.
@@ -824,7 +1018,7 @@ There are 4 types of blocks:
                    org-tailwind-class-mermaid-block
                    contents
                    org-tailwind-class-mermaid-block-description
-                   name))
+                   (if name name "")))
           ;; TODO: process title as summary
           ((equalp type "details")
            (format "<details class=\"%s\"><summary class=\"%s\">%s</summary>%s</details>"
@@ -884,7 +1078,13 @@ If TABLE-CELL is part of the table header, return the HTML table
 cell with `th'. Return `td' otherwise."
   (if (org-export-table-row-in-header-p (org-export-get-parent table-cell) info)
       (format "<th class=\"%s\">%s</th>" org-tailwind-class-table-header-cell contents)
-    (format "<td class=\"%s\">%s</td>" org-tailwind-class-table-body-cell contents)))
+    (if contents
+        (format "<td class=\"%s\">%s</td>"
+                org-tailwind-class-table-body-cell
+                contents)
+      (format "<td class=\"%s\">%s</td>"
+              org-tailwind-class-table-empty-body-cell
+              ""))))
 
 (defun org-tailwind-table-row (table-row contents info)
   "Transcode TABLE-ROW from Org to HTML.
@@ -1002,6 +1202,88 @@ There are three types of lists:
   "Return the contents of SECTION as is."
   contents)
 
+
+;;; Search bar toc tree
+
+(defun ox-tailwind--json-toc-item (file title heading index)
+  "Transform HEADING and TITLE to a json object."
+  (format
+   "\t{\n\t\t\"name\": \"%s\", \n\t\t\"index\": \"%s\", \n\t\t\"parent\": \"%s\", \n\t\t\"file\": \"%s\"\n\t},"
+   heading
+   index
+   title
+   (replace-regexp-in-string ".org" ".html" file)))
+
+
+(defun ox-tailwind--json-toc-all-items (headings title file)
+  "Transform all the HEADINGS into an object with the heading and
+the TITLE."
+  (string-join
+   (-map
+    (lambda (heading)
+      (ox-tailwind--json-toc-item
+       file
+       title
+       (-first-item heading)
+       (-last-item heading)))
+    headings)
+   "\n"))
+
+
+(defun ox-tailwind--json-toc (filename file-tree output-directory)
+  "Read all the exported files and search for headings.
+The JSON format will"
+
+  ;; Create an empty list to append all the headings
+  (setq headings '())
+
+  ;; Create a temporary buffer to store the text of the file
+  (with-temp-buffer
+    ;; Paste all the text inside the file to the temp buffer
+    (insert-file-contents filename)
+    ;; Start the index count
+    ;; this will be used to target the element position in html
+    (setq count 0)
+    ;; Search for the org headings
+    (while (search-forward-regexp "^\\*+\s.*$" nil t)
+      ;; Split the org headings and text
+      (let ((cur-line (string-join (cdr (split-string (match-string 0) "\s")) " ")))
+        (setq headings (append headings `((,cur-line ,count))))
+        (setq count (+ count 1)))))
+
+  (setq title (-first-item (-first-item headings)))
+  (setq json-headings
+        (ox-tailwind--json-toc-all-items headings title filename))
+
+  ;; Write the json toc tree to file
+  (write-region json-headings nil file-tree 'append))
+
+
+(defun ox-tailwind--json-toc-all-files (notes-directory output-directory)
+  "Read all the files in the notes directory and create a toc tree."
+ 
+  (setq files (directory-files notes-directory nil ".org"))
+ 
+  (setq file-tree (concat output-directory "/js/" "toc_tree.js"))
+
+  ;; Clear the file
+  (write-region "" nil file-tree)
+
+  ;; Open the js object
+  (write-region "const tocTree = [\n" nil file-tree 'append)
+
+  ;; Append toc
+  (-map
+   (lambda (file)
+     (let ((file-path (concat "./" file)))
+       (ox-tailwind--json-toc file-path file-tree output-directory))) files)
+
+  ;; Close the js object
+  (write-region "\n];" nil file-tree 'append))
+
+;;(ox-tailwind--json-toc-all-files "./resources" "./out")
+
+
 ;;;###autoload
 (defun org-tailwind-export-as-html
     (&optional async subtreep visible-only body-only ext-plist)
@@ -1074,6 +1356,7 @@ is the property list for the given project.  PUB-DIR is the
 publishing directory.
 
 Return output file name."
+  (ox-tailwind--json-toc-all-files (file-name-directory filename) pub-dir)
   (org-publish-org-to 'tailwind filename
                       (concat (when (> (length org-html-extension) 0) ".")
                               (or (plist-get plist :html-extension)

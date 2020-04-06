@@ -1,22 +1,36 @@
 * Org-Tailwind Export Back-End
   
-  Hi, this back-end has the purpose of allowing easy customization of the HTML
-  output. Although it is called ~Tailwind~, the only thing that it does is
-  allowing you to customize the classes of the HTML and exporting a more
-  barebones HTML (It does not create as many ~divs~ and ~sections~ as the normal
-  HTML export back-end).
+This back-end has the purpose of allowing easy customization of the HTML
+output. Although it is called ~Tailwind~, the only thing that it does is
+allowing you to customize the classes of the HTML and exporting a more
+barebones HTML (It does not create as many ~divs~ and ~sections~ as the normal
+HTML export back-end).
   
-  Instead of using Tailwind.css you can just name the classes of the elements and
-  import your own css (or edit ~./css/styles.css~).
+Instead of using Tailwind.css you can just name the classes of the elements and
+import your own css (or edit ~./css/styles.css~).
 
+** Light Theme
+
+Check the [[https://vascoferreira25.github.io/ox-tailwind/index.html][Light Theme]].
+
+** Dark Theme
+
+Check the [[https://vascoferreira25.github.io/ox-tailwind/dark.html][Dark Theme]].
+
+** Known bugs
+
+- It crashes when it encounters a line that ends in ~\\~;
+- It won't export ~TODO~ keywords and ~SCHEDULE~ dates.
+  
 ** Installation
+*** Spacemacs
    
-   To install this back-end, clone this repo into your packages or private
-   folder in ~~/.emacs.d~
+To install this back-end, clone this repo into your packages or private
+folder in ~~/.emacs.d~
 
-   #+ATTR_USERNAME: user
-   #+ATTR_HOSTNAME: hostname
-   #+begin_src shell
+#+ATTR_USERNAME: spacemacs
+#+ATTR_HOSTNAME: hostname
+#+begin_src shell
 git clone https://github.com/vascoferreira25/org-tailwind ~/.emacs.d/private
 (out)Cloning into '~/.emacs.d/private'...
 (out)remote: Enumerating objects: 49, done.
@@ -24,18 +38,12 @@ git clone https://github.com/vascoferreira25/org-tailwind ~/.emacs.d/private
 (out)remote: Compressing objects: 100% (40/40), done.
 (out)remote: Total 49 (delta 20), reused 28 (delta 8), pack-reused 0
 (out)Unpacking objects: 100% (49/49), done.
-   #+end_src
+#+end_src
 
-   Add the following to your ~config.el~ or ~.spacemacs~ file:
+Add the following to your ~.spacemacs~ file:
 
-   #+begin_src elisp
-  (load-file "~/.emacs.d/private/ox-tailwind/ox-tailwind.el")
-   #+end_src
-
-   For Spacemacs, load the file in the user configuration function:
-
-   #+ATTR_HIGHLIGHT: 8
-   #+begin_src elisp
+#+ATTR_HIGHLIGHT: 8
+#+begin_src elisp
 (defun dotspacemacs/user-config ()
   "Configuration for user code:
 This function is called at the very end of Spacemacs startup, after layer
@@ -46,28 +54,170 @@ before packages are loaded."
   (load-file "~/.emacs.d/private/ox-tailwind/ox-tailwind.el")
   ;; ...
   )
-   #+end_src
+#+end_src
 
-   Then export your org file with the ox-tailwind back-end:
+Then export your org file with the ox-tailwind back-end:
 
-   In Spacemacs you would use ~, e e~ for the export menu and then ~x h~.
+In Spacemacs you would use ~, e e~ for the export menu and then ~x h~.
+
+*** Doom Emacs
+
+To install this back-end, clone this repo into your packages or private
+folder in ~~/.doom.d~
+
+#+ATTR_USERNAME: doom
+#+ATTR_HOSTNAME: hostname
+#+begin_src shell
+git clone https://github.com/vascoferreira25/org-tailwind ~/.doom.d/ox-tailwind
+(out)Cloning into '~/.doom.d/ox-tailwind...
+(out)remote: Enumerating objects: 49, done.
+(out)remote: Counting objects: 100% (49/49), done.
+(out)remote: Compressing objects: 100% (40/40), done.
+(out)remote: Total 49 (delta 20), reused 28 (delta 8), pack-reused 0
+(out)Unpacking objects: 100% (49/49), done.
+#+end_src
+
+Add the following to your ~config.el~ file:
+
+#+begin_src elisp
+(add-load-path! "ox-tailwind")
+
+(use-package ox-tailwind
+  :after ox)
+#+end_src
+
+Then export your org file with the ox-tailwind back-end:
+
+In Spacemacs you would use ~SPC M e~ for the export menu and then ~x h~.
+
+*** Your own config
+
+To install this back-end into your own Emacs config, just add the following:
+
+#+ATTR_USERNAME: your-own-config
+#+ATTR_HOSTNAME: hostname
+#+begin_src shell
+git clone https://github.com/vascoferreira25/org-tailwind ~/.emacs.d/private-packages/ox-tailwind
+(out)Cloning into '~/.emacs.d/private-packages/ox-tailwind...
+(out)remote: Enumerating objects: 49, done.
+(out)remote: Counting objects: 100% (49/49), done.
+(out)remote: Compressing objects: 100% (40/40), done.
+(out)remote: Total 49 (delta 20), reused 28 (delta 8), pack-reused 0
+(out)Unpacking objects: 100% (49/49), done.
+#+end_src
+
+And add the following to your config file:
+
+#+BEGIN_SRC elisp
+;; ox-tailwind export back-end
+(load "~/.emacs.d/private-packages/ox-tailwind/ox-tailwind.el")
+#+END_SRC
+
+** Notes structure
+
+In order to make the search bar work, this export backend will search all
+~.org~ files and store all the headings in a ~.js~ file.
+
+To make this work, the folder structure for your notes should be like this:
+
+  #+begin_src ps
+tree /F /a
+(out)C:/path/to/your_notes/
+(out)|   index.org
+(out)|   ... other org files
+(out)|   
+(out)+---files
+(out)|       # Your attachments
+(out)|
+(out)+---img
+(out)|       # Your image files
+(out)|       
+(out)\---out
+(out)        # Org Publish Files
+  #+end_src
+
+The home page for your notes should be ~index.org~.
+  
+For easier search and note management, the notes should be named as
+~<subject>_<notes_name>_<guide|snippets|templates|...>.org~.
+
+Examples:
+
+| Notes                        | File Name                         |
+|------------------------------+-----------------------------------|
+| Programming Guides Index     | ~programming.org~                 |
+| Python notes Index           | ~programming_python.org~        |
+| Python guide            | ~programming_python_guide.org~    |
+| Python snippets              | ~programming_python_snippets.org~ |
+|                              |                                   |
+| Guides Index                 | ~guides.org~                      |
+| How to download Ebooks guide | ~guides_download_ebooks.org~      |
+|                              |                                   |
+| Gaming Index                 | ~gaming.org~                      |
+| Skyrim guide                 | ~gaming_skyrim.org~               |
+|                              |                                   |
+| Subjects Index               | ~subjects.org~                    |
+| Mathematics                  | ~subjects_mathematics.org~        |
+| Economics                    | ~subjects_economics.org~          |
+
+Index files should have the following template
+
+#+BEGIN_SRC org 
+,* Subjects
+,** Pages
+   
+[[./subjects_accounting_and_finance.org][Accounting and Finance]]
+
+[[./subjects_computer_science.org][Computer Science]]
+
+[[./subjects_economics.org][Economics]]
+
+[[./subjects_elo_rating.org][Elo Rating System]]
+
+[[./subjects_mathematics.org][Mathematics]]
+
+[[./subjects_statistics.org][Statistics]]
+
+,** References
+#+END_SRC
+
+** Publish settings
+
+My export settings are the following:
+
+#+BEGIN_SRC elisp
+(setq org-publish-project-alist
+      '(("notes"
+         :publishing-function org-tailwind-publish-to-html
+         :base-directory "V:/orgmode/"
+         :publishing-directory "V:/orgmode/out/")
+        ;; Images and attachment files
+        ("images"
+         :base-directory "V:/orgmode/img/"
+         :publishing-function org-publish-attachment
+         :publishing-directory "V:/orgmode/out/img/")
+        ("files"
+         :base-directory "V:/orgmode/files/"
+         :publishing-function org-publish-attachment
+         :publishing-directory "V:/orgmode/out/files/")))
+#+END_SRC
 
 ** Notes output directory
    
-   In order for the export to be functional when offline,
-   you need to put the needed files in the output folder.
+In order for the export to be functional when offline,
+you need to put the needed files in the output folder.
 
-   The files used in the HTML file are:
-   - [[https://prismjs.com/][Prism.js]]
-   - [[https://www.mathjax.org/][Mathjax]]
-   - [[https://tailwindcss.com/][Tailwind CSS]]
+The files used in the HTML file are:
+- [[https://prismjs.com/][Prism.js]]
+- [[https://www.mathjax.org/][Mathjax]]
+- [[https://tailwindcss.com/][Tailwind CSS]]
 
-   This is the directory structure of the export folder:
+  This is the directory structure of the export folder:
    
-   #+ATTR_USERNAME: your-username
-   #+ATTR_HOSTNAME: your-hostname
-   #+ATTR_HIGHLIGHT: 3-5,15,18,20-23
-   #+begin_src ps
+#+ATTR_USERNAME: your-username
+#+ATTR_HOSTNAME: your-hostname
+#+ATTR_HIGHLIGHT: 3-5,15,18,20-23
+#+begin_src ps
 tree /F /a
 (out)C:/path/to/your_notes/out/
 (out)|   # The HTML export
@@ -99,180 +249,289 @@ tree /F /a
 (out)|       tex-mml-chtml.js
 (out)|       
 (out)\---mathjax
-(out)    |   # Mathjax Files
-   #+end_src
+(out)        # Mathjax Files
+#+end_src
 
 ** Elements
 *** Markup
 **** Text
-    *Bold Text*
+*Bold Text*
 
-    /Italic Text/ 
+/Italic Text/ 
 
-    _Underlined Text_ 
+_Underlined Text_ 
 
-    +Strike Through+
++Strike Through+
 
-    =Verbatim=
+=Verbatim=
 
-    ~Inline code~
+~Inline code~
     
-    [[./index.html][HyperLinks]]
+[[./index.html][HyperLinks]]
 
 **** Lists
 ***** Ordered List
-    1. Item number 1
-       1. Item number 1.1
-       2. Item number 1.2
-       3. Item number 1.3
-    2. Item number 2
-    3. Item number 3
-    4. Item number 4
-    5. Item number 5
+
+1. Item number 1
+   1. Item number 1.1
+   2. Item number 1.2
+   3. Item number 1.3
+2. Item number 2
+3. Item number 3
+4. Item number 4
+5. Item number 5
 
 ***** Unordered List
-    - Like
-      - This
-        - One
+
+- Like
+  - This
+    - One
 
 ***** Description List
-    - Tip Blocks :: Are for displaying tips.
-    - Warning Blocks :: Are for displaying warnings.
-    - Danger Blocks :: Are for displaying dangers. 
+
+- Tip Blocks :: Are for displaying tips.
+- Warning Blocks :: Are for displaying warnings.
+- Danger Blocks :: Are for displaying dangers. 
+
+***** Checkboxes
+
+- [ ] Unchecked 1
+- [ ] Unchecked 2
+- [X] Checked 1
 
 **** Tables
      
-     #+NAME: This is an example table and description
-     | A | B | C |
-     |---+---+---|
-     | 1 | 2 | 3 |
-     | 4 | 5 | 6 |
-     | 7 | 8 | 9 |
+#+NAME: This is an example table and description
+| A | B | C |
+|---+---+---|
+| 1 | 2 | 3 |
+| 4 | 5 | 6 |
+| 7 | 8 | 9 |
      
 *** Formulas
-    Inline formulas: $\sum_{i=0}^n i^2 = \frac{(n^2+n)(2n+1)}{6}$
+Inline formulas: $\sum_{i=0}^n i^2 = \frac{(n^2+n)(2n+1)}{6}$
     
-    $$\sum_{i=0}^n i^2 = \frac{(n^2+n)(2n+1)}{6}$$
+$$\sum_{i=0}^n i^2 = \frac{(n^2+n)(2n+1)}{6}$$
 
 *** Blocks
 **** Blockquote
-    #+begin_quote
-    Once upon a time..........
-    I forgot the rest.
-    #+end_quote
+#+begin_quote
+Once upon a time..........
+I forgot the rest.
+#+end_quote
 
 **** Source Blocks
 
-     This block fetches a file from the Github API.
-     
-     #+ATTR_HIGHLIGHT: 2,6-8,11-20,48-51
-     #+ATTR_FETCH: https://api.github.com/repos/vascoferreira25/discord-bot/contents/src/main/core.cljs
-     #+BEGIN_SRC clojure
-     #+END_SRC
+#+ATTR_HIGHLIGHT: 2,6-8,11-20,48-51
+#+ATTR_FETCH: https://api.github.com/repos/vascoferreira25/discord-bot/contents/src/main/core.cljs
+#+BEGIN_SRC clojure
+#+END_SRC
    
 *** Custom Blocks
-   There are four custom blocks: ~details~, ~tip~, ~warning~ and ~danger~ and
-   these blocks can contain other elements. In order to get syntax highlighting
-   while editing in Emacs, use ~org~ as language.
+There are four custom blocks: ~details~, ~tip~, ~warning~ and ~danger~ and
+these blocks can contain other elements. In order to get syntax highlighting
+while editing in Emacs, use ~org~ as language.
 
 **** Details
 
-   #+begin_details
-   All the stuff in here will be hidden ....
-   #+end_details
+#+begin_details
+All the stuff in here will be hidden ....
+#+end_details
 
 **** Tip   
 
-   #+begin_tip
-   Tip text.
-   #+end_tip
+#+begin_tip
+Tip text.
+#+end_tip
 
 **** Warning
 
-   #+begin_warning
-   Warning text.
-   #+end_warning
+#+begin_warning
+Warning text.
+#+end_warning
 
 **** Danger
 
-   #+NAME: Danger Title
-   #+begin_danger org
-   These blocks can contain other blocks.
+#+NAME: Danger Title
+#+begin_danger org
+These blocks can contain other blocks.
    
-   Code in a shell?
+Code in a shell?
 
-   #+ATTR_USERNAME: org-tailwind
-   #+ATTR_HOSTNAME: remote.host.com
-   #+BEGIN_SRC shell
+#+ATTR_USERNAME: org-tailwind
+#+ATTR_HOSTNAME: remote.host.com
+#+BEGIN_SRC shell
 cd c:/emacs/bin/runemacs.exe
 (out)I rocks!
-   #+END_SRC
+#+END_SRC
    
-   Cool! Isn't it?
-   #+end_danger
-
-**** Custom Attributes
-     These blocks have custom attributes that you can specify:
-     - Source code ::
-       - ~#+ATTR_HIGHLIGHT~: lines to highlight in the source code, e.g. ~1,5-10,12~
-       - ~#+ATTR_USERNAME~: username to show in command-line blocks, e.g. ~vascoferreira~
-       - ~#+ATTR_HOSTNAME~: hostname to show in command-line blocks, e.g. ~localhost~
-       - ~#+ATTR_FETCH~: fetch files from the Github API
-       - ~#+ATTR_FILEPATH~: get files and add a download button, it uses HTTP so, no local files.
-     - Custom blocks ::
-       - ~#+NAME~: the title of the block
-     - Tables ::
-       - ~#+NAME~: the description of the table
+Cool! Isn't it?
+#+end_danger
 
 **** Mermaids
-    There are also mermaids.
+There are also mermaids.
    
 ***** Diagram
 
- #+begin_mermaid 
- sequenceDiagram
-     participant Alice
-     participant Bob
-     Alice->>John: Hello John, how are you?
-     loop Healthcheck
-         John->>John: Fight against hypochondria
-     end
-     Note right of John: Rational thoughts <br/>prevail!
-     John-->>Alice: Great!
-     John->>Bob: How about you?
-     Bob-->>John: Jolly good!
- #+end_mermaid
+#+begin_mermaid 
+sequenceDiagram
+participant Alice
+participant Bob
+Alice->>John: Hello John, how are you?
+loop Healthcheck
+John->>John: Fight against hypochondria
+end
+Note right of John: Rational thoughts <br/>prevail!
+John-->>Alice: Great!
+John->>Bob: How about you?
+Bob-->>John: Jolly good!
+#+end_mermaid
 
 ***** Gantt Chart
 
- #+begin_mermaid
- gantt
- dateFormat  YYYY-MM-DD
- title Adding GANTT diagram to mermaid
+#+begin_mermaid
+gantt
+dateFormat  YYYY-MM-DD
+title Adding GANTT diagram to mermaid
 
- section A section
- Completed task            :done,    des1, 2014-01-06,2014-01-08
- Active task               :active,  des2, 2014-01-09, 3d
- Future task               :         des3, after des2, 5d
- Future task2               :         des4, after des3, 5d
+section A section
+Completed task            :done,    des1, 2014-01-06,2014-01-08
+Active task               :active,  des2, 2014-01-09, 3d
+Future task               :         des3, after des2, 5d
+Future task2               :         des4, after des3, 5d
 
- section Critical tasks
- Completed task in the critical line :crit, done, 2014-01-06,24h
- Implement parser and jison          :crit, done, after des1, 2d
- Create tests for parser             :crit, active, 3d
- Future task in critical line        :crit, 5d
- Create tests for renderer           :2d
- Add to mermaid                      :1d
+section Critical tasks
+Completed task in the critical line :crit, done, 2014-01-06,24h
+Implement parser and jison          :crit, done, after des1, 2d
+Create tests for parser             :crit, active, 3d
+Future task in critical line        :crit, 5d
+Create tests for renderer           :2d
+Add to mermaid                      :1d
 
- section Documentation
- Describe gantt syntax               :active, a1, after des1, 3d
- Add gantt diagram to demo page      :after a1  , 20h
- Add another diagram to demo page    :doc1, after a1  , 48h
+section Documentation
+Describe gantt syntax               :active, a1, after des1, 3d
+Add gantt diagram to demo page      :after a1  , 20h
+Add another diagram to demo page    :doc1, after a1  , 48h
 
- section Last section
- Describe gantt syntax               :after doc1, 3d
- Add gantt diagram to demo page      : 20h
- Add another diagram to demo page    : 48h
- #+end_mermaid
-     
+section Last section
+Describe gantt syntax               :after doc1, 3d
+Add gantt diagram to demo page      : 20h
+Add another diagram to demo page    : 48h
+#+end_mermaid
+
+**** Custom Attributes
+These blocks have custom attributes that you can change:
+- Source code ::
+                 - ~#+ATTR_HIGHLIGHT~: lines to highlight in the source code, e.g. ~1,5-10,12~
+                 - ~#+ATTR_USERNAME~: username to show in command-line blocks, e.g. ~vascoferreira~
+                 - ~#+ATTR_HOSTNAME~: hostname to show in command-line blocks, e.g. ~localhost~
+                 - ~#+ATTR_FETCH~: fetch files from the Github API
+                 - ~#+ATTR_FILEPATH~: get files and add a download button, it uses HTTP so, no local files.
+- Custom blocks ::
+                   - ~#+NAME~: the title of the block
+- Tables ::
+            - ~#+NAME~: the description of the table
+
 ** Customization
+*** Dark Mode
+
+To get dark mode, add this to your ~config.el~ or ~.spacemacs~ file:
+
+#+BEGIN_SRC elisp
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+                                        ;         ox-tailwind settings        ;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;; Divs
+
+(setq org-tailwind-class-body "flex flex-col h-screen
+bg-gray-900 text-gray-400")
+
+(setq org-tailwind-class-header "w-full border-b border-gray-500
+shadow-md items-center h-16")
+
+(setq org-tailwind-class-sidebar "px-24 pt-20 lg:border-r
+lg:border-gray-800 lg:fixed lg:w-64 lg:p-4 lg:overflow-y-auto
+lg:inset-y-0 lg:mt-16 lg:mb-8")
+
+(setq org-tailwind-class-toc-items "text-sm hover:bg-gray-800")
+
+(setq org-tailwind-class-inner-container "px-16 py-12 mb-12
+shadow-2xl border border-solid border-gray-800 rounded-md")
+
+(setq org-tailwind-class-footer "fixed bottom-0 w-full border-t
+border-solid border-gray-800 h-8 text-center")
+
+
+;; Search bar
+
+(setq org-tailwind-class-search-bar "float-right mx-4 w-1/6
+rounded-lg px-4 py-1 border-solid border-2 border-gray-700
+bg-gray-700 text-gray-600 focus:border-teal-700
+focus:text-gray-400")
+
+(setq org-tailwind-class-search-bar-results-list "z-50 absolute
+w-5/6 sm:w-4/6 md:w-3/6 lg:w-2/6 xl:w-1/6 right-0 mt-8 mr-12
+bg-gray-800 p-4 shadow-lg border border-solid border-gray-700
+rounded-md")
+
+(setq org-tailwind-class-search-bar-results-item
+      "p-2 block rounded-md hover:bg-gray-700")
+
+(setq org-tailwind-footer "<p>Made by Vasco Ferreira</p>")
+
+;; Elements
+
+(setq org-tailwind-class-h1
+      "mt-32 mb-6 text-6xl")
+
+(setq org-tailwind-class-h2
+      "mt-20 mb-6 text-5xl")
+
+(setq org-tailwind-class-h3
+      "mt-12 mb-6 text-4xl")
+
+(setq org-tailwind-class-h4
+      "mt-8 mb-6 text-3xl")
+
+(setq org-tailwind-class-h5
+      "mt-6 mb-6 text-2xl")
+
+(setq org-tailwind-class-h6
+      "mt-4 mb-6 text-xl")
+
+(setq org-tailwind-class-h7
+      "mt-2 mb-6 text-lg")
+
+(setq org-tailwind-class-link "text-blue-500
+hover:text-green-500")
+
+(setq org-tailwind-class-code "m-1 px-2 border-solid border
+rounded-md border-gray-500 text-green-500 bg-gray-700")
+
+(setq org-tailwind-class-verbatim "m-1 px-2 border-solid border
+rounded-md border-gray-500 text-red-500 bg-gray-700")
+
+(setq org-tailwind-class-blockquote "my-4 px-4 border-solid
+border-l-8 border-2 rounded-md border-gray-700 bg-gray-800")
+
+(setq org-tailwind-class-table-body-row "hover:bg-gray-800")
+
+(setq org-tailwind-class-table-body-cell "border border-solid
+border-gray-800 px-4 py-2")
+
+(setq org-tailwind-class-table-empty-body-cell "border
+border-solid border-gray-800 px-2 py-2")
+
+(setq org-tailwind-class-table-header-row "text-gray-500 border
+border-solid border-gray-800")
+
+(setq org-tailwind-class-image "mx-auto p-4 max-w-full max-h-full
+border-solid border rounded-md border-teal-700")
+
+;; Blocks
+
+(setq org-tailwind-class-src-container "my-12 border-solid
+border-2 rounded-md border-teal-700")
+
+#+END_SRC
