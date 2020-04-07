@@ -26,12 +26,12 @@ Check the [[https://vascoferreira25.github.io/ox-tailwind/dark.html][Dark Theme]
 *** Spacemacs
    
 To install this back-end, clone this repo into your packages or private
-folder in ~~/.emacs.d~
+folder into your ~~/.emacs.d~ directory:
 
 #+ATTR_USERNAME: spacemacs
 #+ATTR_HOSTNAME: hostname
 #+begin_src shell
-git clone https://github.com/vascoferreira25/org-tailwind ~/.emacs.d/private
+git clone https://github.com/vascoferreira25/ox-tailwind ~/.emacs.d/private
 (out)Cloning into '~/.emacs.d/private'...
 (out)remote: Enumerating objects: 49, done.
 (out)remote: Counting objects: 100% (49/49), done.
@@ -63,12 +63,12 @@ In Spacemacs you would use ~, e e~ for the export menu and then ~x h~.
 *** Doom Emacs
 
 To install this back-end, clone this repo into your packages or private
-folder in ~~/.doom.d~
+folder into your ~~/.doom.d~ directory:
 
 #+ATTR_USERNAME: doom
 #+ATTR_HOSTNAME: hostname
 #+begin_src shell
-git clone https://github.com/vascoferreira25/org-tailwind ~/.doom.d/ox-tailwind
+git clone https://github.com/vascoferreira25/ox-tailwind ~/.doom.d/ox-tailwind
 (out)Cloning into '~/.doom.d/ox-tailwind...
 (out)remote: Enumerating objects: 49, done.
 (out)remote: Counting objects: 100% (49/49), done.
@@ -97,7 +97,7 @@ To install this back-end into your own Emacs config, just add the following:
 #+ATTR_USERNAME: your-own-config
 #+ATTR_HOSTNAME: hostname
 #+begin_src shell
-git clone https://github.com/vascoferreira25/org-tailwind ~/.emacs.d/private-packages/ox-tailwind
+git clone https://github.com/vascoferreira25/ox-tailwind ~/.emacs.d/private-packages/ox-tailwind
 (out)Cloning into '~/.emacs.d/private-packages/ox-tailwind...
 (out)remote: Enumerating objects: 49, done.
 (out)remote: Counting objects: 100% (49/49), done.
