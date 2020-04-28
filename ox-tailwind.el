@@ -435,12 +435,12 @@ lg:overflow-x-auto xl:px-32"
   :type '(string))
 
 (defcustom org-tailwind-class-inner-container
-  "px-16 py-12 mb-12 shadow-2xl border border-solid border-gray-400 rounded-md"
+  "px-16 py-12 pb-32 mb-12 shadow-2xl border border-solid border-gray-400 rounded-md"
   "Tailwind.css classes for the HTML inner container."
   :type '(string))
 
 (defcustom org-tailwind-class-footer
-  "fixed bottom-0 w-full border-t border-solid border-gray-500 h-8 text-center"
+  "fixed bottom-0 w-full border-t border-solid border-gray-500 h-8 text-center bg-white"
   "Tailwind.css classes for the HTML FOOTER."
   :type '(string))
 
@@ -1209,7 +1209,7 @@ There are three types of lists:
   "Transform HEADING and TITLE to a json object."
   (format
    "\t{\n\t\t\"name\": \"%s\", \n\t\t\"index\": \"%s\", \n\t\t\"parent\": \"%s\", \n\t\t\"file\": \"%s\"\n\t},"
-   heading
+   (replace-regexp-in-string "\"" "'" heading)
    index
    title
    (replace-regexp-in-string ".org" ".html" file)))
