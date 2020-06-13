@@ -485,7 +485,7 @@ lg:overflow-y-auto lg:inset-y-0 lg:mt-16 lg:mb-8")
 
 (setq org-tailwind-class-toc-items "text-sm hover:bg-gray-700")
 
-(setq org-tailwind-class-inner-container "px-16 py-12 mb-12
+(setq org-tailwind-class-inner-container "px-16 py-12 pb-32 mb-12
 shadow-2xl border border-solid border-gray-800 rounded-md")
 
 (setq org-tailwind-class-footer "fixed bottom-0 w-full border-t
