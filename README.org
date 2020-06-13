@@ -480,7 +480,7 @@ bg-gray-900 text-gray-400")
 shadow-md items-center h-16")
 
 (setq org-tailwind-class-sidebar "px-24 py-12 bg-gray-800
-lg:border-r lg:border-gray-700 lg:fixed lg:pt-20 lg:w-64 lg:px-2
+lg:border-r lg:border-gray-700 lg:fixed lg:pt-2 lg:w-64 lg:px-2
 lg:overflow-y-auto lg:inset-y-0 lg:mt-16 lg:mb-8")
 
 (setq org-tailwind-class-toc-items "text-sm hover:bg-gray-700")

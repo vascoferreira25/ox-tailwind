@@ -432,7 +432,7 @@ shadow-md items-center h-16"
 
 (defcustom org-tailwind-class-sidebar
   "px-24 py-12 bg-gray-200 lg:border-r lg:border-gray-500
-lg:fixed lg:pt-20 lg:w-64 lg:px-2 lg:overflow-y-auto lg:inset-y-0
+lg:fixed lg:pt-2 lg:w-64 lg:px-2 lg:overflow-y-auto lg:inset-y-0
 lg:mt-16 lg:mb-8"
   "Tailwind.css classes for the HTML SIDEBAR."
   :type '(string))
@@ -1245,7 +1245,7 @@ tag. If it is neither, return the row without group tags."
 (defun org-tailwind-table (table contents info)
   "Transcode TABLE from Org to HTML."
   (let ((name (org-element-property :name table)))
-    (format "<table class=\"%s\">%s</table>%s"
+    (format "<div class=\"overflow-x-auto\"><table class=\"%s\">%s</table>%s</div>"
             org-tailwind-class-table
             contents
             (if name
