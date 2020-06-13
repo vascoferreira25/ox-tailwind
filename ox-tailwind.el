@@ -998,7 +998,7 @@ By not doing anything to the contents, it exports the elements at the root level
      ((equalp file-extension "org")
       (format link-tag
               org-tailwind-class-link
-              (concat type ":" (replace-regexp-in-string "\.org" "\.html" path))
+              (concat type ":" (replace-regexp-in-string "\\.org" ".html" path))
               contents))
      ;; Any other link
      (t (format link-tag
