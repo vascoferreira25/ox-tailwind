@@ -9,24 +9,23 @@ HTML export back-end).
 Instead of using Tailwind.css you can just name the classes of the elements and
 import your own css (or edit ~./css/styles.css~).
 
-** Light Theme
+** Light and Dark Themes
 
 Check the [[https://vascoferreira25.github.io/ox-tailwind/][Light Theme]].
-
-** Dark Theme
 
 Check the [[https://vascoferreira25.github.io/ox-tailwind/dark.html][Dark Theme]].
 
 ** Known bugs
 
-- It crashes when it encounters a line that ends in ~\\~;
+- It crashes when it encounters a line that ends in ~\\~ - it works if it is
+  inside a block;
 - It won't export ~TODO~ keywords and ~SCHEDULE~ dates.
   
 ** Installation
 *** Spacemacs
    
 To install this back-end, clone this repo into your packages or private
-folder into your ~~/.emacs.d~ directory:
+folder in your ~~/.emacs.d~ directory:
 
 #+ATTR_USERNAME: spacemacs
 #+ATTR_HOSTNAME: hostname
@@ -63,7 +62,7 @@ In Spacemacs you would use ~, e e~ for the export menu and then ~x h~.
 *** Doom Emacs
 
 To install this back-end, clone this repo into your packages or private
-folder into your ~~/.doom.d~ directory:
+folder in your ~~/.doom.d~ directory:
 
 #+ATTR_USERNAME: doom
 #+ATTR_HOSTNAME: hostname
@@ -115,10 +114,10 @@ And add the following to your config file:
 
 ** Notes structure
 
-In order to make the search bar work, this export backend will search all
-~.org~ files and store all the headings in a ~.js~ file.
+In order for the search bar work, this export backend will search all ~.org~
+files in the path of your project and store all the headings in a ~.js~ file.
 
-To make this work, the folder structure for your notes should be like this:
+The folder structure for your notes should be like this:
 
   #+begin_src ps
 tree /F /a
@@ -132,7 +131,7 @@ tree /F /a
 (out)+---img
 (out)|       # Your image files
 (out)|       
-(out)\---out
+(out)\---dist
 (out)        # Org Publish Files
   #+end_src
 
@@ -146,8 +145,8 @@ Examples:
 | Notes                        | File Name                         |
 |------------------------------+-----------------------------------|
 | Programming Guides Index     | ~programming.org~                 |
-| Python notes Index           | ~programming_python.org~        |
-| Python guide            | ~programming_python_guide.org~    |
+| Python notes Index           | ~programming_python.org~          |
+| Python guide                 | ~programming_python_guide.org~    |
 | Python snippets              | ~programming_python_snippets.org~ |
 |                              |                                   |
 | Guides Index                 | ~guides.org~                      |
@@ -190,16 +189,16 @@ My export settings are the following:
       '(("notes"
          :publishing-function org-tailwind-publish-to-html
          :base-directory "V:/orgmode/"
-         :publishing-directory "V:/orgmode/out/")
+         :publishing-directory "V:/orgmode/dist/")
         ;; Images and attachment files
         ("images"
          :base-directory "V:/orgmode/img/"
          :publishing-function org-publish-attachment
-         :publishing-directory "V:/orgmode/out/img/")
+         :publishing-directory "V:/orgmode/dist/img/")
         ("files"
          :base-directory "V:/orgmode/files/"
          :publishing-function org-publish-attachment
-         :publishing-directory "V:/orgmode/out/files/")))
+         :publishing-directory "V:/orgmode/dist/files/")))
 #+END_SRC
 
 ** Notes output directory
@@ -213,7 +212,7 @@ The files used in the HTML file are:
 - [[https://tailwindcss.com/][Tailwind CSS]]
 
 Just copy the folders inside ~/docs/~ folder of this repository
-into your ~/out/~ folder.
+into your ~/dist/~ folder.
 
 This is the directory structure of the export folder:
    
@@ -258,6 +257,7 @@ tree /F /a
 ** Elements
 *** Markup
 **** Text
+
 *Bold Text*
 
 /Italic Text/ 
@@ -311,6 +311,16 @@ _Underlined Text_
 | 4 | 5 | 6 |
 | 7 | 8 | 9 |
      
+**** Images
+
+#+NAME: I don't have words...
+[[./sample_files/weird_cat.gif]]
+
+**** Videos
+
+#+NAME: What is this?
+[[./sample_files/cat_treats.mp4]]
+
 *** Formulas
 Inline formulas: $\sum_{i=0}^n i^2 = \frac{(n^2+n)(2n+1)}{6}$
     
@@ -318,19 +328,28 @@ $$\sum_{i=0}^n i^2 = \frac{(n^2+n)(2n+1)}{6}$$
 
 *** Blocks
 **** Blockquote
+
 #+begin_quote
 Once upon a time..........
-I forgot the rest.
 #+end_quote
 
 **** Source Blocks
+
+Source code blocks can be downloaded directly form github:
 
 #+ATTR_HIGHLIGHT: 2,6-8,11-20,48-51
 #+ATTR_FETCH: https://api.github.com/repos/vascoferreira25/discord-bot/contents/src/main/core.cljs
 #+BEGIN_SRC clojure
 #+END_SRC
-   
+
+This uses the following attributes:
+
+#+BEGIN_SRC org
+,#+ATTR_FETCH: https://api.github.com/repos/vascoferreira25/discord-bot/contents/src/main/core.cljs
+#+END_SRC
+
 *** Custom Blocks
+
 There are four custom blocks: ~details~, ~tip~, ~warning~ and ~danger~ and
 these blocks can contain other elements. In order to get syntax highlighting
 while editing in Emacs, use ~org~ as language.
@@ -372,10 +391,12 @@ Cool! Isn't it?
 #+end_danger
 
 **** Mermaids
+
 There are also mermaids.
    
 ***** Diagram
 
+#+NAME: A simple diagram.
 #+begin_mermaid 
 sequenceDiagram
 participant Alice
@@ -392,6 +413,7 @@ Bob-->>John: Jolly good!
 
 ***** Gantt Chart
 
+#+NAME: What a beautiful chart. What does it mean?
 #+begin_mermaid
 gantt
 dateFormat  YYYY-MM-DD
@@ -423,20 +445,21 @@ Add another diagram to demo page    : 48h
 #+end_mermaid
 
 **** Custom Attributes
+
 These blocks have custom attributes that you can change:
 - Source code ::
-                 - ~#+ATTR_HIGHLIGHT~: lines to highlight in the source code, e.g. ~1,5-10,12~
-                 - ~#+ATTR_USERNAME~: username to show in command-line blocks, e.g. ~vascoferreira~
-                 - ~#+ATTR_HOSTNAME~: hostname to show in command-line blocks, e.g. ~localhost~
-                 - ~#+ATTR_FETCH~: fetch files from the Github API
-                 - ~#+ATTR_FILEPATH~: get files and add a download button, it uses HTTP so, no local files.
+  - ~#+ATTR_HIGHLIGHT~ :: lines to highlight in the source code, e.g. ~1,5-10,12~
+  - ~#+ATTR_USERNAME~ :: username to show in command-line blocks, e.g. ~CrazyCat~
+  - ~#+ATTR_HOSTNAME~ :: hostname to show in command-line blocks, e.g. ~localhost~
+  - ~#+ATTR_FETCH~ :: fetch files from the Github API
+  - ~#+ATTR_FILEPATH~ :: get files and add a download button, it uses HTTP so, no local files.
 - Custom blocks ::
-                   - ~#+NAME~: the title of the block
-- Tables ::
-            - ~#+NAME~: the description of the table
+  - ~#+NAME~ :: the title of the block
+- Tables and Images and Videos ::
+  - ~#+NAME~ :: the description of the table or image or video
 
 ** Customization
-*** Dark Mode
+*** Dark Theme
 
 To get dark mode, add this to your ~config.el~ or ~.spacemacs~ file:
 
@@ -445,25 +468,28 @@ To get dark mode, add this to your ~config.el~ or ~.spacemacs~ file:
                                         ;         ox-tailwind settings        ;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+(setq org-tailwind-headlines "h1,h2,h3")
+
+
 ;; Divs
 
 (setq org-tailwind-class-body "flex flex-col h-screen
 bg-gray-900 text-gray-400")
 
-(setq org-tailwind-class-header "w-full border-b border-gray-500
+(setq org-tailwind-class-header "w-full border-b border-gray-700
 shadow-md items-center h-16")
 
-(setq org-tailwind-class-sidebar "px-24 pt-20 lg:border-r
-lg:border-gray-800 lg:fixed lg:w-64 lg:p-4 lg:overflow-y-auto
-lg:inset-y-0 lg:mt-16 lg:mb-8")
+(setq org-tailwind-class-sidebar "px-24 py-12 bg-gray-800
+lg:border-r lg:border-gray-700 lg:fixed lg:pt-20 lg:w-64 lg:px-2
+lg:overflow-y-auto lg:inset-y-0 lg:mt-16 lg:mb-8")
 
-(setq org-tailwind-class-toc-items "text-sm hover:bg-gray-800")
+(setq org-tailwind-class-toc-items "text-sm hover:bg-gray-700")
 
 (setq org-tailwind-class-inner-container "px-16 py-12 mb-12
 shadow-2xl border border-solid border-gray-800 rounded-md")
 
 (setq org-tailwind-class-footer "fixed bottom-0 w-full border-t
-border-solid border-gray-800 h-8 text-center")
+border-solid border-gray-700 h-8 text-center")
 
 
 ;; Search bar
@@ -481,7 +507,8 @@ rounded-md")
 (setq org-tailwind-class-search-bar-results-item
       "p-2 block rounded-md hover:bg-gray-700")
 
-(setq org-tailwind-footer "<p>Made by Vasco Ferreira</p>")
+(setq org-tailwind-footer "<p>Made by MEEE!</p>")
+
 
 ;; Elements
 
@@ -532,9 +559,10 @@ border-solid border-gray-800")
 (setq org-tailwind-class-image "mx-auto p-4 max-w-full max-h-full
 border-solid border rounded-md border-teal-700")
 
+
 ;; Blocks
 
 (setq org-tailwind-class-src-container "my-12 border-solid
 border-2 rounded-md border-teal-700")
-
 #+END_SRC
+

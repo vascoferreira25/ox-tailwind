@@ -202,12 +202,14 @@
   :type '(string))
 
 (defcustom org-tailwind-class-code
-  "m-1 px-2 border-solid border rounded-md border-gray-500 text-green-500 bg-gray-300"
+  "m-1 px-2 border-solid border rounded-md border-gray-500
+text-green-500 bg-gray-300"
   "Tailwind.css classes for the HTML UNDERLINE attribute."
   :type '(string))
 
 (defcustom org-tailwind-class-verbatim
-  "m-1 px-4 border-solid border rounded-md border-gray-500 text-red-500 bg-gray-300"
+  "m-1 px-4 border-solid border rounded-md border-gray-500
+text-red-500 bg-gray-300"
   "Tailwind.css classes for the HTML VERBATIM attribute."
   :type '(string))
 
@@ -227,7 +229,8 @@
   :type '(string))
 
 (defcustom org-tailwind-class-image
-  "mx-auto max-w-full max-h-full border-solid border-2 rounded-md border-green-500"
+  "mx-auto max-w-full max-h-full border-solid border-2 rounded-md
+border-green-500"
   "Tailwind.css classes for the HTML IMAGE."
   :type '(string))
 
@@ -237,8 +240,13 @@
   :type '(string))
 
 (defcustom org-tailwind-class-video
-  "border-solid border-2 rounded-md border-green-500"
+  "border-solid border-2 rounded-md border-green-500 m-auto"
   "Tailwind.css classes for the HTML VIDEO."
+  :type '(string))
+
+(defcustom org-tailwind-class-video-description
+  "mx-20 text-center italic"
+  "Tailwind.css classes for the HTML image DESCRIPTION."
   :type '(string))
 
 (defcustom org-tailwind-class-toc-items
@@ -346,7 +354,8 @@
   :type '(string))
 
 (defcustom org-tailwind-class-blockquote
-  "my-12 px-4 border-solid border-l-8 border-2 rounded-md border-gray-500 bg-gray-300"
+  "my-12 px-4 border-solid border-l-8 border-2 rounded-md
+border-gray-500 bg-gray-300"
   "Tailwind.css classes for the HTML BLOCKQUOTE block."
   :type '(string))
 
@@ -364,7 +373,8 @@
   :type '(string))
 
 (defcustom org-tailwind-class-details-block
-  "my-12 p-8 border-solid border-l-8 border-2 rounded-md border-purple-500"
+  "my-12 p-8 border-solid border-l-8 border-2 rounded-md
+border-purple-500"
   "Tailwind.css classes for the HTML DETAILS block."
   :type '(string))
 
@@ -374,7 +384,8 @@
   :type '(string))
 
 (defcustom org-tailwind-class-tip-block
-  "my-12 p-8 border-solid border-l-8 border-2 rounded-md border-teal-500"
+  "my-12 p-8 border-solid border-l-8 border-2 rounded-md
+border-teal-500"
   "Tailwind.css classes for the HTML TIP block."
   :type '(string))
 
@@ -384,7 +395,8 @@
   :type '(string))
 
 (defcustom org-tailwind-class-warning-block
-  "my-12 p-8 border-solid border-l-8 border-2 rounded-md border-yellow-500"
+  "my-12 p-8 border-solid border-l-8 border-2 rounded-md
+border-yellow-500"
   "Tailwind.css classes for the HTML WARNING block."
   :type '(string))
 
@@ -394,7 +406,8 @@
   :type '(string))
 
 (defcustom org-tailwind-class-danger-block
-  "my-12 p-8 border-solid border-l-8 border-2 rounded-md border-red-500"
+  "my-12 p-8 border-solid border-l-8 border-2 rounded-md
+border-red-500"
   "Tailwind.css classes for the HTML DANGER block."
   :type '(string))
 
@@ -418,8 +431,9 @@ shadow-md items-center h-16"
   :type '(string))
 
 (defcustom org-tailwind-class-sidebar
-  "px-24 pt-20 lg:border-r lg:border-gray-500 lg:fixed lg:w-64
-lg:p-4 lg:overflow-y-auto lg:inset-y-0 lg:mt-16 lg:mb-8"
+  "px-24 py-12 bg-gray-200 lg:border-r lg:border-gray-500
+lg:fixed lg:pt-20 lg:w-64 lg:px-2 lg:overflow-y-auto lg:inset-y-0
+lg:mt-16 lg:mb-8"
   "Tailwind.css classes for the HTML SIDEBAR."
   :type '(string))
 
@@ -435,12 +449,14 @@ lg:overflow-x-auto xl:px-32"
   :type '(string))
 
 (defcustom org-tailwind-class-inner-container
-  "px-16 py-12 pb-32 mb-12 shadow-2xl border border-solid border-gray-400 rounded-md"
+  "px-16 py-12 pb-32 mb-12 shadow-2xl border border-solid
+border-gray-400 rounded-md"
   "Tailwind.css classes for the HTML inner container."
   :type '(string))
 
 (defcustom org-tailwind-class-footer
-  "fixed bottom-0 w-full border-t border-solid border-gray-500 h-8 text-center bg-white"
+  "fixed bottom-0 w-full border-t border-solid border-gray-500
+h-8 text-center bg-white"
   "Tailwind.css classes for the HTML FOOTER."
   :type '(string))
 
@@ -470,7 +486,8 @@ border-solid border-gray-500 rounded-md"
 
 (defcustom org-tailwind-class-search-bar-results-item
   "p-2 block rounded-md hover:bg-green-300"
-  "Tailwind.css classes for the HTML RESULTS ITEM. Don't break the line."
+  "Tailwind.css classes for the HTML RESULTS ITEM. Don't break
+the line."
   :type '(string))
 
 
@@ -552,6 +569,11 @@ MathJax = {
   "Javascript files to be imported at the bottom of the HTML file."
   :type '(string))
 
+(defcustom org-tailwind-headlines
+  "h1,h2,h3"
+  "The level of the headlines to be included in the toc."
+  :type '(string))
+
 (defcustom org-tailwind-javascript
    "function getElementsByTagNames(list,obj) {
 	if (!obj) var obj = document;
@@ -579,39 +601,112 @@ MathJax = {
 }
 
 function createTOC() {
-	var z = document.getElementById('toc');;
-	var toBeTOCced = getElementsByTagNames('h1,h2,h3,h4,h5');
-	if (toBeTOCced.length < 2) return false;
-
 	// Add go to top button
-	var top = document.createElement('a');
+	let top = document.createElement('a');
 	top.innerHTML = 'Top';
 	top.href = '#top';
 	top.className += 'top %s';
-	// z.appendChild(top);
 
-	for (var i=0;i < toBeTOCced.length;i++) {
-		var tmp = document.createElement('a');
-		tmp.innerHTML = toBeTOCced[i].innerHTML;
-		tmp.className = 'p-2';
-		z.appendChild(tmp);
-		if (toBeTOCced[i].nodeName == 'H1')
-			tmp.className += ' block mt-2 ml-0';
-		if (toBeTOCced[i].nodeName == 'H2')
-			tmp.className += ' block ml-4';
-		if (toBeTOCced[i].nodeName == 'H3')
-			tmp.className += ' block ml-8';
-		if (toBeTOCced[i].nodeName == 'H4')
-			tmp.className += ' block ml-12';
-		if (toBeTOCced[i].nodeName == 'H5')
-			tmp.className += ' block ml-16';
-		if (toBeTOCced[i].nodeName == 'H6')
-			tmp.className += ' block ml-20';
-                tmp.className += ' %s';
+    // The tags with the headlines
+	let headlines = getElementsByTagNames('%s');
 
-		var headerId = toBeTOCced[i].id || 'link' + i;
-		tmp.href = '#' + headerId;
-		toBeTOCced[i].id = headerId;
+	if (headlines.length < 2) return false;
+
+    // Populate the #toc div
+	let toc = document.getElementById('toc');
+
+    // Header counts for numbering
+    let header_1 = 0;
+    let header_2 = 0;
+    let header_3 = 0;
+    let header_4 = 0;
+    let header_5 = 0;
+    let header_6 = 0;
+
+	for (var i=0;i < headlines.length;i++) {
+
+		let tocHeader = document.createElement('a');
+
+        // Tailwind.css classes
+		tocHeader.className = 'rounded px-2 py-1';
+        tocHeader.className += ' %s';
+	
+        // Add the header to the table of contents
+        toc.appendChild(tocHeader);
+
+        switch (headlines[i].nodeName) {
+          case 'H1':
+            tocHeader.className += ' block mt-2 ml-0';
+            header_1 += 1;
+            header_2 = 0;
+            header_3 = 0;
+            header_4 = 0;
+            header_5 = 0;
+            header_6 = 0;
+
+          	// Numbering
+          	tocHeader.innerHTML += '<b>' + header_1 + '.</b> ';
+            
+            break;
+
+          case 'H2':
+            tocHeader.className += ' block ml-5';
+            header_2 += 1;
+            header_3 = 0;
+            header_4 = 0;
+            header_5 = 0;
+            header_6 = 0;
+
+          	// Numbering
+          	tocHeader.innerHTML += '<b>' + header_1 + '.' + header_2 + '.</b> ';
+            break;
+
+          case 'H3':
+            tocHeader.className += ' block ml-12';
+            header_3 += 1;
+            header_4 = 0;
+            header_5 = 0;
+            header_6 = 0;
+
+          	// Numbering
+          	tocHeader.innerHTML += '<b>' + header_1 + '.' + header_2 + '.' + header_3 + '.</b> ';
+            break;
+
+          case 'H4':
+            tocHeader.className += ' block ml-20';
+            header_4 += 1;
+            header_5 = 0;
+            header_6 = 0;
+
+          	// Numbering
+          	tocHeader.innerHTML += '<b>' + header_1 + '.' + header_2 + '.' + header_3 + '.' + header_4 + '.</b> ';
+            break;
+
+          case 'H5':
+            tocHeader.className += ' block ml-32';
+            header_5 += 1;
+            header_6 = 0;
+
+          	// Numbering
+          	tocHeader.innerHTML += '<b>' + header_1 + '.' + header_2 + '.' + header_3 + '.' + header_4 + '.' + header_5 + '.</b> ';
+            break;
+
+          case 'H6':
+            tocHeader.className += ' block ml-48';
+            header_6 += 1;
+
+          	// Numbering
+          	tocHeader.innerHTML += '<b>' + header_1 + '.' + header_2 + '.' + header_3 + '.' + header_4 + '.' + header_5 + '.' + header_6 + '.</b> ';
+            break;
+        }       
+        
+        // Header title
+        tocHeader.innerHTML += headlines[i].innerHTML;
+		
+        // Add a link to the header
+		let headerId = headlines[i].id || 'link' + i;
+		tocHeader.href = '#' + headerId;
+		headlines[i].id = headerId;
 	}
 }
 
@@ -763,6 +858,7 @@ By not doing anything to the contents, it exports the elements at the root level
           org-tailwind-footer
           (format org-tailwind-javascript
                   org-tailwind-class-top-button
+                  org-tailwind-headlines
                   org-tailwind-class-toc-items
                   org-tailwind-class-search-bar-results-item)
           org-tailwind-bottom-files))
@@ -850,7 +946,8 @@ By not doing anything to the contents, it exports the elements at the root level
          (description (org-element-property :name parent))
          (file-extension (file-name-extension path))
          (link-tag "<a class=\"%s\" href=\"%s\">%s</a>")
-         (video-tag "<video class=\"%s\" controls> <source src=\"%s\" type=\"video/%s\"/> </video>")
+         (video-description "<p class=\"%s\">%s</p>")
+         (video-tag "<video class=\"%s\" controls><source src=\"%s\" type=\"video/%s\"/></video>%s")
          (image-description "<p class=\"%s\">%s</p>")
          (image-tag "<img class=\"%s\" src=\"%s\"/>%s"))
     (cond
@@ -863,7 +960,12 @@ By not doing anything to the contents, it exports the elements at the root level
       (format video-tag
               org-tailwind-class-video
               path
-              file-extension))
+              file-extension
+              (if description
+                  (format image-description
+                          org-tailwind-class-video-description
+                          description)
+                "")))
      ;; Is the link an image
      ((or (equalp file-extension "png")
           (equalp file-extension "svg")
