@@ -240,7 +240,7 @@ border-green-500"
   :type '(string))
 
 (defcustom org-tailwind-class-video
-  "border-solid border-2 rounded-md border-green-500 m-auto"
+  "mx-auto border-solid border-2 rounded-md border-green-500"
   "Tailwind.css classes for the HTML VIDEO."
   :type '(string))
 

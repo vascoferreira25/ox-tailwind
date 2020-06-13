@@ -559,8 +559,8 @@ border-solid border-gray-800")
 (setq org-tailwind-class-image "mx-auto max-w-full max-h-full
 border-solid border-2 rounded-md border-teal-700")
 
-(setq org-tailwind-class-video "border-solid border-2 rounded-md
- border-teal-700 m-auto")
+(setq org-tailwind-class-video "mx-auto border-solid border-2 rounded-md
+ border-teal-700")
 
 
 ;; Blocks
