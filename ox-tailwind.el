@@ -224,7 +224,7 @@ text-red-500 bg-gray-300"
   :type '(string))
 
 (defcustom org-tailwind-class-image-div
-  "my-12"
+  "my-12 max-w-full max-h-full"
   "Tailwind.css classes for the HTML image DIV."
   :type '(string))
 
@@ -239,6 +239,11 @@ border-green-500"
   "Tailwind.css classes for the HTML image DESCRIPTION."
   :type '(string))
 
+(defcustom org-tailwind-class-video-div
+  "my-12 max-w-full max-h-full"
+  "Tailwind.css classes for the HTML video DIV."
+  :type '(string))
+
 (defcustom org-tailwind-class-video
   "mx-auto border-solid border-2 rounded-md border-green-500"
   "Tailwind.css classes for the HTML VIDEO."
@@ -246,7 +251,7 @@ border-green-500"
 
 (defcustom org-tailwind-class-video-description
   "mx-20 text-center italic"
-  "Tailwind.css classes for the HTML image DESCRIPTION."
+  "Tailwind.css classes for the HTML video DESCRIPTION."
   :type '(string))
 
 (defcustom org-tailwind-class-toc-items
@@ -915,7 +920,8 @@ By not doing anything to the contents, it exports the elements at the root level
          (ancestor-type (org-element-property :type ancestor))
          (checkbox (org-element-property :checkbox parent))
          (is-checkbox-p (unless (equalp checkbox nil) t))
-         (is-image-p (string-match-p "<img " contents)))
+         (is-image-p (string-match-p "<img " contents))
+		 (is-video-p (string-match-p "<video " contents)))
     (cond
      ;; For Mermaid.js return raw text
      ((equalp parent-type "mermaid") contents)
@@ -927,6 +933,10 @@ By not doing anything to the contents, it exports the elements at the root level
      ;; Put image inside a div with description
      (is-image-p (format "<div class=\"%s\">%s</div>"
                          org-tailwind-class-image-div
+                         contents))
+	 ;; Put video inside a div with description
+     (is-video-p (format "<div class=\"%s\">%s</div>"
+                         org-tailwind-class-video-div
                          contents))
      ;; If is a checkbox
      (is-checkbox-p
@@ -955,6 +965,7 @@ By not doing anything to the contents, it exports the elements at the root level
      ((or (equalp file-extension "mp4")
           (equalp file-extension "avi")
           (equalp file-extension "mkv")
+          (equalp file-extension "webm")
           (equalp file-extension "mpeg4")
           (equalp file-extension "3gp"))
       (format video-tag
