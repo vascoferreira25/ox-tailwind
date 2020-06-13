@@ -509,11 +509,12 @@ border-gray-800 px-4 py-2">8</td><td class="border border-solid
 border-gray-800 px-4 py-2">9</td></tr></tbody>
 </table><p class="mx-20 text-center italic">This is an example table and description</p>
 
-<h4 class="mt-8 mb-6 text-3xl">Images</h4><div class="my-12"><img class="mx-auto p-4 max-w-full max-h-full
-border-solid border rounded-md border-teal-700" src="./sample_files/weird_cat.gif"/><p class="mx-20 text-center italic">I don't have words...</p>
+<h4 class="mt-8 mb-6 text-3xl">Images</h4><div class="my-12"><img class="mx-auto max-w-full max-h-full
+border-solid border-2 rounded-md border-teal-700" src="./sample_files/weird_cat.gif"/><p class="mx-20 text-center italic">I don't have words...</p>
 </div>
 
-<h4 class="mt-8 mb-6 text-3xl">Videos</h4><p class="my-2"><video class="border-solid border-2 rounded-md border-green-500 m-auto" controls><source src="./sample_files/cat_treats.mp4" type="video/mp4"/></video><p class="mx-20 text-center italic">What is this?</p>
+<h4 class="mt-8 mb-6 text-3xl">Videos</h4><p class="my-2"><video class="border-solid border-2 rounded-md
+ border-teal-700 m-auto" controls><source src="./sample_files/cat_treats.mp4" type="video/mp4"/></video><p class="mx-20 text-center italic">What is this?</p>
 </p>
 
 <h3 class="mt-12 mb-6 text-4xl">Formulas</h3><p class="my-2">Inline formulas: \(\sum_{i=0}^n i^2 = \frac{(n^2+n)(2n+1)}{6}\)
@@ -756,8 +757,11 @@ border-solid border-gray-800 px-2 py-2")
 (setq org-tailwind-class-table-header-row "text-gray-500 border
 border-solid border-gray-800")
 
-(setq org-tailwind-class-image "mx-auto p-4 max-w-full max-h-full
-border-solid border rounded-md border-teal-700")
+(setq org-tailwind-class-image "mx-auto max-w-full max-h-full
+border-solid border-2 rounded-md border-teal-700")
+
+(setq org-tailwind-class-video "border-solid border-2 rounded-md
+ border-teal-700 m-auto")
 
 
 ;; Blocks

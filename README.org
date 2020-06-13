@@ -556,8 +556,11 @@ border-solid border-gray-800 px-2 py-2")
 (setq org-tailwind-class-table-header-row "text-gray-500 border
 border-solid border-gray-800")
 
-(setq org-tailwind-class-image "mx-auto p-4 max-w-full max-h-full
-border-solid border rounded-md border-teal-700")
+(setq org-tailwind-class-image "mx-auto max-w-full max-h-full
+border-solid border-2 rounded-md border-teal-700")
+
+(setq org-tailwind-class-video "border-solid border-2 rounded-md
+ border-teal-700 m-auto")
 
 
 ;; Blocks
