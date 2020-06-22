@@ -34,14 +34,9 @@
 ;; For example, replace `.table' with `.ttable', there is only one occurence.
 ;;
 ;; You can change the look of the exported HTML by redefining the values of the
-;; classes. All the classes start with `org-tailwind-class-'. To change the
-;; contents of the elements you can change the following variables:
-;; - `org-tailwind-title'
-;; - `org-tailwind-head-files'
-;; - `org-tailwind-header'
-;; - `org-tailwind-footer'
-;; - `org-tailwind-sidebar'
-;; - `org-tailwind-bottom-files'
+;; classes. All the classes start with `org-tailwind-class-', check this file
+;; to know which tailwind.css classes are being used and change them any way
+;; you want.
 ;;
 ;; Prism.js needs the following plugins:
 ;; - line highlight
@@ -64,6 +59,7 @@
 
 ;;; Dependencies:
 
+(require 's)
 (require 'cl)
 (require 'ox-html)
 (require 'dash)
@@ -121,7 +117,7 @@
     (verbatim . org-tailwind-verbatim)
     (verse-block . org-html-verse-block))
   :menu-entry
-  '(?x "Export to HTML with ox-tailwind Back-End"
+  '(?x "Export to HTML with org-tailwind Back-End"
        ((?H "As HTML buffer" org-tailwind-export-as-html)
         (?h "As HTML file" org-tailwind-export-to-html)
         (?o "As HTML file and open"
@@ -139,7 +135,7 @@
 
 ;; tailwind group
 
-(defgroup ox-tailwind nil
+(defgroup org-tailwind nil
   "Classes for the html elements."
   :group 'classes)
 
@@ -149,37 +145,44 @@
 ;; Headings
 
 (defcustom org-tailwind-class-h1
-  "mt-32 mb-6 text-6xl text-gray-700"
+  "mt-32 mb-6 text-6xl text-gray-700 border-b hover:text-green-500
+border-gray-500"
   "Tailwind.css classes for Heading 1"
   :type '(string))
 
 (defcustom org-tailwind-class-h2
-  "mt-20 mb-6 text-5xl text-gray-700"
+  "mt-20 mb-6 text-5xl text-gray-700 border-b hover:text-green-500
+border-gray-500"
   "Tailwind.css classes for Heading 2"
   :type '(string))
 
 (defcustom org-tailwind-class-h3
-  "mt-12 mb-6 text-4xl text-gray-700"
+  "mt-12 mb-6 text-4xl text-gray-700 border-b hover:text-green-500
+border-gray-500"
   "Tailwind.css classes for Heading 3"
   :type '(string))
 
 (defcustom org-tailwind-class-h4
-  "mt-8 mb-6 text-3xl text-gray-700"
+  "mt-8 mb-6 text-3xl text-gray-700 border-b hover:text-green-500
+border-gray-500"
   "Tailwind.css classes for Heading 4"
   :type '(string))
 
 (defcustom org-tailwind-class-h5
-  "mt-6 mb-6 text-2xl text-gray-700"
+  "mt-6 mb-6 text-2xl text-gray-700 border-b hover:text-green-500
+border-gray-500"
   "Tailwind.css classes for Heading 5"
   :type '(string))
 
 (defcustom org-tailwind-class-h6
-  "mt-4 mb-6 text-xl text-gray-700"
+  "mt-4 mb-6 text-xl text-gray-700 border-b hover:text-green-500
+border-gray-500"
   "Tailwind.css classes for Heading 6"
   :type '(string))
 
 (defcustom org-tailwind-class-h7
-  "mt-2 mb-6 text-lg text-gray-700"
+  "mt-2 mb-6 text-lg text-gray-700 border-b hover:text-green-500
+border-gray-500"
   "Tailwind.css classes for Heading 7 and beyond."
   :type '(string))
 
@@ -202,14 +205,12 @@
   :type '(string))
 
 (defcustom org-tailwind-class-code
-  "m-1 px-2 border-solid border rounded-md border-gray-500
-text-green-500 bg-gray-300"
+  "px-2 rounded-md text-green-600 bg-gray-400"
   "Tailwind.css classes for the HTML UNDERLINE attribute."
   :type '(string))
 
 (defcustom org-tailwind-class-verbatim
-  "m-1 px-4 border-solid border rounded-md border-gray-500
-text-red-500 bg-gray-300"
+  "px-2 rounded-md text-red-600 bg-gray-400"
   "Tailwind.css classes for the HTML VERBATIM attribute."
   :type '(string))
 
@@ -229,13 +230,13 @@ text-red-500 bg-gray-300"
   :type '(string))
 
 (defcustom org-tailwind-class-image
-  "mx-auto max-w-full max-h-full border-solid border-2 rounded-md
-border-green-500"
+  "mx-auto mb-2 max-w-full max-h-full rounded-md border-2
+border-gray-500"
   "Tailwind.css classes for the HTML IMAGE."
   :type '(string))
 
 (defcustom org-tailwind-class-image-description
-  "mx-20 text-center italic"
+  "mx-48 text-center italic border-t border-gray-500"
   "Tailwind.css classes for the HTML image DESCRIPTION."
   :type '(string))
 
@@ -245,18 +246,25 @@ border-green-500"
   :type '(string))
 
 (defcustom org-tailwind-class-video
-  "mx-auto border-solid border-2 rounded-md border-green-500"
+  "mx-auto mb-2 rounded-md border-2 border-gray-500"
   "Tailwind.css classes for the HTML VIDEO."
   :type '(string))
 
 (defcustom org-tailwind-class-video-description
-  "mx-20 text-center italic"
+  "mx-48 text-center italic border-t border-gray-500"
   "Tailwind.css classes for the HTML video DESCRIPTION."
   :type '(string))
 
 (defcustom org-tailwind-class-toc-items
-  "text-sm hover:bg-green-300"
-  "Tailwind.css classes for the HTML Table of Contents items."
+  "text-sm border-b border-l-4 border-gray-200 hover:bg-green-300"
+  "Tailwind.css classes for the HTML Table of Contents items.
+Do not break the line with while inserting a `newline'. Use `\' at
+the end."
+  :type '(string))
+
+(defcustom org-tailwind-class-current-toc
+  "border-green-500"
+  "Tailwind.css classes for the CURRENT HTML Table of Contents item."
   :type '(string))
 
 
@@ -300,18 +308,23 @@ border-green-500"
 
 ;; Table
 
-(defcustom org-tailwind-class-table-name
-  "mx-20 text-center italic"
+(defcustom org-tailwind-class-table-container
+  "overflow-x-auto my-12"
   "Tailwind.css classes for the HTML table NAME."
   :type '(string))
 
 (defcustom org-tailwind-class-table
-  "table-auto m-auto my-12"
+  "table-auto m-auto my-2"
   "Tailwind.css classes for the HTML TABLE."
   :type '(string))
 
+(defcustom org-tailwind-class-table-description
+  "mx-48 text-center italic border-t border-gray-500"
+  "Tailwind.css classes for the HTML table NAME."
+  :type '(string))
+
 (defcustom org-tailwind-class-table-header-row
-  "text-gray-600 border"
+  "text-gray-600 border-b-2 border-gray-400"
   "Tailwind.css classes for the HTML table HEADER-ROW."
   :type '(string))
 
@@ -325,13 +338,18 @@ border-green-500"
   "Tailwind.css classes for the HTML table BODY-ROW."
   :type '(string))
 
+(defcustom org-tailwind-class-table-last-body-row
+  "border-b-2 border-gray-400 hover:bg-green-200"
+  "Tailwind.css classes for the HTML table BODY-ROW."
+  :type '(string))
+
 (defcustom org-tailwind-class-table-body-cell
-  "border border-solid border-gray-400 px-4 py-2"
+  "px-4 py-2"
   "Tailwind.css classes for the HTML table BODY-CELL."
   :type '(string))
 
 (defcustom org-tailwind-class-table-empty-body-cell
-  "border px-2 py-2"
+  "px-2 py-2"
   "Tailwind.css classes for the HTML table EMPTY BODY-CELL."
   :type '(string))
 
@@ -339,47 +357,62 @@ border-green-500"
 ;; Blocks
 
 (defcustom org-tailwind-class-example-container
-  "my-12 border-solid border-2 rounded-md border-green-500"
+  "my-12 rounded-md border border-gray-800 shadow-xl"
   "Tailwind.css classes for the HTML EXAMPLE-BLOCK CONTAINER."
   :type '(string))
 
 (defcustom org-tailwind-class-example
-  "text-green-500 bg-gray-300"
+  "rounded rainbow-braces"
   "Tailwind.css classes for the HTML EXAMPLE-BLOCK."
   :type '(string))
 
 (defcustom org-tailwind-class-src-container
-  "my-12 border-solid border-2 rounded-md border-green-500"
+  "my-12 shadow-xl"
   "Tailwind.css classes for the HTML SRC-BLOCK CONTAINER."
   :type '(string))
 
 (defcustom org-tailwind-class-pre
-  "rainbow-braces"
+  "rainbow-braces match-braces rounded"
   "Tailwind.css classes for the HTML SRC-BLOCK."
   :type '(string))
 
+(defcustom org-tailwind-class-blockquote-container
+  "my-12"
+  "Tailwind.css classes for the HTML BLOCKQUOTE container."
+  :type '(string))
+
 (defcustom org-tailwind-class-blockquote
-  "my-12 px-4 border-solid border-l-8 border-2 rounded-md
-border-gray-500 bg-gray-300"
+  "my-2 mx-20 px-4 border-l-8 rounded-md border border-gray-500
+bg-gray-300"
   "Tailwind.css classes for the HTML BLOCKQUOTE block."
+  :type '(string))
+
+(defcustom org-tailwind-class-blockquote-author
+  "mx-48 text-right italic border-t border-gray-500"
+  "Tailwind.css classes for the HTML blockquote AUTHOR."
   :type '(string))
 
 
 ;; Special Blocks
 
+(defcustom org-tailwind-class-mermaid-container
+  "my-12"
+  "Tailwind.css classes for the HTML MERMAID container."
+  :type '(string))
+
 (defcustom org-tailwind-class-mermaid-block
-  "my-12 p-4 max-w-full max-h-full bg-white rounded-md"
+  "my-2 p-4 max-w-full max-h-full bg-white rounded-md"
   "Tailwind.css classes for the HTML MERMAID block."
   :type '(string))
 
-(defcustom org-tailwind-class-mermaid-block-description
-  "mx-20 text-center italic"
+(defcustom org-tailwind-class-mermaid-block-title
+  "mx-20 text-center italic border-t border-gray-500"
   "Tailwind.css classes for the HTML MERMAID block."
   :type '(string))
 
 (defcustom org-tailwind-class-details-block
-  "my-12 p-8 border-solid border-l-8 border-2 rounded-md
-border-purple-500"
+  "my-12 p-8 rounded-md border-l-8 border border-purple-500
+shadow-xl"
   "Tailwind.css classes for the HTML DETAILS block."
   :type '(string))
 
@@ -389,8 +422,8 @@ border-purple-500"
   :type '(string))
 
 (defcustom org-tailwind-class-tip-block
-  "my-12 p-8 border-solid border-l-8 border-2 rounded-md
-border-teal-500"
+  "my-12 p-8 rounded-md border-l-8 border border-teal-500
+shadow-xl"
   "Tailwind.css classes for the HTML TIP block."
   :type '(string))
 
@@ -400,8 +433,8 @@ border-teal-500"
   :type '(string))
 
 (defcustom org-tailwind-class-warning-block
-  "my-12 p-8 border-solid border-l-8 border-2 rounded-md
-border-yellow-500"
+  "my-12 p-8 rounded-md border-l-8 border border-yellow-500
+shadow-xl"
   "Tailwind.css classes for the HTML WARNING block."
   :type '(string))
 
@@ -411,8 +444,8 @@ border-yellow-500"
   :type '(string))
 
 (defcustom org-tailwind-class-danger-block
-  "my-12 p-8 border-solid border-l-8 border-2 rounded-md
-border-red-500"
+  "my-12 p-8 rounded-md border-l-8 border border-red-500
+shadow-xl"
   "Tailwind.css classes for the HTML DANGER block."
   :type '(string))
 
@@ -454,8 +487,7 @@ lg:overflow-x-auto xl:px-32"
   :type '(string))
 
 (defcustom org-tailwind-class-inner-container
-  "px-16 py-12 pb-32 mb-12 shadow-2xl border border-solid
-border-gray-400 rounded-md"
+  "px-20 py-12 pb-32 mb-12 shadow-2xl rounded-md"
   "Tailwind.css classes for the HTML inner container."
   :type '(string))
 
@@ -484,15 +516,16 @@ focus:text-gray-700"
 
 (defcustom org-tailwind-class-search-bar-results-list
   "z-50 absolute w-5/6 sm:w-4/6 md:w-3/6 lg:w-2/6 xl:w-1/6
-right-0 mt-8 mr-12 bg-white p-4 shadow-lg border
+right-0 mt-12 mr-20 bg-white p-4 shadow-lg border
 border-solid border-gray-500 rounded-md"
   "Tailwind.css classes for the HTML RESULTS LIST."
   :type '(string))
 
 (defcustom org-tailwind-class-search-bar-results-item
   "p-2 block rounded-md hover:bg-green-300"
-  "Tailwind.css classes for the HTML RESULTS ITEM. Don't break
-the line."
+  "Tailwind.css classes for the HTML RESULTS ITEM.
+Do not break the line with while inserting a `newline'. Use `\' at
+the end."
   :type '(string))
 
 
@@ -516,14 +549,6 @@ MathJax = {
 <script type=\"text/javascript\" async
   src=\"./mathjax/tex-mml-chtml.js\">
 </script>
-
-<!-- Other Settings -->
-<style>
-.mermaid > svg {margin: auto;}
-.line-highlight {
-    background: linear-gradient(to right, hsla(0, 0%, 100%, 0.1) 70%, hsla(157.4, 100%, 51%, 0.04));
-}
-</style>
 
 <!-- Your CSS file should come here -->
 <link href=\"./css/style.css\" rel=\"stylesheet\" />
@@ -563,7 +588,7 @@ MathJax = {
   :type '(string))
 
 (defcustom org-tailwind-footer
-  "<p>Exported with ox-tailwind</p>"
+  "<p>Exported with org-tailwind</p>"
   "Contents of footer in HTML."
   :type '(string))
 
@@ -635,6 +660,12 @@ function createTOC() {
         // Tailwind.css classes
 		tocHeader.className = 'rounded px-2 py-1';
         tocHeader.className += ' %s';
+
+        // Make the first header active
+        // This will be used for the scroll spy
+        if (i == 0) {
+            tocHeader.className += ' %s';
+        }
 	
         // Add the header to the table of contents
         toc.appendChild(tocHeader);
@@ -709,9 +740,10 @@ function createTOC() {
         tocHeader.innerHTML += headlines[i].innerHTML;
 		
         // Add a link to the header
-		let headerId = headlines[i].id || 'link' + i;
-		tocHeader.href = '#' + headerId;
+		let headerId = headlines[i].id || 'toc-link-' + i;
 		headlines[i].id = headerId;
+        tocHeader.id = \"goto-\" + headerId;
+		tocHeader.href = '#' + headerId;
 	}
 }
 
@@ -724,7 +756,7 @@ for(let i = 0; i < tocTree.length; i++) {
     let heading = tocTree[i]
     let item = document.createElement('li')
     let link = document.createElement('a')
-    link.href = heading.file + '#link' + heading.index
+    link.href = heading.file + '#toc-link-' + heading.index
     link.className = \"%s\"
     link.style.display = 'none'
 
@@ -768,6 +800,56 @@ function search(){
         }
     }
 }
+
+
+// Check if an element is visible
+function isElementVisible (el, parent) {
+    let rect = el.getBoundingClientRect();
+
+    return (
+        rect.top >= parent.getBoundingClientRect().top &&
+        rect.left >= 0 &&
+        rect.bottom <= (parent.clientHeight + parent.getBoundingClientRect().top) &&
+        rect.right <= (parent.clientWidth)
+    );
+}
+
+
+// Scroll Spy
+// Everything is run inside the function because offsets
+// are created due to tailwind.css classes as it changes
+// the height/position of the elements after the page is loaded
+function scrollSpy () {
+  let headings = document.querySelectorAll('[id^=\"toc-link-\"]');
+  let headingsTopOffsets = {};
+  let i = 0;
+
+  let selectedClassName = \"%s\";
+
+  Array.prototype.forEach.call(headings, function(s) {
+    headingsTopOffsets[s.id] = s.offsetTop;
+  });
+  
+  
+  let scrollEl = document.getElementById(\"content-container\");
+  let scrollPosition = scrollEl.scrollTop + 150;
+
+  let sidebar = document.getElementById('sidebar');
+
+  for (i in headingsTopOffsets) {
+    if (headingsTopOffsets[i] <= scrollPosition) {
+      document.querySelector(`div#sidebar a.${selectedClassName}`).classList.remove(selectedClassName);
+      document.querySelector(`a[id^=\"goto-${i}\"]`).classList.add(selectedClassName);
+
+      // Scroll the sidebar to the current heading if not visible
+      let tocItem = document.getElementById(`goto-${i}`);
+      if (!isElementVisible(tocItem, sidebar)) {
+          tocItem.scrollIntoView();
+      }
+    }
+  }
+
+};
 "
   "Javascript code needed in the HTML file."
   :type '(string))
@@ -791,7 +873,7 @@ function search(){
   %s
   </div>
 
-  <div id=\"content-container\" class=\"%s\">
+  <div id=\"content-container\" class=\"%s\" onscroll=\"scrollSpy()\">
     <div id=\"top\"></div>
     <div id=\"inner-container\" class=\"%s\">
       %s
@@ -865,7 +947,9 @@ By not doing anything to the contents, it exports the elements at the root level
                   org-tailwind-class-top-button
                   org-tailwind-headlines
                   org-tailwind-class-toc-items
-                  org-tailwind-class-search-bar-results-item)
+                  org-tailwind-class-current-toc
+                  org-tailwind-class-search-bar-results-item
+                  org-tailwind-class-current-toc)
           org-tailwind-bottom-files))
 
 (defun org-tailwind-bold (bold contents info)
@@ -1008,7 +1092,13 @@ By not doing anything to the contents, it exports the elements at the root level
 
 (defun org-tailwind-blockquote (blockquote contents info)
   "Transcode BLOCKQUOTE from Org to HTML."
-  (format "<blockquote class=\"%s\">%s</blockquote>" org-tailwind-class-blockquote contents))
+  (format
+   "<div class=\"%s\"><blockquote class=\"%s\">%s</blockquote><p class=\"%s\">%s</p></div>"
+   org-tailwind-class-blockquote-container
+   org-tailwind-class-blockquote
+   contents
+   org-tailwind-class-blockquote-author
+   (org-element-property :name blockquote)))
 
 (defvar org-tailwind--src-block-open
   "<div class=\"%s\"><pre class=\"%s\" %s>"
@@ -1039,7 +1129,7 @@ It has two format places:
     (concat
      (format org-tailwind--src-block-open
              org-tailwind-class-src-container
-             (concat "command-line " )
+             (concat "command-line " org-tailwind-class-pre)
              (concat
               "data-filter-output=\"(out)\" "
               ;; Add user and host names
@@ -1109,10 +1199,13 @@ It has two format places:
         (language (org-element-property :language example-block))
         (highlight-lines (org-element-property :highlight example-block)))
     (format "<div class=\"%s\">
-<pre class=\"%s\"><code class=\"language-%s\">%s</code></pre></div>"
+<pre class=\"%s\">
+<code class=\"language-%s\">%s</code>
+</pre>
+</div>"
             org-tailwind-class-example-container
             org-tailwind-class-example
-            (if language language "")
+            (if language language "none")
             code-text)))
 
 (defun org-tailwind-special-block (special-block contents info)
@@ -1127,10 +1220,11 @@ There are 4 types of blocks:
   (let* ((type (org-element-property :type special-block))
          (name (org-element-property :name special-block)))
     (cond ((equalp type "mermaid")
-           (format "<div class=\"%s\"><div class=\"mermaid\">%s</div><p class=\"%s\">%s</p></div>"
+           (format "<div class=\"%s\"><div class=\"mermaid %s\">%s</div><p class=\"%s\">%s</p></div>"
+                   org-tailwind-class-mermaid-container
                    org-tailwind-class-mermaid-block
                    contents
-                   org-tailwind-class-mermaid-block-description
+                   org-tailwind-class-mermaid-block-title
                    (if name name "")))
           ;; TODO: process title as summary
           ((equalp type "details")
@@ -1189,15 +1283,27 @@ There are 4 types of blocks:
   "Transcode TABLE-CELL from Org to HTML.
 If TABLE-CELL is part of the table header, return the HTML table
 cell with `th'. Return `td' otherwise."
-  (if (org-export-table-row-in-header-p (org-export-get-parent table-cell) info)
-      (format "<th class=\"%s\">%s</th>" org-tailwind-class-table-header-cell contents)
-    (if contents
-        (format "<td class=\"%s\">%s</td>"
-                org-tailwind-class-table-body-cell
-                contents)
-      (format "<td class=\"%s\">%s</td>"
-              org-tailwind-class-table-empty-body-cell
-              ""))))
+  (let* ((header-p (org-export-table-row-in-header-p
+                   (org-export-get-parent table-cell) info))
+         (text-alignment (org-export-table-cell-alignment
+                          table-cell
+                          info)))
+    (if header-p
+        (format "<th class=\"%s\">%s</th>" org-tailwind-class-table-header-cell contents)
+      (if contents
+          (format "<td class=\"%s %s\">%s</td>"
+                  org-tailwind-class-table-body-cell
+                  (concat "text-"
+                          (cond
+                           ((equal text-alignment 'left) "left")
+                           ((equal text-alignment 'center) "center")
+                           ((equal text-alignment 'right) "right")))
+                  contents)
+        (format "<td class=\"%s\"></td>"
+                org-tailwind-class-table-empty-body-cell)))))
+
+
+;; (message "%s" (org-export-table-cell-alignment table-cell info))
 
 (defun org-tailwind-table-row (table-row contents info)
   "Transcode TABLE-ROW from Org to HTML.
@@ -1244,7 +1350,7 @@ tag. If it is neither, return the row without group tags."
                   (cdr row)))
          ;; Is the last row of the body
          ((not (eq is-last-row-p nil))
-          (concat (format (car row) org-tailwind-class-table-body-row)
+          (concat (format (car row) org-tailwind-class-table-last-body-row)
                   contents
                   (cdr row)
                   (cdr body)))
@@ -1256,12 +1362,13 @@ tag. If it is neither, return the row without group tags."
 (defun org-tailwind-table (table contents info)
   "Transcode TABLE from Org to HTML."
   (let ((name (org-element-property :name table)))
-    (format "<div class=\"overflow-x-auto\"><table class=\"%s\">%s</table>%s</div>"
+    (format "<div class=\"%s\"><table class=\"%s\">%s</table>%s</div>"
+            org-tailwind-class-table-container
             org-tailwind-class-table
             contents
             (if name
                 (format "<p class=\"%s\">%s</p>"
-                        org-tailwind-class-table-name
+                        org-tailwind-class-table-description
                         name)
               ""))))
 
@@ -1318,7 +1425,7 @@ There are three types of lists:
 
 ;;; Search bar toc tree
 
-(defun ox-tailwind--json-toc-item (file title heading index)
+(defun org-tailwind--json-toc-item (file title heading index)
   "Transform HEADING and TITLE to a json object."
   (format
    "\t{\n\t\t\"name\": \"%s\", \n\t\t\"index\": \"%s\", \n\t\t\"parent\": \"%s\", \n\t\t\"file\": \"%s\"\n\t},"
@@ -1328,13 +1435,13 @@ There are three types of lists:
    (replace-regexp-in-string ".org" ".html" file)))
 
 
-(defun ox-tailwind--json-toc-all-items (headings title file)
+(defun org-tailwind--json-toc-all-items (headings title file)
   "Transform all the HEADINGS into an object with the heading and
 the TITLE."
   (string-join
    (-map
     (lambda (heading)
-      (ox-tailwind--json-toc-item
+      (org-tailwind--json-toc-item
        file
        title
        (-first-item heading)
@@ -1343,12 +1450,14 @@ the TITLE."
    "\n"))
 
 
-(defun ox-tailwind--json-toc (filename file-tree output-directory)
+(defun org-tailwind--json-toc (filename file-tree output-directory)
   "Read all the exported files and search for headings.
 The JSON format will"
 
   ;; Create an empty list to append all the headings
   (setq headings '())
+
+  (setq headings-max-level (+ 1 (s-count-matches "," org-tailwind-headlines)))
 
   ;; Create a temporary buffer to store the text of the file
   (with-temp-buffer
@@ -1358,7 +1467,10 @@ The JSON format will"
     ;; this will be used to target the element position in html
     (setq count 0)
     ;; Search for the org headings
-    (while (search-forward-regexp "^\\*+\s.*$" nil t)
+    (while (search-forward-regexp
+            (format "^\\*\\{1,%s\\}\s.*$" headings-max-level)
+            nil
+            t)
       ;; Split the org headings and text
       (let ((cur-line (string-join (cdr (split-string (match-string 0) "\s")) " ")))
         (setq headings (append headings `((,cur-line ,count))))
@@ -1366,13 +1478,13 @@ The JSON format will"
 
   (setq title (-first-item (-first-item headings)))
   (setq json-headings
-        (ox-tailwind--json-toc-all-items headings title filename))
+        (org-tailwind--json-toc-all-items headings title filename))
 
   ;; Write the json toc tree to file
   (write-region json-headings nil file-tree 'append))
 
 
-(defun ox-tailwind--json-toc-all-files (notes-directory output-directory)
+(defun org-tailwind--json-toc-all-files (notes-directory output-directory)
   "Read all the files in the notes directory and create a toc tree."
  
   (setq files (directory-files notes-directory nil ".org"))
@@ -1389,12 +1501,12 @@ The JSON format will"
   (-map
    (lambda (file)
      (let ((file-path (concat "./" file)))
-       (ox-tailwind--json-toc file-path file-tree output-directory))) files)
+       (org-tailwind--json-toc file-path file-tree output-directory))) files)
 
   ;; Close the js object
   (write-region "\n];" nil file-tree 'append))
 
-;;(ox-tailwind--json-toc-all-files "./resources" "./out")
+;;(org-tailwind--json-toc-all-files "./resources" "./out")
 
 
 ;;;###autoload
@@ -1469,7 +1581,7 @@ is the property list for the given project.  PUB-DIR is the
 publishing directory.
 
 Return output file name."
-  (ox-tailwind--json-toc-all-files (file-name-directory filename) pub-dir)
+  (org-tailwind--json-toc-all-files (file-name-directory filename) pub-dir)
   (org-publish-org-to 'tailwind filename
                       (concat (when (> (length org-html-extension) 0) ".")
                               (or (plist-get plist :html-extension)
