@@ -1,4 +1,4 @@
-* Org-Tailwind Export Back-End
+* Ox-Tailwind Export Back-End
   
 This back-end has the purpose of allowing easy customization of the HTML
 output. Although it is called ~Tailwind~, the only thing that it does is
@@ -186,19 +186,28 @@ My export settings are the following:
 
 #+BEGIN_SRC elisp
 (setq org-publish-project-alist
-      '(("notes"
-         :publishing-function org-tailwind-publish-to-html
+      '(("org-files"
+         :base-extension "org"
          :base-directory "V:/orgmode/"
-         :publishing-directory "V:/orgmode/dist/")
-        ;; Images and attachment files
+         :publishing-directory "V:/orgmode/dist/"
+         :publishing-function org-tailwind-publish-to-html)
         ("images"
          :base-directory "V:/orgmode/img/"
-         :publishing-function org-publish-attachment
-         :publishing-directory "V:/orgmode/dist/img/")
+         :base-extension ".*"
+         :publishing-directory "V:/orgmode/dist/img/"
+         :publishing-function org-publish-attachment)
         ("files"
          :base-directory "V:/orgmode/files/"
-         :publishing-function org-publish-attachment
-         :publishing-directory "V:/orgmode/dist/files/")))
+         :base-extension ".*"
+         :publishing-directory "V:/orgmode/dist/files/"
+         :publishing-function org-publish-attachment)
+        ("tangles"
+         :base-directory "V:/orgmode/tangles/"
+         :base-extension ".*"
+         :publishing-directory "V:/orgmode/dist/tangles/"
+         :publishing-function org-publish-attachment)
+        ;; Publish all in one time
+        ("notes" :components ("org-files" "images" "files" "tangles"))))
 #+END_SRC
 
 ** Notes output directory
@@ -305,11 +314,12 @@ _Underlined Text_
 **** Tables
      
 #+NAME: This is an example table and description
-| A | B | C |
-|---+---+---|
-| 1 | 2 | 3 |
-| 4 | 5 | 6 |
-| 7 | 8 | 9 |
+| A               | B              |                   C |
+|-----------------+----------------+---------------------|
+| <l>             | <c>            |                 <r> |
+| In this column  | In this        |            Finally, |
+| the text        | column         |         in this one |
+| is left aligned | it is centered | it is right aligned |
      
 **** Images
 
@@ -329,13 +339,14 @@ $$\sum_{i=0}^n i^2 = \frac{(n^2+n)(2n+1)}{6}$$
 *** Blocks
 **** Blockquote
 
+#+NAME: The name of the author
 #+begin_quote
 Once upon a time..........
 #+end_quote
 
 **** Source Blocks
 
-Source code blocks can be downloaded directly form github:
+Source code blocks can be downloaded directly from github:
 
 #+ATTR_HIGHLIGHT: 2,6-8,11-20,48-51
 #+ATTR_FETCH: https://api.github.com/repos/vascoferreira25/discord-bot/contents/src/main/core.cljs
@@ -423,7 +434,7 @@ section A section
 Completed task            :done,    des1, 2014-01-06,2014-01-08
 Active task               :active,  des2, 2014-01-09, 3d
 Future task               :         des3, after des2, 5d
-Future task2               :         des4, after des3, 5d
+Future task2              :         des4, after des3, 5d
 
 section Critical tasks
 Completed task in the critical line :crit, done, 2014-01-06,24h
@@ -455,8 +466,12 @@ These blocks have custom attributes that you can change:
   - ~#+ATTR_FILEPATH~ :: get files and add a download button, it uses HTTP so, no local files.
 - Custom blocks ::
   - ~#+NAME~ :: the title of the block
-- Tables and Images and Videos ::
+- Tables ::
   - ~#+NAME~ :: the description of the table or image or video
+-  Images and Videos ::
+  - ~#+NAME~ :: the description of the table or image or video
+- Blockquotes ::
+  - ~#+NAME~ :: the name of the author
 
 ** Customization
 *** Dark Theme
@@ -465,107 +480,79 @@ To get dark mode, add this to your ~config.el~ or ~.spacemacs~ file:
 
 #+BEGIN_SRC elisp
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-                                        ;         ox-tailwind settings        ;
+                                        ;         org-tailwind settings        ;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+;; Headlines to include in the Table of Contents
 (setq org-tailwind-headlines "h1,h2,h3")
 
+(setq org-tailwind-class-h1 "mt-32 mb-6 text-6xl text-yellow-600
+border-b hover:text-green-500 border-gray-500")
 
-;; Divs
+(setq org-tailwind-class-h2 "mt-20 mb-6 text-5xl text-yellow-600
+border-b hover:text-green-500 border-gray-500")
+
+(setq org-tailwind-class-h3 "mt-12 mb-6 text-4xl text-yellow-600
+border-b hover:text-green-500 border-gray-500")
+
+(setq org-tailwind-class-h4 "mt-8 mb-6 text-3xl text-yellow-600
+border-b hover:text-green-500 border-gray-500")
+
+(setq org-tailwind-class-h5 "mt-6 mb-6 text-2xl text-yellow-600
+border-b hover:text-green-500 border-gray-500")
+
+(setq org-tailwind-class-h6 "mt-4 mb-6 text-xl text-yellow-600
+border-b hover:text-green-500 border-gray-500")
+
+(setq org-tailwind-class-h7 "mt-2 mb-6 text-lg text-yellow-600
+border-b hover:text-green-500 border-gray-500")
+
+(setq org-tailwind-class-code "px-2 rounded-md text-green-600
+bg-gray-900")
+
+(setq org-tailwind-class-verbatim "px-2 rounded-md text-red-600
+bg-gray-900")
+
+
+;; Page Elements
 
 (setq org-tailwind-class-body "flex flex-col h-screen
-bg-gray-900 text-gray-400")
+text-gray-200 bg-gray-800")
 
-(setq org-tailwind-class-header "w-full border-b border-gray-700
-shadow-md items-center h-16")
-
-(setq org-tailwind-class-sidebar "px-24 py-12 bg-gray-800
-lg:border-r lg:border-gray-700 lg:fixed lg:pt-2 lg:w-64 lg:px-2
-lg:overflow-y-auto lg:inset-y-0 lg:mt-16 lg:mb-8")
-
-(setq org-tailwind-class-toc-items "text-sm hover:bg-gray-700")
-
-(setq org-tailwind-class-inner-container "px-16 py-12 pb-32 mb-12
-shadow-2xl border border-solid border-gray-800 rounded-md")
+(setq org-tailwind-class-header "w-full border-b border-gray-500
+bg-gray-900 shadow-md items-center h-16")
 
 (setq org-tailwind-class-footer "fixed bottom-0 w-full border-t
-border-solid border-gray-700 h-8 text-center")
+border-solid border-gray-500 h-8 text-center bg-gray-900")
 
+(setq org-tailwind-class-sidebar "px-24 py-12 bg-gray-900
+lg:border-r lg:border-gray-500 lg:fixed lg:pt-2 lg:w-64 lg:px-2
+lg:overflow-y-auto lg:inset-y-0 lg:mt-16 lg:mb-8")
 
-;; Search bar
+(setq org-tailwind-class-toc-items "text-sm border-b border-l-4 \
+border-gray-900 hover:border-yellow-700")
+
+(setq org-tailwind-class-current-toc "border-yellow-700")
 
 (setq org-tailwind-class-search-bar "float-right mx-4 w-1/6
 rounded-lg px-4 py-1 border-solid border-2 border-gray-700
-bg-gray-700 text-gray-600 focus:border-teal-700
-focus:text-gray-400")
+bg-gray-900 text-gray-700 focus:border-yellow-700
+focus:text-gray-200")
 
 (setq org-tailwind-class-search-bar-results-list "z-50 absolute
-w-5/6 sm:w-4/6 md:w-3/6 lg:w-2/6 xl:w-1/6 right-0 mt-8 mr-12
-bg-gray-800 p-4 shadow-lg border border-solid border-gray-700
-rounded-md")
+w-5/6 sm:w-4/6 md:w-3/6 lg:w-2/6 xl:w-1/6 right-0 mt-12 mr-20
+bg-gray-900 p-4 shadow-lg border border-solid border-gray-500
+rounded-md text-gray-200")
 
-(setq org-tailwind-class-search-bar-results-item
-      "p-2 block rounded-md hover:bg-gray-700")
+(setq org-tailwind-class-search-bar-results-item "p-2 block \
+rounded-md hover:bg-yellow-700")
 
-(setq org-tailwind-footer "<p>Made by MEEE!</p>")
+(setq org-tailwind-class-blockquote "my-2 mx-20 px-4 border-l-8
+rounded-md border border-gray-500 bg-gray-900")
 
+(setq org-tailwind-class-table-body-row "hover:bg-gray-900")
 
-;; Elements
-
-(setq org-tailwind-class-h1
-      "mt-32 mb-6 text-6xl")
-
-(setq org-tailwind-class-h2
-      "mt-20 mb-6 text-5xl")
-
-(setq org-tailwind-class-h3
-      "mt-12 mb-6 text-4xl")
-
-(setq org-tailwind-class-h4
-      "mt-8 mb-6 text-3xl")
-
-(setq org-tailwind-class-h5
-      "mt-6 mb-6 text-2xl")
-
-(setq org-tailwind-class-h6
-      "mt-4 mb-6 text-xl")
-
-(setq org-tailwind-class-h7
-      "mt-2 mb-6 text-lg")
-
-(setq org-tailwind-class-link "text-blue-500
-hover:text-green-500")
-
-(setq org-tailwind-class-code "m-1 px-2 border-solid border
-rounded-md border-gray-500 text-green-500 bg-gray-700")
-
-(setq org-tailwind-class-verbatim "m-1 px-2 border-solid border
-rounded-md border-gray-500 text-red-500 bg-gray-700")
-
-(setq org-tailwind-class-blockquote "my-4 px-4 border-solid
-border-l-8 border-2 rounded-md border-gray-700 bg-gray-800")
-
-(setq org-tailwind-class-table-body-row "hover:bg-gray-800")
-
-(setq org-tailwind-class-table-body-cell "border border-solid
-border-gray-800 px-4 py-2")
-
-(setq org-tailwind-class-table-empty-body-cell "border
-border-solid border-gray-800 px-2 py-2")
-
-(setq org-tailwind-class-table-header-row "text-gray-500 border
-border-solid border-gray-800")
-
-(setq org-tailwind-class-image "mx-auto max-w-full max-h-full
-border-solid border-2 rounded-md border-teal-700")
-
-(setq org-tailwind-class-video "mx-auto border-solid border-2 rounded-md
- border-teal-700")
-
-
-;; Blocks
-
-(setq org-tailwind-class-src-container "my-12 border-solid
-border-2 rounded-md border-teal-700")
+(setq org-tailwind-class-table-last-body-row "border-b-2
+border-gray-400 hover:bg-gray-900")
 #+END_SRC
 
