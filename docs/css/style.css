@@ -1,3 +1,11 @@
+.mermaid > svg {
+    margin: auto;
+}
+
+.line-highlight {
+    background: linear-gradient(to right, hsla(0, 0%, 100%, 0.1) 70%, hsla(180, 23.8%, 4.1%, 0.04));
+}
+
 pre[class*="language-"] {
 	margin: 0rem;
 }
