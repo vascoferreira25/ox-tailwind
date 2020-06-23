@@ -1432,7 +1432,7 @@ There are three types of lists:
    (replace-regexp-in-string "\"" "'" heading)
    index
    title
-   (replace-regexp-in-string ".org" ".html" file)))
+   (replace-regexp-in-string "\\.org$" ".html" file)))
 
 
 (defun org-tailwind--json-toc-all-items (headings title file)
