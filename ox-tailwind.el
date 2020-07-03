@@ -1093,12 +1093,15 @@ By not doing anything to the contents, it exports the elements at the root level
 (defun org-tailwind-blockquote (blockquote contents info)
   "Transcode BLOCKQUOTE from Org to HTML."
   (format
-   "<div class=\"%s\"><blockquote class=\"%s\">%s</blockquote><p class=\"%s\">%s</p></div>"
+   "<div class=\"%s\"><blockquote class=\"%s\">%s</blockquote>%s</div>"
    org-tailwind-class-blockquote-container
    org-tailwind-class-blockquote
    contents
-   org-tailwind-class-blockquote-author
-   (org-element-property :name blockquote)))
+   (if (org-element-property :name blockquote)
+       (format "<p class=\"%s\">%s</p>"
+               org-tailwind-class-blockquote-author
+               (org-element-property :name blockquote))
+     "")))
 
 (defvar org-tailwind--src-block-open
   "<div class=\"%s\"><pre class=\"%s\" %s>"
