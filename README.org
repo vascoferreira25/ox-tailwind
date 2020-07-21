@@ -507,6 +507,9 @@ border-b hover:text-green-500 border-gray-500")
 (setq org-tailwind-class-h7 "mt-2 mb-6 text-lg text-yellow-600
 border-b hover:text-green-500 border-gray-500")
 
+(setq org-tailwind-class-h8 "mt-1 mb-6 text-base text-yellow-600
+border-b hover:text-green-500 border-gray-500")
+
 (setq org-tailwind-class-code "px-2 rounded-md text-green-600
 bg-gray-900")
 

@@ -183,7 +183,13 @@ border-gray-500"
 (defcustom org-tailwind-class-h7
   "mt-2 mb-6 text-lg text-gray-700 border-b hover:text-green-500
 border-gray-500"
-  "Tailwind.css classes for Heading 7 and beyond."
+  "Tailwind.css classes for Heading 7."
+  :type '(string))
+
+(defcustom org-tailwind-class-h8
+  "mt-1 mb-6 text-base text-gray-700 border-b hover:text-green-500
+border-gray-500"
+  "Tailwind.css classes for Heading 8 and beyond."
   :type '(string))
 
 
@@ -1273,7 +1279,9 @@ There are 4 types of blocks:
                            text level header-contents))
      ((eq level 6) (format header level org-tailwind-class-h6
                            text level header-contents))
-     (t (format header level org-tailwind-class-h7 text level
+     ((eq level 7) (format header level org-tailwind-class-h7
+                           text level header-contents))
+     (t (format header level org-tailwind-class-h8 text level
                 header-contents)))))
 
 (defun org-tailwind-headline (headline contents info)
