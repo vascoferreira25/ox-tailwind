@@ -545,13 +545,14 @@ the end."
 <link href=\"./css/prism_tomorrow.css\" rel=\"stylesheet\" />
 
 <!-- Mathjax -->
-<script>
+<script async>
 MathJax = {
   tex: {
   	processEscapes: true
   }
 }
 </script>
+
 <script type=\"text/javascript\" async
   src=\"./mathjax/tex-mml-chtml.js\">
 </script>
@@ -560,7 +561,7 @@ MathJax = {
 <link href=\"./css/style.css\" rel=\"stylesheet\" />
 
 <!-- Toc tree file -->
-<script src=\"./js/toc_tree.js\"></script>
+<script async src=\"./js/toc_tree.js\"></script>
 "
   "Links to be imported on the head of the HTML file."
   :type '(string))
@@ -891,7 +892,6 @@ function scrollSpy () {
 %s
 </div>
 
-</script>
 <script>
 %s
 </script>
