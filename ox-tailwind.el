@@ -545,7 +545,7 @@ the end."
 <link href=\"./css/prism_tomorrow.css\" rel=\"stylesheet\" />
 
 <!-- Mathjax -->
-<script async>
+<script>
 MathJax = {
   tex: {
   	processEscapes: true
@@ -561,7 +561,7 @@ MathJax = {
 <link href=\"./css/style.css\" rel=\"stylesheet\" />
 
 <!-- Toc tree file -->
-<script async src=\"./js/toc_tree.js\"></script>
+<script src=\"./js/toc_tree.js\"></script>
 "
   "Links to be imported on the head of the HTML file."
   :type '(string))
@@ -949,6 +949,7 @@ By not doing anything to the contents, it exports the elements at the root level
           contents
           org-tailwind-class-footer
           org-tailwind-footer
+          ;; Generate TOC Javascript
           (format org-tailwind-javascript
                   org-tailwind-class-top-button
                   org-tailwind-headlines
