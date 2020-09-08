@@ -15,7 +15,7 @@ Check the [[https://vascoferreira25.github.io/ox-tailwind/][Light Theme]].
 
 Check the [[https://vascoferreira25.github.io/ox-tailwind/dark.html][Dark Theme]].
 
-Gitlab alike [[./docs/another_theme.html][theme]].
+Gitlab alike [[https://vascoferreira25.github.io/ox-tailwind/another_theme.html][theme]].
 
 ** Known bugs
 
