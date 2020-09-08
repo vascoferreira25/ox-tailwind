@@ -9,11 +9,13 @@ HTML export back-end).
 Instead of using Tailwind.css you can just name the classes of the elements and
 import your own css (or edit ~./css/styles.css~).
 
-** Light and Dark Themes
+** More Themes
 
 Check the [[https://vascoferreira25.github.io/ox-tailwind/][Light Theme]].
 
 Check the [[https://vascoferreira25.github.io/ox-tailwind/dark.html][Dark Theme]].
+
+Gitlab alike [[./docs/another_theme.html][theme]].
 
 ** Known bugs
 
@@ -559,3 +561,77 @@ rounded-md border border-gray-500 bg-gray-900")
 border-gray-400 hover:bg-gray-900")
 #+END_SRC
 
+*** Gitlab alike Theme
+
+#+BEGIN_SRC elisp
+(setq org-tailwind-headlines "h1,h2,h3")
+
+(setq org-tailwind-class-h1 "mt-32 mb-6 text-4xl text-gray-800
+border-b hover:text-blue-500 border-gray-500")
+
+(setq org-tailwind-class-h2 "mt-20 mb-6 text-3xl text-gray-800
+border-b hover:text-blue-500 border-gray-500")
+
+(setq org-tailwind-class-h3 "mt-12 mb-6 text-2xl text-gray-800
+border-b hover:text-blue-500 border-gray-500")
+
+(setq org-tailwind-class-h4 "mt-8 mb-6 text-xl text-gray-800
+border-b hover:text-blue-500 border-gray-500")
+
+(setq org-tailwind-class-h5 "mt-6 mb-6 text-lg text-gray-800
+border-b hover:text-blue-500 border-gray-500")
+
+(setq org-tailwind-class-h6 "mt-4 mb-6 text-lg text-gray-800
+border-b hover:text-blue-500 border-gray-500")
+
+(setq org-tailwind-class-h7 "mt-2 mb-6 text-base text-gray-800
+border-b hover:text-blue-500 border-gray-500")
+
+(setq org-tailwind-class-h8 "mt-1 mb-6 text-base text-gray-800
+border-b hover:text-green-500 border-gray-500")
+
+(setq org-tailwind-class-code "px-2 rounded-md text-green-600
+bg-gray-200")
+
+(setq org-tailwind-class-verbatim "px-2 rounded-md text-red-600
+bg-gray-200")
+
+(setq org-tailwind-class-link "text-blue-700 hover:text-blue-800 hover:underline")
+
+
+;; Page Elements
+
+(setq org-tailwind-class-body "flex flex-col h-screen
+text-gray-800")
+
+(setq org-tailwind-class-inner-container "px-20 pb-24 mb-12 border border-gray-300")
+
+(setq org-tailwind-class-header "w-full border-b border-gray-500
+bg-purple-900 shadow-md items-center h-16 text-white")
+
+(setq org-tailwind-class-footer "hidden fixed bottom-0 w-full border-t \
+border-solid border-gray-500 h-8 text-center bg-gray-900")
+
+(setq org-tailwind-class-sidebar "px-24 py-12 bg-gray-100
+lg:border-r-4 lg:border-gray-300 lg:fixed lg:pt-2 lg:w-64 lg:px-2
+lg:overflow-y-auto lg:inset-y-0 lg:mt-16")
+
+(setq org-tailwind-class-content-container "flex-grow px-4 py-12 \
+sm:px-8 md:px-12 lg:ml-64 lg:px-12 lg:overflow-x-auto xl:px-32")
+
+(setq org-tailwind-class-toc-items "text-sm hover:bg-gray-500")
+
+(setq org-tailwind-class-current-toc "bg-gray-400 border-r-4 border-indigo-900")
+
+(setq org-tailwind-class-search-bar "float-right mx-4 w-1/6 \
+rounded-lg px-4 py-1 border-solid border border-purple-900 \
+bg-purple-800 text-gray-800 focus:text-white")
+
+(setq org-tailwind-class-search-bar-results-list "z-50 absolute \
+w-5/6 sm:w-4/6 md:w-3/6 lg:w-2/6 xl:w-1/6 right-0 mt-12 mr-20 \
+bg-white p-4 shadow-lg border border-indigo-700 \
+rounded-md text-gray-800")
+
+(setq org-tailwind-class-search-bar-results-item "p-2 block \
+rounded hover:bg-gray-500")
+#+END_SRC

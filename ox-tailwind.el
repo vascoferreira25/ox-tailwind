@@ -665,7 +665,7 @@ function createTOC() {
 		let tocHeader = document.createElement('a');
 
         // Tailwind.css classes
-		tocHeader.className = 'rounded px-2 py-1';
+		tocHeader.className = 'px-2 py-1';
         tocHeader.className += ' %s';
 
         // Make the first header active
@@ -822,6 +822,20 @@ function isElementVisible (el, parent) {
 }
 
 
+DOMTokenList.prototype.addMany = function(classes) {
+    var array = classes.split(' ');
+    for (var i = 0, length = array.length; i < length; i++) {
+      this.add(array[i]);
+    }
+}
+
+DOMTokenList.prototype.removeMany = function(classes) {
+    var array = classes.split(' ');
+    for (var i = 0, length = array.length; i < length; i++) {
+      this.remove(array[i]);
+    }
+}
+
 // Scroll Spy
 // Everything is run inside the function because offsets
 // are created due to tailwind.css classes as it changes
@@ -845,8 +859,8 @@ function scrollSpy () {
 
   for (i in headingsTopOffsets) {
     if (headingsTopOffsets[i] <= scrollPosition) {
-      document.querySelector(`div#sidebar a.${selectedClassName}`).classList.remove(selectedClassName);
-      document.querySelector(`a[id^=\"goto-${i}\"]`).classList.add(selectedClassName);
+      document.getElementsByClassName(selectedClassName)[0].classList.removeMany(selectedClassName);
+      document.querySelector(`a[id^=\"goto-${i}\"]`).classList.addMany(selectedClassName);
 
       // Scroll the sidebar to the current heading if not visible
       let tocItem = document.getElementById(`goto-${i}`);
@@ -1095,7 +1109,9 @@ By not doing anything to the contents, it exports the elements at the root level
      (t (format link-tag
                 org-tailwind-class-link
                 (concat type ":" path)
-                contents)))))
+                (if contents
+                    contents
+                  (concat type ":" path)))))))
 
 (defun org-tailwind-blockquote (blockquote contents info)
   "Transcode BLOCKQUOTE from Org to HTML."

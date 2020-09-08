@@ -17,6 +17,7 @@ MathJax = {
   }
 }
 </script>
+
 <script type="text/javascript" async
   src="./mathjax/tex-mml-chtml.js">
 </script>
@@ -88,10 +89,13 @@ bg-gray-900">./css/styles.css</code>).
 </p>
 
 <h2 class="mt-20 mb-6 text-5xl text-yellow-600
-border-b hover:text-green-500 border-gray-500">Light and Dark Themes</h2><p class="my-2">Check the <a class="text-green-500 hover:text-green-900" href="https://vascoferreira25.github.io/ox-tailwind/">Light Theme</a>.
+border-b hover:text-green-500 border-gray-500">More Themes</h2><p class="my-2">Check the <a class="text-green-500 hover:text-green-900" href="https://vascoferreira25.github.io/ox-tailwind/">Light Theme</a>.
 </p>
 
 <p class="my-2">Check the <a class="text-green-500 hover:text-green-900" href="https://vascoferreira25.github.io/ox-tailwind/dark.html">Dark Theme</a>.
+</p>
+
+<p class="my-2">Gitlab alike <a class="text-green-500 hover:text-green-900" href="file:./docs/another_theme.html">theme</a>.
 </p>
 
 <h2 class="mt-20 mb-6 text-5xl text-yellow-600
@@ -679,6 +683,9 @@ border-b hover:text-green-500 border-gray-500")
 (setq org-tailwind-class-h7 "mt-2 mb-6 text-lg text-yellow-600
 border-b hover:text-green-500 border-gray-500")
 
+(setq org-tailwind-class-h8 "mt-1 mb-6 text-base text-yellow-600
+border-b hover:text-green-500 border-gray-500")
+
 (setq org-tailwind-class-code "px-2 rounded-md text-green-600
 bg-gray-900")
 
@@ -728,6 +735,79 @@ rounded-md border border-gray-500 bg-gray-900")
 border-gray-400 hover:bg-gray-900")
 </code></pre></div>
 
+<h3 class="mt-12 mb-6 text-4xl text-yellow-600
+border-b hover:text-green-500 border-gray-500">Gitlab alike Theme</h3><div class="my-12 shadow-xl"><pre class="line-numbers rainbow-braces match-braces rounded"  ><code class="language-elisp">(setq org-tailwind-headlines "h1,h2,h3")
+
+(setq org-tailwind-class-h1 "mt-32 mb-6 text-4xl text-gray-800
+border-b hover:text-blue-500 border-gray-500")
+
+(setq org-tailwind-class-h2 "mt-20 mb-6 text-3xl text-gray-800
+border-b hover:text-blue-500 border-gray-500")
+
+(setq org-tailwind-class-h3 "mt-12 mb-6 text-2xl text-gray-800
+border-b hover:text-blue-500 border-gray-500")
+
+(setq org-tailwind-class-h4 "mt-8 mb-6 text-xl text-gray-800
+border-b hover:text-blue-500 border-gray-500")
+
+(setq org-tailwind-class-h5 "mt-6 mb-6 text-lg text-gray-800
+border-b hover:text-blue-500 border-gray-500")
+
+(setq org-tailwind-class-h6 "mt-4 mb-6 text-lg text-gray-800
+border-b hover:text-blue-500 border-gray-500")
+
+(setq org-tailwind-class-h7 "mt-2 mb-6 text-base text-gray-800
+border-b hover:text-blue-500 border-gray-500")
+
+(setq org-tailwind-class-h8 "mt-1 mb-6 text-base text-gray-800
+border-b hover:text-green-500 border-gray-500")
+
+(setq org-tailwind-class-code "px-2 rounded-md text-green-600
+bg-gray-200")
+
+(setq org-tailwind-class-verbatim "px-2 rounded-md text-red-600
+bg-gray-200")
+
+(setq org-tailwind-class-link "text-blue-700 hover:text-blue-800 hover:underline")
+
+
+;; Page Elements
+
+(setq org-tailwind-class-body "flex flex-col h-screen
+text-gray-800")
+
+(setq org-tailwind-class-inner-container "px-20 pb-24 mb-12 border border-gray-300")
+
+(setq org-tailwind-class-header "w-full border-b border-gray-500
+bg-purple-900 shadow-md items-center h-16 text-white")
+
+(setq org-tailwind-class-footer "hidden fixed bottom-0 w-full border-t \
+border-solid border-gray-500 h-8 text-center bg-gray-900")
+
+(setq org-tailwind-class-sidebar "px-24 py-12 bg-gray-100
+lg:border-r-4 lg:border-gray-300 lg:fixed lg:pt-2 lg:w-64 lg:px-2
+lg:overflow-y-auto lg:inset-y-0 lg:mt-16")
+
+(setq org-tailwind-class-content-container "flex-grow px-4 py-12 \
+sm:px-8 md:px-12 lg:ml-64 lg:px-12 lg:overflow-x-auto xl:px-32")
+
+(setq org-tailwind-class-toc-items "text-sm hover:bg-gray-500")
+
+(setq org-tailwind-class-current-toc "bg-gray-400 border-r-4 border-indigo-900")
+
+(setq org-tailwind-class-search-bar "float-right mx-4 w-1/6 \
+rounded-lg px-4 py-1 border-solid border border-purple-900 \
+bg-purple-800 text-gray-800 focus:text-white")
+
+(setq org-tailwind-class-search-bar-results-list "z-50 absolute \
+w-5/6 sm:w-4/6 md:w-3/6 lg:w-2/6 xl:w-1/6 right-0 mt-12 mr-20 \
+bg-white p-4 shadow-lg border border-indigo-700 \
+rounded-md text-gray-800")
+
+(setq org-tailwind-class-search-bar-results-item "p-2 block \
+rounded hover:bg-gray-500")
+</code></pre></div>
+
     </div>
   </div>
 </div>
@@ -737,7 +817,6 @@ border-solid border-gray-500 h-8 text-center bg-gray-900">
 <p>Exported with org-tailwind</p>
 </div>
 
-</script>
 <script>
 function getElementsByTagNames(list,obj) {
 	if (!obj) var obj = document;
@@ -792,7 +871,7 @@ function createTOC() {
 		let tocHeader = document.createElement('a');
 
         // Tailwind.css classes
-		tocHeader.className = 'rounded px-2 py-1';
+		tocHeader.className = 'px-2 py-1';
         tocHeader.className += ' text-sm border-b border-l-4 border-gray-900 hover:border-yellow-700';
 
         // Make the first header active
@@ -949,6 +1028,20 @@ function isElementVisible (el, parent) {
 }
 
 
+DOMTokenList.prototype.addMany = function(classes) {
+    var array = classes.split(' ');
+    for (var i = 0, length = array.length; i < length; i++) {
+      this.add(array[i]);
+    }
+}
+
+DOMTokenList.prototype.removeMany = function(classes) {
+    var array = classes.split(' ');
+    for (var i = 0, length = array.length; i < length; i++) {
+      this.remove(array[i]);
+    }
+}
+
 // Scroll Spy
 // Everything is run inside the function because offsets
 // are created due to tailwind.css classes as it changes
@@ -972,8 +1065,8 @@ function scrollSpy () {
 
   for (i in headingsTopOffsets) {
     if (headingsTopOffsets[i] <= scrollPosition) {
-      document.querySelector(`div#sidebar a.${selectedClassName}`).classList.remove(selectedClassName);
-      document.querySelector(`a[id^="goto-${i}"]`).classList.add(selectedClassName);
+      document.getElementsByClassName(selectedClassName)[0].classList.removeMany(selectedClassName);
+      document.querySelector(`a[id^="goto-${i}"]`).classList.addMany(selectedClassName);
 
       // Scroll the sidebar to the current heading if not visible
       let tocItem = document.getElementById(`goto-${i}`);

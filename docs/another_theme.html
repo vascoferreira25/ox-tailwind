@@ -29,10 +29,11 @@ MathJax = {
 <script src="./js/toc_tree.js"></script>
 
 </head>
-<body class="flex flex-col h-screen text-gray-700">
+<body class="flex flex-col h-screen
+text-gray-800">
 
 <div id="header" class="w-full border-b border-gray-500
-shadow-md items-center h-16">
+bg-purple-900 shadow-md items-center h-16 text-white">
 <nav class="flex items-center justify-between flex-wrap p-4">
   <div class="flex items-center flex-no-shrink mr-6">
     <span class="font-semibold text-xl tracking-tight">
@@ -46,65 +47,68 @@ shadow-md items-center h-16">
       </a>
       <input id="search-bar" onkeyup="search()"
       onfocusin='showResults()'
-      class="float-right mx-4 w-1/6 rounded-lg px-4 py-1 border-solid
-border-2 border-gray-700 text-gray-400 focus:border-green-500
-focus:text-gray-700" placeholder="Search..."/>
+      class="float-right mx-4 w-1/6 rounded-lg px-4 py-1 border-solid border border-purple-900 bg-purple-800 text-gray-800 focus:text-white" placeholder="Search..."/>
       <ul id="search-bar-results"
-      class="z-50 absolute w-5/6 sm:w-4/6 md:w-3/6 lg:w-2/6 xl:w-1/6
-right-0 mt-12 mr-20 bg-white p-4 shadow-lg border
-border-solid border-gray-500 rounded-md" style="display: none;"></ul>
+      class="z-50 absolute w-5/6 sm:w-4/6 md:w-3/6 lg:w-2/6 xl:w-1/6 right-0 mt-12 mr-20 bg-white p-4 shadow-lg border border-indigo-700 rounded-md text-gray-800" style="display: none;"></ul>
     </div>
   </div>
 </nav>
 </div>
 
 <div id="content" class="top flex flex-col lg:flex-row overflow-y-auto" onclick="hideResults()">
-  <div id="sidebar" class="px-24 py-12 bg-gray-200 lg:border-r lg:border-gray-500
-lg:fixed lg:pt-2 lg:w-64 lg:px-2 lg:overflow-y-auto lg:inset-y-0
-lg:mt-16 lg:mb-8">
+  <div id="sidebar" class="px-24 py-12 bg-gray-100
+lg:border-r-4 lg:border-gray-300 lg:fixed lg:pt-2 lg:w-64 lg:px-2
+lg:overflow-y-auto lg:inset-y-0 lg:mt-16">
   <div id="toc"></div>
   </div>
 
-  <div id="content-container" class="flex-grow px-4 py-12 mb-8 sm:px-8 md:px-12 lg:ml-64 lg:px-12
-lg:overflow-x-auto xl:px-32" onscroll="scrollSpy()">
+  <div id="content-container" class="flex-grow px-4 py-12 sm:px-8 md:px-12 lg:ml-64 lg:px-12 lg:overflow-x-auto xl:px-32" onscroll="scrollSpy()">
     <div id="top"></div>
-    <div id="inner-container" class="px-20 py-12 pb-32 mb-12 shadow-2xl rounded-md">
-      <h1 class="mt-32 mb-6 text-6xl text-gray-700 border-b hover:text-green-500
-border-gray-500">Ox-Tailwind Export Back-End</h1><p class="my-2">This back-end has the purpose of allowing easy customization of the HTML
-output. Although it is called <code class="px-2 rounded-md text-green-600 bg-gray-400">Tailwind</code>, the only thing that it does is
+    <div id="inner-container" class="px-20 pb-24 mb-12 border border-gray-300">
+      <h1 class="mt-32 mb-6 text-4xl text-gray-800
+border-b hover:text-blue-500 border-gray-500">Ox-Tailwind Export Back-End</h1><p class="my-2">This back-end has the purpose of allowing easy customization of the HTML
+output. Although it is called <code class="px-2 rounded-md text-green-600
+bg-gray-200">Tailwind</code>, the only thing that it does is
 allowing you to customize the classes of the HTML and exporting a more
-barebones HTML (It does not create as many <code class="px-2 rounded-md text-green-600 bg-gray-400">divs</code> and <code class="px-2 rounded-md text-green-600 bg-gray-400">sections</code> as the normal
+barebones HTML (It does not create as many <code class="px-2 rounded-md text-green-600
+bg-gray-200">divs</code> and <code class="px-2 rounded-md text-green-600
+bg-gray-200">sections</code> as the normal
 HTML export back-end).
 </p>
 
 <p class="my-2">Instead of using Tailwind.css you can just name the classes of the elements and
-import your own css (or edit <code class="px-2 rounded-md text-green-600 bg-gray-400">./css/styles.css</code>).
+import your own css (or edit <code class="px-2 rounded-md text-green-600
+bg-gray-200">./css/styles.css</code>).
 </p>
 
-<h2 class="mt-20 mb-6 text-5xl text-gray-700 border-b hover:text-green-500
-border-gray-500">More Themes</h2><p class="my-2">Check the <a class="text-green-500 hover:text-green-900" href="https://vascoferreira25.github.io/ox-tailwind/">Light Theme</a>.
+<h2 class="mt-20 mb-6 text-3xl text-gray-800
+border-b hover:text-blue-500 border-gray-500">More Themes</h2><p class="my-2">Check the <a class="text-blue-700 hover:text-blue-800 hover:underline" href="https://vascoferreira25.github.io/ox-tailwind/">Light Theme</a>.
 </p>
 
-<p class="my-2">Check the <a class="text-green-500 hover:text-green-900" href="https://vascoferreira25.github.io/ox-tailwind/dark.html">Dark Theme</a>.
+<p class="my-2">Check the <a class="text-blue-700 hover:text-blue-800 hover:underline" href="https://vascoferreira25.github.io/ox-tailwind/dark.html">Dark Theme</a>.
 </p>
 
-<p class="my-2">Gitlab alike <a class="text-green-500 hover:text-green-900" href="file:./docs/another_theme.html">theme</a>.
+<p class="my-2">Gitlab alike <a class="text-blue-700 hover:text-blue-800 hover:underline" href="file:./docs/another_theme.html">theme</a>.
 </p>
 
-<h2 class="mt-20 mb-6 text-5xl text-gray-700 border-b hover:text-green-500
-border-gray-500">Known bugs</h2><ul class="list-disc my-8"><li class="ml-10"><p class="my-2">It crashes when it encounters a line that ends in <code class="px-2 rounded-md text-green-600 bg-gray-400">\\</code> - it works if it is
+<h2 class="mt-20 mb-6 text-3xl text-gray-800
+border-b hover:text-blue-500 border-gray-500">Known bugs</h2><ul class="list-disc my-8"><li class="ml-10"><p class="my-2">It crashes when it encounters a line that ends in <code class="px-2 rounded-md text-green-600
+bg-gray-200">\\</code> - it works if it is
 inside a block;
 </p>
 </li>
-<li class="ml-10"><p class="my-2">It won't export <code class="px-2 rounded-md text-green-600 bg-gray-400">TODO</code> keywords and <code class="px-2 rounded-md text-green-600 bg-gray-400">SCHEDULE</code> dates.
+<li class="ml-10"><p class="my-2">It won't export <code class="px-2 rounded-md text-green-600
+bg-gray-200">TODO</code> keywords and <code class="px-2 rounded-md text-green-600
+bg-gray-200">SCHEDULE</code> dates.
 </p>
 </li>
 </ul>
 
-<h2 class="mt-20 mb-6 text-5xl text-gray-700 border-b hover:text-green-500
-border-gray-500">Installation</h2><h3 class="mt-12 mb-6 text-4xl text-gray-700 border-b hover:text-green-500
-border-gray-500">Spacemacs</h3><p class="my-2">To install this back-end, clone this repo into your packages or private
-folder in your <code class="px-2 rounded-md text-green-600 bg-gray-400">~/.emacs.d</code> directory:
+<h2 class="mt-20 mb-6 text-3xl text-gray-800
+border-b hover:text-blue-500 border-gray-500">Installation</h2><h3 class="mt-12 mb-6 text-2xl text-gray-800
+border-b hover:text-blue-500 border-gray-500">Spacemacs</h3><p class="my-2">To install this back-end, clone this repo into your packages or private
+folder in your <code class="px-2 rounded-md text-green-600
+bg-gray-200">~/.emacs.d</code> directory:
 </p>
 
 <div class="my-12 shadow-xl"><pre class="command-line rainbow-braces match-braces rounded" data-filter-output="(out)"  data-user="spacemacs" data-host="hostname"><code class="language-shell">git clone https://github.com/vascoferreira25/ox-tailwind ~/.emacs.d/private
@@ -116,7 +120,8 @@ folder in your <code class="px-2 rounded-md text-green-600 bg-gray-400">~/.emacs
 (out)Unpacking objects: 100% (49/49), done.
 </code></pre></div>
 
-<p class="my-2">Add the following to your <code class="px-2 rounded-md text-green-600 bg-gray-400">.spacemacs</code> file:
+<p class="my-2">Add the following to your <code class="px-2 rounded-md text-green-600
+bg-gray-200">.spacemacs</code> file:
 </p>
 
 <div class="my-12 shadow-xl"><pre class="line-numbers rainbow-braces match-braces rounded"   data-line="8"><code class="language-elisp">(defun dotspacemacs/user-config ()
@@ -134,12 +139,15 @@ before packages are loaded."
 <p class="my-2">Then export your org file with the ox-tailwind back-end:
 </p>
 
-<p class="my-2">In Spacemacs you would use <code class="px-2 rounded-md text-green-600 bg-gray-400">, e e</code> for the export menu and then <code class="px-2 rounded-md text-green-600 bg-gray-400">x h</code>.
+<p class="my-2">In Spacemacs you would use <code class="px-2 rounded-md text-green-600
+bg-gray-200">, e e</code> for the export menu and then <code class="px-2 rounded-md text-green-600
+bg-gray-200">x h</code>.
 </p>
 
-<h3 class="mt-12 mb-6 text-4xl text-gray-700 border-b hover:text-green-500
-border-gray-500">Doom Emacs</h3><p class="my-2">To install this back-end, clone this repo into your packages or private
-folder in your <code class="px-2 rounded-md text-green-600 bg-gray-400">~/.doom.d</code> directory:
+<h3 class="mt-12 mb-6 text-2xl text-gray-800
+border-b hover:text-blue-500 border-gray-500">Doom Emacs</h3><p class="my-2">To install this back-end, clone this repo into your packages or private
+folder in your <code class="px-2 rounded-md text-green-600
+bg-gray-200">~/.doom.d</code> directory:
 </p>
 
 <div class="my-12 shadow-xl"><pre class="command-line rainbow-braces match-braces rounded" data-filter-output="(out)"  data-user="doom" data-host="hostname"><code class="language-shell">git clone https://github.com/vascoferreira25/ox-tailwind ~/.doom.d/ox-tailwind
@@ -151,7 +159,8 @@ folder in your <code class="px-2 rounded-md text-green-600 bg-gray-400">~/.doom.
 (out)Unpacking objects: 100% (49/49), done.
 </code></pre></div>
 
-<p class="my-2">Add the following to your <code class="px-2 rounded-md text-green-600 bg-gray-400">config.el</code> file:
+<p class="my-2">Add the following to your <code class="px-2 rounded-md text-green-600
+bg-gray-200">config.el</code> file:
 </p>
 
 <div class="my-12 shadow-xl"><pre class="line-numbers rainbow-braces match-braces rounded"  ><code class="language-elisp">(add-load-path! "ox-tailwind")
@@ -163,11 +172,13 @@ folder in your <code class="px-2 rounded-md text-green-600 bg-gray-400">~/.doom.
 <p class="my-2">Then export your org file with the ox-tailwind back-end:
 </p>
 
-<p class="my-2">In Spacemacs you would use <code class="px-2 rounded-md text-green-600 bg-gray-400">SPC M e</code> for the export menu and then <code class="px-2 rounded-md text-green-600 bg-gray-400">x h</code>.
+<p class="my-2">In Spacemacs you would use <code class="px-2 rounded-md text-green-600
+bg-gray-200">SPC M e</code> for the export menu and then <code class="px-2 rounded-md text-green-600
+bg-gray-200">x h</code>.
 </p>
 
-<h3 class="mt-12 mb-6 text-4xl text-gray-700 border-b hover:text-green-500
-border-gray-500">Your own config</h3><p class="my-2">To install this back-end into your own Emacs config, just add the following:
+<h3 class="mt-12 mb-6 text-2xl text-gray-800
+border-b hover:text-blue-500 border-gray-500">Your own config</h3><p class="my-2">To install this back-end into your own Emacs config, just add the following:
 </p>
 
 <div class="my-12 shadow-xl"><pre class="command-line rainbow-braces match-braces rounded" data-filter-output="(out)"  data-user="your-own-config" data-host="hostname"><code class="language-shell">git clone https://github.com/vascoferreira25/ox-tailwind ~/.emacs.d/private-packages/ox-tailwind
@@ -186,9 +197,11 @@ border-gray-500">Your own config</h3><p class="my-2">To install this back-end in
 (load "~/.emacs.d/private-packages/ox-tailwind/ox-tailwind.el")
 </code></pre></div>
 
-<h2 class="mt-20 mb-6 text-5xl text-gray-700 border-b hover:text-green-500
-border-gray-500">Notes structure</h2><p class="my-2">In order for the search bar work, this export backend will search all <code class="px-2 rounded-md text-green-600 bg-gray-400">.org</code>
-files in the path of your project and store all the headings in a <code class="px-2 rounded-md text-green-600 bg-gray-400">.js</code> file.
+<h2 class="mt-20 mb-6 text-3xl text-gray-800
+border-b hover:text-blue-500 border-gray-500">Notes structure</h2><p class="my-2">In order for the search bar work, this export backend will search all <code class="px-2 rounded-md text-green-600
+bg-gray-200">.org</code>
+files in the path of your project and store all the headings in a <code class="px-2 rounded-md text-green-600
+bg-gray-200">.js</code> file.
 </p>
 
 <p class="my-2">The folder structure for your notes should be like this:
@@ -209,31 +222,44 @@ files in the path of your project and store all the headings in a <code class="p
 (out)        # Org Publish Files
 </code></pre></div>
 
-<p class="my-2">The home page for your notes should be <code class="px-2 rounded-md text-green-600 bg-gray-400">index.org</code>.
+<p class="my-2">The home page for your notes should be <code class="px-2 rounded-md text-green-600
+bg-gray-200">index.org</code>.
 </p>
 
 <p class="my-2">For easier search and note management, the notes should be named as
-<code class="px-2 rounded-md text-green-600 bg-gray-400">&lt;subject&gt;_&lt;notes_name&gt;_&lt;guide|snippets|templates|...&gt;.org</code>.
+<code class="px-2 rounded-md text-green-600
+bg-gray-200">&lt;subject&gt;_&lt;notes_name&gt;_&lt;guide|snippets|templates|...&gt;.org</code>.
 </p>
 
 <p class="my-2">Examples:
 </p>
 
 <div class="overflow-x-auto my-12"><table class="table-auto m-auto my-2"><thead><tr class="text-gray-600 border-b-2 border-gray-400"><th class="px-4 py-2 font-bold text-center">Notes</th><th class="px-4 py-2 font-bold text-center">File Name</th></tr>
-<tbody><tr class="hover:bg-green-200"><td class="px-4 py-2 text-left">Programming Guides Index</td><td class="px-4 py-2 text-left"><code class="px-2 rounded-md text-green-600 bg-gray-400">programming.org</code></td></tr>
-<tr class="hover:bg-green-200"><td class="px-4 py-2 text-left">Python notes Index</td><td class="px-4 py-2 text-left"><code class="px-2 rounded-md text-green-600 bg-gray-400">programming_python.org</code></td></tr>
-<tr class="hover:bg-green-200"><td class="px-4 py-2 text-left">Python guide</td><td class="px-4 py-2 text-left"><code class="px-2 rounded-md text-green-600 bg-gray-400">programming_python_guide.org</code></td></tr>
-<tr class="hover:bg-green-200"><td class="px-4 py-2 text-left">Python snippets</td><td class="px-4 py-2 text-left"><code class="px-2 rounded-md text-green-600 bg-gray-400">programming_python_snippets.org</code></td></tr>
+<tbody><tr class="hover:bg-green-200"><td class="px-4 py-2 text-left">Programming Guides Index</td><td class="px-4 py-2 text-left"><code class="px-2 rounded-md text-green-600
+bg-gray-200">programming.org</code></td></tr>
+<tr class="hover:bg-green-200"><td class="px-4 py-2 text-left">Python notes Index</td><td class="px-4 py-2 text-left"><code class="px-2 rounded-md text-green-600
+bg-gray-200">programming_python.org</code></td></tr>
+<tr class="hover:bg-green-200"><td class="px-4 py-2 text-left">Python guide</td><td class="px-4 py-2 text-left"><code class="px-2 rounded-md text-green-600
+bg-gray-200">programming_python_guide.org</code></td></tr>
+<tr class="hover:bg-green-200"><td class="px-4 py-2 text-left">Python snippets</td><td class="px-4 py-2 text-left"><code class="px-2 rounded-md text-green-600
+bg-gray-200">programming_python_snippets.org</code></td></tr>
 <tr class="hover:bg-green-200"><td class="px-2 py-2"></td><td class="px-2 py-2"></td></tr>
-<tr class="hover:bg-green-200"><td class="px-4 py-2 text-left">Guides Index</td><td class="px-4 py-2 text-left"><code class="px-2 rounded-md text-green-600 bg-gray-400">guides.org</code></td></tr>
-<tr class="hover:bg-green-200"><td class="px-4 py-2 text-left">How to download Ebooks guide</td><td class="px-4 py-2 text-left"><code class="px-2 rounded-md text-green-600 bg-gray-400">guides_download_ebooks.org</code></td></tr>
+<tr class="hover:bg-green-200"><td class="px-4 py-2 text-left">Guides Index</td><td class="px-4 py-2 text-left"><code class="px-2 rounded-md text-green-600
+bg-gray-200">guides.org</code></td></tr>
+<tr class="hover:bg-green-200"><td class="px-4 py-2 text-left">How to download Ebooks guide</td><td class="px-4 py-2 text-left"><code class="px-2 rounded-md text-green-600
+bg-gray-200">guides_download_ebooks.org</code></td></tr>
 <tr class="hover:bg-green-200"><td class="px-2 py-2"></td><td class="px-2 py-2"></td></tr>
-<tr class="hover:bg-green-200"><td class="px-4 py-2 text-left">Gaming Index</td><td class="px-4 py-2 text-left"><code class="px-2 rounded-md text-green-600 bg-gray-400">gaming.org</code></td></tr>
-<tr class="hover:bg-green-200"><td class="px-4 py-2 text-left">Skyrim guide</td><td class="px-4 py-2 text-left"><code class="px-2 rounded-md text-green-600 bg-gray-400">gaming_skyrim.org</code></td></tr>
+<tr class="hover:bg-green-200"><td class="px-4 py-2 text-left">Gaming Index</td><td class="px-4 py-2 text-left"><code class="px-2 rounded-md text-green-600
+bg-gray-200">gaming.org</code></td></tr>
+<tr class="hover:bg-green-200"><td class="px-4 py-2 text-left">Skyrim guide</td><td class="px-4 py-2 text-left"><code class="px-2 rounded-md text-green-600
+bg-gray-200">gaming_skyrim.org</code></td></tr>
 <tr class="hover:bg-green-200"><td class="px-2 py-2"></td><td class="px-2 py-2"></td></tr>
-<tr class="hover:bg-green-200"><td class="px-4 py-2 text-left">Subjects Index</td><td class="px-4 py-2 text-left"><code class="px-2 rounded-md text-green-600 bg-gray-400">subjects.org</code></td></tr>
-<tr class="hover:bg-green-200"><td class="px-4 py-2 text-left">Mathematics</td><td class="px-4 py-2 text-left"><code class="px-2 rounded-md text-green-600 bg-gray-400">subjects_mathematics.org</code></td></tr>
-<tr class="border-b-2 border-gray-400 hover:bg-green-200"><td class="px-4 py-2 text-left">Economics</td><td class="px-4 py-2 text-left"><code class="px-2 rounded-md text-green-600 bg-gray-400">subjects_economics.org</code></td></tr></tbody>
+<tr class="hover:bg-green-200"><td class="px-4 py-2 text-left">Subjects Index</td><td class="px-4 py-2 text-left"><code class="px-2 rounded-md text-green-600
+bg-gray-200">subjects.org</code></td></tr>
+<tr class="hover:bg-green-200"><td class="px-4 py-2 text-left">Mathematics</td><td class="px-4 py-2 text-left"><code class="px-2 rounded-md text-green-600
+bg-gray-200">subjects_mathematics.org</code></td></tr>
+<tr class="border-b-2 border-gray-400 hover:bg-green-200"><td class="px-4 py-2 text-left">Economics</td><td class="px-4 py-2 text-left"><code class="px-2 rounded-md text-green-600
+bg-gray-200">subjects_economics.org</code></td></tr></tbody>
 </table></div>
 
 <p class="my-2">Index files should have the following template
@@ -257,8 +283,8 @@ files in the path of your project and store all the headings in a <code class="p
 ** References
 </code></pre></div>
 
-<h2 class="mt-20 mb-6 text-5xl text-gray-700 border-b hover:text-green-500
-border-gray-500">Publish settings</h2><p class="my-2">My export settings are the following:
+<h2 class="mt-20 mb-6 text-3xl text-gray-800
+border-b hover:text-blue-500 border-gray-500">Publish settings</h2><p class="my-2">My export settings are the following:
 </p>
 
 <div class="my-12 shadow-xl"><pre class="line-numbers rainbow-braces match-braces rounded"  ><code class="language-elisp">(setq org-publish-project-alist
@@ -286,26 +312,28 @@ border-gray-500">Publish settings</h2><p class="my-2">My export settings are the
         ("notes" :components ("org-files" "images" "files" "tangles"))))
 </code></pre></div>
 
-<h2 class="mt-20 mb-6 text-5xl text-gray-700 border-b hover:text-green-500
-border-gray-500">Notes output directory</h2><p class="my-2">In order for the export to be functional when offline,
+<h2 class="mt-20 mb-6 text-3xl text-gray-800
+border-b hover:text-blue-500 border-gray-500">Notes output directory</h2><p class="my-2">In order for the export to be functional when offline,
 you need to put the needed files in the output folder.
 </p>
 
 <p class="my-2">The files used in the HTML file are:
 </p>
-<ul class="list-disc my-8"><li class="ml-10"><p class="my-2"><a class="text-green-500 hover:text-green-900" href="https://prismjs.com/">Prism.js</a>
+<ul class="list-disc my-8"><li class="ml-10"><p class="my-2"><a class="text-blue-700 hover:text-blue-800 hover:underline" href="https://prismjs.com/">Prism.js</a>
 </p>
 </li>
-<li class="ml-10"><p class="my-2"><a class="text-green-500 hover:text-green-900" href="https://www.mathjax.org/">Mathjax</a>
+<li class="ml-10"><p class="my-2"><a class="text-blue-700 hover:text-blue-800 hover:underline" href="https://www.mathjax.org/">Mathjax</a>
 </p>
 </li>
-<li class="ml-10"><p class="my-2"><a class="text-green-500 hover:text-green-900" href="https://tailwindcss.com/">Tailwind CSS</a>
+<li class="ml-10"><p class="my-2"><a class="text-blue-700 hover:text-blue-800 hover:underline" href="https://tailwindcss.com/">Tailwind CSS</a>
 </p>
 </li>
 </ul>
 
-<p class="my-2">Just copy the folders inside <code class="px-2 rounded-md text-green-600 bg-gray-400">/docs/</code> folder of this repository
-into your <code class="px-2 rounded-md text-green-600 bg-gray-400">/dist/</code> folder.
+<p class="my-2">Just copy the folders inside <code class="px-2 rounded-md text-green-600
+bg-gray-200">/docs/</code> folder of this repository
+into your <code class="px-2 rounded-md text-green-600
+bg-gray-200">/dist/</code> folder.
 </p>
 
 <p class="my-2">This is the directory structure of the export folder:
@@ -345,10 +373,10 @@ into your <code class="px-2 rounded-md text-green-600 bg-gray-400">/dist/</code>
 (out)        # Mathjax Files
 </code></pre></div>
 
-<h2 class="mt-20 mb-6 text-5xl text-gray-700 border-b hover:text-green-500
-border-gray-500">Elements</h2><h3 class="mt-12 mb-6 text-4xl text-gray-700 border-b hover:text-green-500
-border-gray-500">Markup</h3><h4 class="mt-8 mb-6 text-3xl text-gray-700 border-b hover:text-green-500
-border-gray-500">Text</h4><p class="my-2"><strong class="">Bold Text</strong>
+<h2 class="mt-20 mb-6 text-3xl text-gray-800
+border-b hover:text-blue-500 border-gray-500">Elements</h2><h3 class="mt-12 mb-6 text-2xl text-gray-800
+border-b hover:text-blue-500 border-gray-500">Markup</h3><h4 class="mt-8 mb-6 text-xl text-gray-800
+border-b hover:text-blue-500 border-gray-500">Text</h4><p class="my-2"><strong class="">Bold Text</strong>
 </p>
 
 <p class="my-2"><em class="">Italic Text</em> 
@@ -360,18 +388,20 @@ border-gray-500">Text</h4><p class="my-2"><strong class="">Bold Text</strong>
 <p class="my-2"><del class="">Strike Through</del>
 </p>
 
-<p class="my-2"><code class="px-2 rounded-md text-red-600 bg-gray-400">Verbatim</code>
+<p class="my-2"><code class="px-2 rounded-md text-red-600
+bg-gray-200">Verbatim</code>
 </p>
 
-<p class="my-2"><code class="px-2 rounded-md text-green-600 bg-gray-400">Inline code</code>
+<p class="my-2"><code class="px-2 rounded-md text-green-600
+bg-gray-200">Inline code</code>
 </p>
 
-<p class="my-2"><a class="text-green-500 hover:text-green-900" href="file:./index.html">HyperLinks</a>
+<p class="my-2"><a class="text-blue-700 hover:text-blue-800 hover:underline" href="file:./index.html">HyperLinks</a>
 </p>
 
-<h4 class="mt-8 mb-6 text-3xl text-gray-700 border-b hover:text-green-500
-border-gray-500">Lists</h4><h5 class="mt-6 mb-6 text-2xl text-gray-700 border-b hover:text-green-500
-border-gray-500">Ordered List</h5><ol class="list-decimal my-8"><li class="ml-10"><p class="my-2">Item number 1
+<h4 class="mt-8 mb-6 text-xl text-gray-800
+border-b hover:text-blue-500 border-gray-500">Lists</h4><h5 class="mt-6 mb-6 text-lg text-gray-800
+border-b hover:text-blue-500 border-gray-500">Ordered List</h5><ol class="list-decimal my-8"><li class="ml-10"><p class="my-2">Item number 1
 </p>
 <ol class="list-decimal my-8"><li class="ml-10"><p class="my-2">Item number 1.1
 </p>
@@ -398,8 +428,8 @@ border-gray-500">Ordered List</h5><ol class="list-decimal my-8"><li class="ml-10
 </li>
 </ol>
 
-<h5 class="mt-6 mb-6 text-2xl text-gray-700 border-b hover:text-green-500
-border-gray-500">Unordered List</h5><ul class="list-disc my-8"><li class="ml-10"><p class="my-2">Like
+<h5 class="mt-6 mb-6 text-lg text-gray-800
+border-b hover:text-blue-500 border-gray-500">Unordered List</h5><ul class="list-disc my-8"><li class="ml-10"><p class="my-2">Like
 </p>
 <ul class="list-disc my-8"><li class="ml-10"><p class="my-2">This
 </p>
@@ -412,8 +442,8 @@ border-gray-500">Unordered List</h5><ul class="list-disc my-8"><li class="ml-10"
 </li>
 </ul>
 
-<h5 class="mt-6 mb-6 text-2xl text-gray-700 border-b hover:text-green-500
-border-gray-500">Description List</h5><dl class="my-8"><dt class="font-bold">Tip Blocks</dt><dd class="ml-10">Are for displaying tips.
+<h5 class="mt-6 mb-6 text-lg text-gray-800
+border-b hover:text-blue-500 border-gray-500">Description List</h5><dl class="my-8"><dt class="font-bold">Tip Blocks</dt><dd class="ml-10">Are for displaying tips.
 </dd>
 <dt class="font-bold">Warning Blocks</dt><dd class="ml-10">Are for displaying warnings.
 </dd>
@@ -421,8 +451,8 @@ border-gray-500">Description List</h5><dl class="my-8"><dt class="font-bold">Tip
 </dd>
 </dl>
 
-<h5 class="mt-6 mb-6 text-2xl text-gray-700 border-b hover:text-green-500
-border-gray-500">Checkboxes</h5><ul class="list-disc my-8"><li class="ml-10"><p class="my-2"><input type="checkbox" disabled unchecked> Unchecked 1
+<h5 class="mt-6 mb-6 text-lg text-gray-800
+border-b hover:text-blue-500 border-gray-500">Checkboxes</h5><ul class="list-disc my-8"><li class="ml-10"><p class="my-2"><input type="checkbox" disabled unchecked> Unchecked 1
 </p>
 </li>
 <li class="ml-10"><p class="my-2"><input type="checkbox" disabled unchecked> Unchecked 2
@@ -433,38 +463,38 @@ border-gray-500">Checkboxes</h5><ul class="list-disc my-8"><li class="ml-10"><p 
 </li>
 </ul>
 
-<h4 class="mt-8 mb-6 text-3xl text-gray-700 border-b hover:text-green-500
-border-gray-500">Tables</h4><div class="overflow-x-auto my-12"><table class="table-auto m-auto my-2"><thead><tr class="text-gray-600 border-b-2 border-gray-400"><th class="px-4 py-2 font-bold text-center">A</th><th class="px-4 py-2 font-bold text-center">B</th><th class="px-4 py-2 font-bold text-center">C</th></tr>
+<h4 class="mt-8 mb-6 text-xl text-gray-800
+border-b hover:text-blue-500 border-gray-500">Tables</h4><div class="overflow-x-auto my-12"><table class="table-auto m-auto my-2"><thead><tr class="text-gray-600 border-b-2 border-gray-400"><th class="px-4 py-2 font-bold text-center">A</th><th class="px-4 py-2 font-bold text-center">B</th><th class="px-4 py-2 font-bold text-center">C</th></tr>
 <tbody><tr class="hover:bg-green-200"><td class="px-4 py-2 text-left">In this column</td><td class="px-4 py-2 text-center">In this</td><td class="px-4 py-2 text-right">Finally,</td></tr>
 <tr class="hover:bg-green-200"><td class="px-4 py-2 text-left">the text</td><td class="px-4 py-2 text-center">column</td><td class="px-4 py-2 text-right">in this one</td></tr>
 <tr class="border-b-2 border-gray-400 hover:bg-green-200"><td class="px-4 py-2 text-left">is left aligned</td><td class="px-4 py-2 text-center">it is centered</td><td class="px-4 py-2 text-right">it is right aligned</td></tr></tbody>
 </table><p class="mx-48 text-center italic border-t border-gray-500">This is an example table and description</p></div>
 
-<h4 class="mt-8 mb-6 text-3xl text-gray-700 border-b hover:text-green-500
-border-gray-500">Images</h4><div class="my-12 max-w-full max-h-full"><img class="mx-auto mb-2 max-w-full max-h-full rounded-md border-2
+<h4 class="mt-8 mb-6 text-xl text-gray-800
+border-b hover:text-blue-500 border-gray-500">Images</h4><div class="my-12 max-w-full max-h-full"><img class="mx-auto mb-2 max-w-full max-h-full rounded-md border-2
 border-gray-500" src="./sample_files/weird_cat.gif"/><p class="mx-48 text-center italic border-t border-gray-500">I don't have words...</p>
 </div>
 
-<h4 class="mt-8 mb-6 text-3xl text-gray-700 border-b hover:text-green-500
-border-gray-500">Videos</h4><div class="my-12 max-w-full max-h-full"><video class="mx-auto mb-2 rounded-md border-2 border-gray-500" controls><source src="./sample_files/cat_treats.mp4" type="video/mp4"/></video><p class="mx-48 text-center italic border-t border-gray-500">What is this?</p>
+<h4 class="mt-8 mb-6 text-xl text-gray-800
+border-b hover:text-blue-500 border-gray-500">Videos</h4><div class="my-12 max-w-full max-h-full"><video class="mx-auto mb-2 rounded-md border-2 border-gray-500" controls><source src="./sample_files/cat_treats.mp4" type="video/mp4"/></video><p class="mx-48 text-center italic border-t border-gray-500">What is this?</p>
 </div>
 
-<h3 class="mt-12 mb-6 text-4xl text-gray-700 border-b hover:text-green-500
-border-gray-500">Formulas</h3><p class="my-2">Inline formulas: \(\sum_{i=0}^n i^2 = \frac{(n^2+n)(2n+1)}{6}\)
+<h3 class="mt-12 mb-6 text-2xl text-gray-800
+border-b hover:text-blue-500 border-gray-500">Formulas</h3><p class="my-2">Inline formulas: \(\sum_{i=0}^n i^2 = \frac{(n^2+n)(2n+1)}{6}\)
 </p>
 
 <p class="my-2">\[\sum_{i=0}^n i^2 = \frac{(n^2+n)(2n+1)}{6}\]
 </p>
 
-<h3 class="mt-12 mb-6 text-4xl text-gray-700 border-b hover:text-green-500
-border-gray-500">Blocks</h3><h4 class="mt-8 mb-6 text-3xl text-gray-700 border-b hover:text-green-500
-border-gray-500">Blockquote</h4><div class="my-12"><blockquote class="my-2 mx-20 px-4 border-l-8 rounded-md border border-gray-500
+<h3 class="mt-12 mb-6 text-2xl text-gray-800
+border-b hover:text-blue-500 border-gray-500">Blocks</h3><h4 class="mt-8 mb-6 text-xl text-gray-800
+border-b hover:text-blue-500 border-gray-500">Blockquote</h4><div class="my-12"><blockquote class="my-2 mx-20 px-4 border-l-8 rounded-md border border-gray-500
 bg-gray-300"><p class="my-2">Once upon a time..........
 </p>
 </blockquote><p class="mx-48 text-right italic border-t border-gray-500">The name of the author</p></div>
 
-<h4 class="mt-8 mb-6 text-3xl text-gray-700 border-b hover:text-green-500
-border-gray-500">Source Blocks</h4><p class="my-2">Source code blocks can be downloaded directly from github:
+<h4 class="mt-8 mb-6 text-xl text-gray-800
+border-b hover:text-blue-500 border-gray-500">Source Blocks</h4><p class="my-2">Source code blocks can be downloaded directly from github:
 </p>
 
 <div class="my-12 shadow-xl"><pre class="line-numbers rainbow-braces match-braces rounded"   data-line="2,6-8,11-20,48-51" data-jsonp="https://api.github.com/repos/vascoferreira25/discord-bot/contents/src/main/core.cljs" language-clojure><code class="language-clojure">
@@ -476,32 +506,37 @@ border-gray-500">Source Blocks</h4><p class="my-2">Source code blocks can be dow
 <div class="my-12 shadow-xl"><pre class="line-numbers rainbow-braces match-braces rounded"  ><code class="language-org">#+ATTR_FETCH: https://api.github.com/repos/vascoferreira25/discord-bot/contents/src/main/core.cljs
 </code></pre></div>
 
-<h3 class="mt-12 mb-6 text-4xl text-gray-700 border-b hover:text-green-500
-border-gray-500">Custom Blocks</h3><p class="my-2">There are four custom blocks: <code class="px-2 rounded-md text-green-600 bg-gray-400">details</code>, <code class="px-2 rounded-md text-green-600 bg-gray-400">tip</code>, <code class="px-2 rounded-md text-green-600 bg-gray-400">warning</code> and <code class="px-2 rounded-md text-green-600 bg-gray-400">danger</code> and
+<h3 class="mt-12 mb-6 text-2xl text-gray-800
+border-b hover:text-blue-500 border-gray-500">Custom Blocks</h3><p class="my-2">There are four custom blocks: <code class="px-2 rounded-md text-green-600
+bg-gray-200">details</code>, <code class="px-2 rounded-md text-green-600
+bg-gray-200">tip</code>, <code class="px-2 rounded-md text-green-600
+bg-gray-200">warning</code> and <code class="px-2 rounded-md text-green-600
+bg-gray-200">danger</code> and
 these blocks can contain other elements. In order to get syntax highlighting
-while editing in Emacs, use <code class="px-2 rounded-md text-green-600 bg-gray-400">org</code> as language.
+while editing in Emacs, use <code class="px-2 rounded-md text-green-600
+bg-gray-200">org</code> as language.
 </p>
 
-<h4 class="mt-8 mb-6 text-3xl text-gray-700 border-b hover:text-green-500
-border-gray-500">Details</h4><details class="my-12 p-8 rounded-md border-l-8 border border-purple-500
+<h4 class="mt-8 mb-6 text-xl text-gray-800
+border-b hover:text-blue-500 border-gray-500">Details</h4><details class="my-12 p-8 rounded-md border-l-8 border border-purple-500
 shadow-xl"><summary class="my-2">Details</summary><p class="my-2">All the stuff in here will be hidden ....
 </p>
 </details>
 
-<h4 class="mt-8 mb-6 text-3xl text-gray-700 border-b hover:text-green-500
-border-gray-500">Tip</h4><div class="tip my-12 p-8 rounded-md border-l-8 border border-teal-500
+<h4 class="mt-8 mb-6 text-xl text-gray-800
+border-b hover:text-blue-500 border-gray-500">Tip</h4><div class="tip my-12 p-8 rounded-md border-l-8 border border-teal-500
 shadow-xl"><p class="text-teal-500 font-bold"></p><p class="my-2">Tip text.
 </p>
 </div>
 
-<h4 class="mt-8 mb-6 text-3xl text-gray-700 border-b hover:text-green-500
-border-gray-500">Warning</h4><div class="warning my-12 p-8 rounded-md border-l-8 border border-yellow-500
+<h4 class="mt-8 mb-6 text-xl text-gray-800
+border-b hover:text-blue-500 border-gray-500">Warning</h4><div class="warning my-12 p-8 rounded-md border-l-8 border border-yellow-500
 shadow-xl"><p class="text-yellow-500 font-bold"></p><p class="my-2">Warning text.
 </p>
 </div>
 
-<h4 class="mt-8 mb-6 text-3xl text-gray-700 border-b hover:text-green-500
-border-gray-500">Danger</h4><div class="danger my-12 p-8 rounded-md border-l-8 border border-red-500
+<h4 class="mt-8 mb-6 text-xl text-gray-800
+border-b hover:text-blue-500 border-gray-500">Danger</h4><div class="danger my-12 p-8 rounded-md border-l-8 border border-red-500
 shadow-xl"><p class="text-red-500 font-bold">Danger Title</p><p class="my-2">These blocks can contain other blocks.
 </p>
 
@@ -516,12 +551,12 @@ shadow-xl"><p class="text-red-500 font-bold">Danger Title</p><p class="my-2">The
 </p>
 </div>
 
-<h4 class="mt-8 mb-6 text-3xl text-gray-700 border-b hover:text-green-500
-border-gray-500">Mermaids</h4><p class="my-2">There are also mermaids.
+<h4 class="mt-8 mb-6 text-xl text-gray-800
+border-b hover:text-blue-500 border-gray-500">Mermaids</h4><p class="my-2">There are also mermaids.
 </p>
 
-<h5 class="mt-6 mb-6 text-2xl text-gray-700 border-b hover:text-green-500
-border-gray-500">Diagram</h5><div class="my-12"><div class="mermaid my-2 p-4 max-w-full max-h-full bg-white rounded-md">sequenceDiagram
+<h5 class="mt-6 mb-6 text-lg text-gray-800
+border-b hover:text-blue-500 border-gray-500">Diagram</h5><div class="my-12"><div class="mermaid my-2 p-4 max-w-full max-h-full bg-white rounded-md">sequenceDiagram
 participant Alice
 participant Bob
 Alice->>John: Hello John, how are you?
@@ -534,8 +569,8 @@ John->>Bob: How about you?
 Bob-->>John: Jolly good!
 </div><p class="mx-20 text-center italic border-t border-gray-500">A simple diagram.</p></div>
 
-<h5 class="mt-6 mb-6 text-2xl text-gray-700 border-b hover:text-green-500
-border-gray-500">Gantt Chart</h5><div class="my-12"><div class="mermaid my-2 p-4 max-w-full max-h-full bg-white rounded-md">gantt
+<h5 class="mt-6 mb-6 text-lg text-gray-800
+border-b hover:text-blue-500 border-gray-500">Gantt Chart</h5><div class="my-12"><div class="mermaid my-2 p-4 max-w-full max-h-full bg-white rounded-md">gantt
 dateFormat  YYYY-MM-DD
 title Adding GANTT diagram to mermaid
 
@@ -564,37 +599,51 @@ Add gantt diagram to demo page      : 20h
 Add another diagram to demo page    : 48h
 </div><p class="mx-20 text-center italic border-t border-gray-500">What a beautiful chart. What does it mean?</p></div>
 
-<h4 class="mt-8 mb-6 text-3xl text-gray-700 border-b hover:text-green-500
-border-gray-500">Custom Attributes</h4><p class="my-2">These blocks have custom attributes that you can change:
+<h4 class="mt-8 mb-6 text-xl text-gray-800
+border-b hover:text-blue-500 border-gray-500">Custom Attributes</h4><p class="my-2">These blocks have custom attributes that you can change:
 </p>
-<dl class="my-8"><dt class="font-bold">Source code</dt><dl class="my-8"><dt class="font-bold"><code class="px-2 rounded-md text-green-600 bg-gray-400">#+ATTR_HIGHLIGHT</code></dt><dd class="ml-10">lines to highlight in the source code, e.g. <code class="px-2 rounded-md text-green-600 bg-gray-400">1,5-10,12</code>
+<dl class="my-8"><dt class="font-bold">Source code</dt><dl class="my-8"><dt class="font-bold"><code class="px-2 rounded-md text-green-600
+bg-gray-200">#+ATTR_HIGHLIGHT</code></dt><dd class="ml-10">lines to highlight in the source code, e.g. <code class="px-2 rounded-md text-green-600
+bg-gray-200">1,5-10,12</code>
 </dd>
-<dt class="font-bold"><code class="px-2 rounded-md text-green-600 bg-gray-400">#+ATTR_USERNAME</code></dt><dd class="ml-10">username to show in command-line blocks, e.g. <code class="px-2 rounded-md text-green-600 bg-gray-400">CrazyCat</code>
+<dt class="font-bold"><code class="px-2 rounded-md text-green-600
+bg-gray-200">#+ATTR_USERNAME</code></dt><dd class="ml-10">username to show in command-line blocks, e.g. <code class="px-2 rounded-md text-green-600
+bg-gray-200">CrazyCat</code>
 </dd>
-<dt class="font-bold"><code class="px-2 rounded-md text-green-600 bg-gray-400">#+ATTR_HOSTNAME</code></dt><dd class="ml-10">hostname to show in command-line blocks, e.g. <code class="px-2 rounded-md text-green-600 bg-gray-400">localhost</code>
+<dt class="font-bold"><code class="px-2 rounded-md text-green-600
+bg-gray-200">#+ATTR_HOSTNAME</code></dt><dd class="ml-10">hostname to show in command-line blocks, e.g. <code class="px-2 rounded-md text-green-600
+bg-gray-200">localhost</code>
 </dd>
-<dt class="font-bold"><code class="px-2 rounded-md text-green-600 bg-gray-400">#+ATTR_FETCH</code></dt><dd class="ml-10">fetch files from the Github API
+<dt class="font-bold"><code class="px-2 rounded-md text-green-600
+bg-gray-200">#+ATTR_FETCH</code></dt><dd class="ml-10">fetch files from the Github API
 </dd>
-<dt class="font-bold"><code class="px-2 rounded-md text-green-600 bg-gray-400">#+ATTR_FILEPATH</code></dt><dd class="ml-10">get files and add a download button, it uses HTTP so, no local files.
+<dt class="font-bold"><code class="px-2 rounded-md text-green-600
+bg-gray-200">#+ATTR_FILEPATH</code></dt><dd class="ml-10">get files and add a download button, it uses HTTP so, no local files.
 </dd>
 </dl>
-<dt class="font-bold">Custom blocks</dt><dl class="my-8"><dt class="font-bold"><code class="px-2 rounded-md text-green-600 bg-gray-400">#+NAME</code></dt><dd class="ml-10">the title of the block
+<dt class="font-bold">Custom blocks</dt><dl class="my-8"><dt class="font-bold"><code class="px-2 rounded-md text-green-600
+bg-gray-200">#+NAME</code></dt><dd class="ml-10">the title of the block
 </dd>
 </dl>
-<dt class="font-bold">Tables</dt><dl class="my-8"><dt class="font-bold"><code class="px-2 rounded-md text-green-600 bg-gray-400">#+NAME</code></dt><dd class="ml-10">the description of the table or image or video
+<dt class="font-bold">Tables</dt><dl class="my-8"><dt class="font-bold"><code class="px-2 rounded-md text-green-600
+bg-gray-200">#+NAME</code></dt><dd class="ml-10">the description of the table or image or video
 </dd>
 </dl>
-<dt class="font-bold">Images and Videos</dt><dl class="my-8"><dt class="font-bold"><code class="px-2 rounded-md text-green-600 bg-gray-400">#+NAME</code></dt><dd class="ml-10">the description of the table or image or video
+<dt class="font-bold">Images and Videos</dt><dl class="my-8"><dt class="font-bold"><code class="px-2 rounded-md text-green-600
+bg-gray-200">#+NAME</code></dt><dd class="ml-10">the description of the table or image or video
 </dd>
 </dl>
-<dt class="font-bold">Blockquotes</dt><dl class="my-8"><dt class="font-bold"><code class="px-2 rounded-md text-green-600 bg-gray-400">#+NAME</code></dt><dd class="ml-10">the name of the author
+<dt class="font-bold">Blockquotes</dt><dl class="my-8"><dt class="font-bold"><code class="px-2 rounded-md text-green-600
+bg-gray-200">#+NAME</code></dt><dd class="ml-10">the name of the author
 </dd>
 </dl>
 </dl>
 
-<h2 class="mt-20 mb-6 text-5xl text-gray-700 border-b hover:text-green-500
-border-gray-500">Customization</h2><h3 class="mt-12 mb-6 text-4xl text-gray-700 border-b hover:text-green-500
-border-gray-500">Dark Theme</h3><p class="my-2">To get dark mode, add this to your <code class="px-2 rounded-md text-green-600 bg-gray-400">config.el</code> or <code class="px-2 rounded-md text-green-600 bg-gray-400">.spacemacs</code> file:
+<h2 class="mt-20 mb-6 text-3xl text-gray-800
+border-b hover:text-blue-500 border-gray-500">Customization</h2><h3 class="mt-12 mb-6 text-2xl text-gray-800
+border-b hover:text-blue-500 border-gray-500">Dark Theme</h3><p class="my-2">To get dark mode, add this to your <code class="px-2 rounded-md text-green-600
+bg-gray-200">config.el</code> or <code class="px-2 rounded-md text-green-600
+bg-gray-200">.spacemacs</code> file:
 </p>
 
 <div class="my-12 shadow-xl"><pre class="line-numbers rainbow-braces match-braces rounded"  ><code class="language-elisp">;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -677,8 +726,8 @@ rounded-md border border-gray-500 bg-gray-900")
 border-gray-400 hover:bg-gray-900")
 </code></pre></div>
 
-<h3 class="mt-12 mb-6 text-4xl text-gray-700 border-b hover:text-green-500
-border-gray-500">Gitlab alike Theme</h3><div class="my-12 shadow-xl"><pre class="line-numbers rainbow-braces match-braces rounded"  ><code class="language-elisp">(setq org-tailwind-headlines "h1,h2,h3")
+<h3 class="mt-12 mb-6 text-2xl text-gray-800
+border-b hover:text-blue-500 border-gray-500">Gitlab alike Theme</h3><div class="my-12 shadow-xl"><pre class="line-numbers rainbow-braces match-braces rounded"  ><code class="language-elisp">(setq org-tailwind-headlines "h1,h2,h3")
 
 (setq org-tailwind-class-h1 "mt-32 mb-6 text-4xl text-gray-800
 border-b hover:text-blue-500 border-gray-500")
@@ -754,8 +803,7 @@ rounded hover:bg-gray-500")
   </div>
 </div>
 
-<div id="footer" class="fixed bottom-0 w-full border-t border-solid border-gray-500
-h-8 text-center bg-white">
+<div id="footer" class="hidden fixed bottom-0 w-full border-t border-solid border-gray-500 h-8 text-center bg-gray-900">
 <p>Exported with org-tailwind</p>
 </div>
 
@@ -814,12 +862,12 @@ function createTOC() {
 
         // Tailwind.css classes
 		tocHeader.className = 'px-2 py-1';
-        tocHeader.className += ' text-sm border-b border-l-4 border-gray-200 hover:bg-green-300';
+        tocHeader.className += ' text-sm hover:bg-gray-500';
 
         // Make the first header active
         // This will be used for the scroll spy
         if (i == 0) {
-            tocHeader.className += ' border-green-500';
+            tocHeader.className += ' bg-gray-400 border-r-4 border-indigo-900';
         }
 	
         // Add the header to the table of contents
@@ -912,7 +960,7 @@ for(let i = 0; i < tocTree.length; i++) {
     let item = document.createElement('li')
     let link = document.createElement('a')
     link.href = heading.file + '#toc-link-' + heading.index
-    link.className = "p-2 block rounded-md hover:bg-green-300"
+    link.className = "p-2 block rounded hover:bg-gray-500"
     link.style.display = 'none'
 
     if (heading.name === heading.parent) {
@@ -993,7 +1041,7 @@ function scrollSpy () {
   let headingsTopOffsets = {};
   let i = 0;
 
-  let selectedClassName = "border-green-500";
+  let selectedClassName = "bg-gray-400 border-r-4 border-indigo-900";
 
   Array.prototype.forEach.call(headings, function(s) {
     headingsTopOffsets[s.id] = s.offsetTop;
