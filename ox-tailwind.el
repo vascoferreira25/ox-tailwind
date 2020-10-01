@@ -110,7 +110,7 @@
     (table . org-tailwind-table)
     (table-cell . org-tailwind-table-cell)
     (table-row . org-tailwind-table-row)
-    (target . org-html-target)
+    (target . org-tailwind-target)
     (template . org-tailwind-template)
     (timestamp . org-html-timestamp)
     (underline . org-tailwind-underlined)
@@ -1049,13 +1049,24 @@ By not doing anything to the contents, it exports the elements at the root level
               org-tailwind-class-paragraph
               (org-tailwind-checkbox checkbox)
               contents))
+     ;; Normal paragraph
      (t (format "<p class=\"%s\">%s</p>"
                 org-tailwind-class-paragraph
                 contents)))))
 
+
+(defun org-tailwind-target (target _contents info)
+  "Transcode a TARGET object from Org to HTML.
+CONTENTS is nil.  INFO is a plist holding contextual
+information."
+  (let* ((ref (org-element-property :value target)))
+    (format "<span id=\"%s\"></span>" ref)))
+
+
 (defun org-tailwind-link (link contents info)
   "Transcode LINK from Org to HTML."
   (let* ((path (org-element-property :path link))
+         (raw-link (org-element-property :raw-link link))
          (type (org-element-property :type link))
          (parent (org-element-property :parent link))
          (description (org-element-property :name parent))
@@ -1105,6 +1116,14 @@ By not doing anything to the contents, it exports the elements at the root level
               org-tailwind-class-link
               (concat type ":" (replace-regexp-in-string "\\.org" ".html" path))
               contents))
+     ;; Internal link
+     ((equalp type "fuzzy")
+      (format link-tag
+              org-tailwind-class-link
+              (concat "#" raw-link)
+              (if contents
+                  contents
+                (concat "#" raw-link))))
      ;; Any other link
      (t (format link-tag
                 org-tailwind-class-link
