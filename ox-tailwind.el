@@ -377,8 +377,14 @@ the end."
   "Tailwind.css classes for the HTML SRC-BLOCK CONTAINER."
   :type '(string))
 
+(defcustom org-tailwind-class-src-window
+  "bg-gray-400"
+  "Tailwind.css classes for the HTML SRC-BLOCK WINDOW.
+This makes it look like the code is in an editor on mac OS."
+  :type '(string))
+
 (defcustom org-tailwind-class-pre
-  "rainbow-braces match-braces rounded"
+  "rainbow-braces match-braces rounded-b"
   "Tailwind.css classes for the HTML SRC-BLOCK."
   :type '(string))
 
@@ -1146,7 +1152,7 @@ information."
      "")))
 
 (defvar org-tailwind--src-block-open
-  "<div class=\"%s\"><pre class=\"%s\" %s>"
+  "<div class=\"%s\">%s<pre class=\"%s\" %s>"
   "Opening tag of code block for Prism.js
 It has two format places:
 - Tailwind.css classes
@@ -1159,6 +1165,15 @@ It has two format places:
 - language
 - code text")
 
+(defvar org-tailwind--src-block-file-name
+  "<div class=\"h-8 rounded-t flex %s\">
+  <div class=\"bg-red-500 my-2 ml-2 mr-1 h-4 w-4 rounded-full\"></div>
+  <div class=\"bg-yellow-500 my-2 ml-1 mr-1 h-4 w-4 rounded-full\"></div>
+  <div class=\"bg-green-500 my-2 ml-1 mr-1 h-4 w-4 rounded-full\"></div>
+  <p class=\"mx-2 my-1 w-full text-center\">%s</p>
+</div>"
+  "Make it look like the code is in a mac OS code editor.")
+
 (defun org-tailwind--get-attribute (attribute block)
   "Get the ATTRIBUTE from an org BLOCK element."
   (car (org-element-property attribute block)))
@@ -1168,12 +1183,18 @@ It has two format places:
   (let* ((code-text (org-element-property :value src-block))
          (language (org-element-property :language src-block))
          (filepath (org-tailwind--get-attribute :attr_filepath src-block))
+         (file-name (org-tailwind--get-attribute :attr_filename src-block))
          (username (org-tailwind--get-attribute :attr_username src-block))
          (hostname (org-tailwind--get-attribute :attr_hostname src-block))
          (highlight-lines (org-tailwind--get-attribute :attr_highlight src-block)))
     (concat
      (format org-tailwind--src-block-open
              org-tailwind-class-src-container
+             (format org-tailwind--src-block-file-name
+                     org-tailwind-class-src-window
+                     (if file-name
+                         file-name
+                       "Console"))
              (concat "command-line " org-tailwind-class-pre)
              (concat
               "data-filter-output=\"(out)\" "
@@ -1201,11 +1222,18 @@ It has two format places:
                          r2))
          (language (org-element-property :language src-block))
          (filepath (org-tailwind--get-attribute :attr_filepath src-block))
+         (file-name (org-tailwind--get-attribute :attr_filename src-block))
          (highlight-lines (org-tailwind--get-attribute :attr_highlight src-block))
          (fetch-code (org-tailwind--get-attribute :attr_fetch src-block)))
     (concat
      (format org-tailwind--src-block-open
              org-tailwind-class-src-container
+             (format org-tailwind--src-block-file-name
+                     org-tailwind-class-src-window
+                     (if file-name
+                         file-name
+                       ""))
+
              (concat "line-numbers " org-tailwind-class-pre)
              (concat " "
                      (if highlight-lines

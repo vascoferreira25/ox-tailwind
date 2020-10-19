@@ -43,6 +43,7 @@ git clone https://github.com/vascoferreira25/ox-tailwind ~/.emacs.d/private
 
 Add the following to your ~.spacemacs~ file:
 
+#+ATTR_FILENAME: .spacemacs
 #+ATTR_HIGHLIGHT: 8
 #+begin_src elisp
 (defun dotspacemacs/user-config ()
@@ -80,6 +81,7 @@ git clone https://github.com/vascoferreira25/ox-tailwind ~/.doom.d/ox-tailwind
 
 Add the following to your ~config.el~ file:
 
+#+ATTR_FILENAME: config.el
 #+begin_src elisp
 (add-load-path! "ox-tailwind")
 
@@ -109,6 +111,7 @@ git clone https://github.com/vascoferreira25/ox-tailwind ~/.emacs.d/private-pack
 
 And add the following to your config file:
 
+#+ATTR_FILENAME: your_config.el
 #+BEGIN_SRC elisp
 ;; ox-tailwind export back-end
 (load "~/.emacs.d/private-packages/ox-tailwind/ox-tailwind.el")
@@ -350,6 +353,7 @@ Once upon a time..........
 
 Source code blocks can be downloaded directly from github:
 
+#+ATTR_FILENAME: core.cljs
 #+ATTR_HIGHLIGHT: 2,6-8,11-20,48-51
 #+ATTR_FETCH: https://api.github.com/repos/vascoferreira25/discord-bot/contents/src/main/core.cljs
 #+BEGIN_SRC clojure
@@ -358,6 +362,8 @@ Source code blocks can be downloaded directly from github:
 This uses the following attributes:
 
 #+BEGIN_SRC org
+,#+ATTR_FILENAME: core.cljs
+,#+ATTR_HIGHLIGHT: 2,6-8,11-20,48-51
 ,#+ATTR_FETCH: https://api.github.com/repos/vascoferreira25/discord-bot/contents/src/main/core.cljs
 #+END_SRC
 
@@ -466,6 +472,7 @@ These blocks have custom attributes that you can change:
   - ~#+ATTR_HOSTNAME~ :: hostname to show in command-line blocks, e.g. ~localhost~
   - ~#+ATTR_FETCH~ :: fetch files from the Github API
   - ~#+ATTR_FILEPATH~ :: get files and add a download button, it uses HTTP so, no local files.
+  - ~#+ATTR_FILENAME~ :: name to display on the source code window.
 - Custom blocks ::
   - ~#+NAME~ :: the title of the block
 - Tables ::
@@ -480,12 +487,12 @@ These blocks have custom attributes that you can change:
 
 To get dark mode, add this to your ~config.el~ or ~.spacemacs~ file:
 
+#+ATTR_FILENAME: Your settings
 #+BEGIN_SRC elisp
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-                                        ;         org-tailwind settings        ;
+                                       ;        org-tailwind dark mode        ;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-;; Headlines to include in the Table of Contents
 (setq org-tailwind-headlines "h1,h2,h3")
 
 (setq org-tailwind-class-h1 "mt-32 mb-6 text-6xl text-yellow-600
@@ -517,9 +524,6 @@ bg-gray-900")
 
 (setq org-tailwind-class-verbatim "px-2 rounded-md text-red-600
 bg-gray-900")
-
-
-;; Page Elements
 
 (setq org-tailwind-class-body "flex flex-col h-screen
 text-gray-200 bg-gray-800")
@@ -559,11 +563,18 @@ rounded-md border border-gray-500 bg-gray-900")
 
 (setq org-tailwind-class-table-last-body-row "border-b-2
 border-gray-400 hover:bg-gray-900")
+
+(setq org-tailwind-class-src-window "bg-gray-400 text-gray-700")
 #+END_SRC
 
 *** Gitlab alike Theme
 
+#+ATTR_FILENAME: Your settings
 #+BEGIN_SRC elisp
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+                                       ;      org-tailwind gitlab theme       ;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
 (setq org-tailwind-headlines "h1,h2,h3")
 
 (setq org-tailwind-class-h1 "mt-32 mb-6 text-4xl text-gray-800
@@ -590,19 +601,19 @@ border-b hover:text-blue-500 border-gray-500")
 (setq org-tailwind-class-h8 "mt-1 mb-6 text-base text-gray-800
 border-b hover:text-green-500 border-gray-500")
 
-(setq org-tailwind-class-code "px-2 rounded-md text-green-600
-bg-gray-200")
+(setq org-tailwind-class-code "px-2 rounded-md text-teal-500
+bg-gray-300")
 
-(setq org-tailwind-class-verbatim "px-2 rounded-md text-red-600
-bg-gray-200")
+(setq org-tailwind-class-verbatim "px-2 rounded-md text-pink-500
+bg-gray-300")
 
 (setq org-tailwind-class-link "text-blue-700 hover:text-blue-800 hover:underline")
 
-
-;; Page Elements
-
 (setq org-tailwind-class-body "flex flex-col h-screen
 text-gray-800")
+
+(setq org-tailwind-class-file-name "flex rounded-t border \
+border-gray-300 bg-gray-100 py-2 pl-4 font-bold")
 
 (setq org-tailwind-class-inner-container "px-20 pb-24 mb-12 border border-gray-300")
 
@@ -617,7 +628,7 @@ lg:border-r-4 lg:border-gray-300 lg:fixed lg:pt-2 lg:w-64 lg:px-2
 lg:overflow-y-auto lg:inset-y-0 lg:mt-16")
 
 (setq org-tailwind-class-content-container "flex-grow px-4 py-12 \
-sm:px-8 md:px-12 lg:ml-64 lg:px-12 lg:overflow-x-auto xl:px-32")
+sm:px-8 md:px-12 lg:ml-64 lg:px-24 lg:overflow-x-auto xl:px-56")
 
 (setq org-tailwind-class-toc-items "text-sm hover:bg-gray-500")
 
@@ -634,4 +645,82 @@ rounded-md text-gray-800")
 
 (setq org-tailwind-class-search-bar-results-item "p-2 block \
 rounded hover:bg-gray-500")
+
+(setq org-tailwind-html-template
+      "<!doctype html>
+<html lang=\"en\">
+<head>
+  <meta charset=\"utf-8\">
+  <title>%s</title>
+  %s
+</head>
+<body class=\"%s\">
+
+<div id=\"header\" class=\"%s\">
+%s
+</div>
+
+<div id=\"content\" class=\"top %s\" onclick=\"hideResults()\">
+  <div id=\"sidebar\" class=\"%s\">
+  %s
+  </div>
+
+  <div id=\"content-container\" class=\"%s\" onscroll=\"scrollSpy()\">
+    <div id=\"top\"></div>
+    <div id=\"file-name\" class=\"%s\">
+      <img class=\"w-6 h-6 mr-2\" src=\"./icons/folders.png\">
+      <p>%s</p>
+    </div>
+    <div id=\"inner-container\" class=\"%s\">
+      %s
+    </div>
+  </div>
+</div>
+
+<div id=\"footer\" class=\"%s\">
+%s
+</div>
+
+<script>
+%s
+</script>
+
+%s
+
+</body>
+</html>
+")
+
+(defun org-tailwind-template (contents info)
+  "Format the HTML Template and add the CONTENTS of the export."
+  (format org-tailwind-html-template
+          (plist-get (org-export-get-environment 'tailwind) :html-title)
+          org-tailwind-head-files
+          org-tailwind-class-body
+          org-tailwind-class-header
+          (format org-tailwind-header
+                  org-tailwind-class-top-button
+                  org-tailwind-class-search-bar
+                  org-tailwind-class-search-bar-results-list)
+          org-tailwind-class-content
+          org-tailwind-class-sidebar
+          org-tailwind-sidebar
+          org-tailwind-class-content-container
+          ;; add the file name before the content box
+          org-tailwind-class-file-name
+          (plist-get info :input-buffer)
+          org-tailwind-class-inner-container
+          contents
+          org-tailwind-class-footer
+          org-tailwind-footer
+          ;; Generate TOC Javascript
+          (format org-tailwind-javascript
+                  org-tailwind-class-top-button
+                  org-tailwind-headlines
+                  org-tailwind-class-toc-items
+                  org-tailwind-class-current-toc
+                  org-tailwind-class-search-bar-results-item
+                  org-tailwind-class-current-toc)
+          org-tailwind-bottom-files))
 #+END_SRC
+
