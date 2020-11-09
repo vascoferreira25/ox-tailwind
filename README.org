@@ -118,6 +118,7 @@ files in the path of your project and store all the headings in a ~.js~ file.
 
 The folder structure for your notes should be like this:
 
+#+ATTR_FILENAME: C:/notes
   #+begin_src ps
 tree /F /a
 (out)C:/path/to/your_notes/
@@ -580,12 +581,12 @@ _Underlined Text_
 **** Images
 
 #+NAME: I don't have words...
-[[./sample_files/weird_cat.gif]]
+[[./files/weird_cat.gif]]
 
 **** Videos
 
 #+NAME: What is this?
-[[./sample_files/cat_treats.mp4]]
+[[./files/cat_treats.mp4]]
 
 *** Formulas
 Inline formulas: $\sum_{i=0}^n i^2 = \frac{(n^2+n)(2n+1)}{6}$
