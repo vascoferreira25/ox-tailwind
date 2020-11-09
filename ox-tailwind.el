@@ -46,14 +46,22 @@
 ;; - show language
 ;; - jsonp highlight
 ;; - inline colors
+;; - inline color
 ;; - previewers
 ;; - autoloader
+;; - keep markup
 ;; - command-line
+;; - unescaped markup
+;; - normalize whitespace
+;; - toolbar
+;; - data-uri highlight
 ;; - toolbar
 ;; - copy to clipboard button
 ;; - download button
 ;; - match braces
 ;; - diff highlight
+;; - filter highlight all
+;; - treeview
 
 ;;; Code:
 
@@ -548,7 +556,7 @@ the end."
 <link href=\"./css/tailwind.min.css\" rel=\"stylesheet\"/>
 
 <!-- Prism Css -->
-<link href=\"./css/prism_tomorrow.css\" rel=\"stylesheet\" />
+<link href=\"./css/prism.css\" rel=\"stylesheet\" />
 
 <!-- Mathjax -->
 <script>

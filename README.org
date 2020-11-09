@@ -15,14 +15,8 @@ Check the [[https://vascoferreira25.github.io/ox-tailwind/][Light Theme]].
 
 Check the [[https://vascoferreira25.github.io/ox-tailwind/dark.html][Dark Theme]].
 
-Gitlab alike [[https://vascoferreira25.github.io/ox-tailwind/another_theme.html][theme]].
+Check the [[https://vascoferreira25.github.io/ox-tailwind/gitlab.html][Gitlab theme]].
 
-** Known bugs
-
-- It crashes when it encounters a line that ends in ~\\~ - it works if it is
-  inside a block;
-- It won't export ~TODO~ keywords and ~SCHEDULE~ dates.
-  
 ** Installation
 *** Spacemacs
    
@@ -119,7 +113,7 @@ And add the following to your config file:
 
 ** Notes structure
 
-In order for the search bar work, this export backend will search all ~.org~
+In order for the search bar to work, this export backend will search all ~.org~
 files in the path of your project and store all the headings in a ~.js~ file.
 
 The folder structure for your notes should be like this:
@@ -136,7 +130,7 @@ tree /F /a
 (out)+---img
 (out)|       # Your image files
 (out)|       
-(out)\---dist
+(out)+---dist
 (out)        # Org Publish Files
   #+end_src
 
@@ -166,6 +160,7 @@ Examples:
 
 Index files should have the following template
 
+#+ATTR_FILENAME: subjects.org
 #+BEGIN_SRC org 
 ,* Subjects
 ,** Pages
@@ -187,8 +182,9 @@ Index files should have the following template
 
 ** Publish settings
 
-My export settings are the following:
+To setup automatic export of all my org files I use the following settings:
 
+#+ATTR_FILENAME: your_config.el
 #+BEGIN_SRC elisp
 (setq org-publish-project-alist
       '(("org-files"
@@ -217,38 +213,34 @@ My export settings are the following:
 
 ** Notes output directory
    
-In order for the export to be functional when offline,
-you need to put the needed files in the output folder.
+In order for the export to be functional when offline, you need to put the
+needed files in the output folder.
 
 The files used in the HTML file are:
+
 - [[https://prismjs.com/][Prism.js]]
 - [[https://www.mathjax.org/][Mathjax]]
 - [[https://tailwindcss.com/][Tailwind CSS]]
 
-Just copy the folders inside ~/docs/~ folder of this repository
-into your ~/dist/~ folder.
+Just copy the folders inside ~/docs/~ folder of this repository into your
+~/dist/~ folder.
 
 This is the directory structure of the export folder:
    
 #+ATTR_USERNAME: your-username
 #+ATTR_HOSTNAME: your-hostname
 #+ATTR_HIGHLIGHT: 3-5,15,18,20-23
+#+ATTR_FILENAME: C:/notes/dist
 #+begin_src ps
 tree /F /a
-(out)C:/path/to/your_notes/out/
+(out)C:/path/to/your_notes/dist/
 (out)|   # The HTML export
 (out)|   index.html
 (out)|   
 (out)+---css
 (out)|       prism.css
-(out)|       prism_coy.css
-(out)|       prism_default.css
-(out)|       prism_okaidia.css
-(out)|       prism_solarized_light.css
-(out)|       prism_tomorrow.css
-(out)|       prism_twilight.css
-(out)|       tailwind.min.css
 (out)|       style.css # Your css file
+(out)|       tailwind.min.css
 (out)|       
 (out)+---files
 (out)|       # Your attachments
@@ -263,10 +255,269 @@ tree /F /a
 (out)|       polyfill.min.js
 (out)|       prism.js
 (out)|       tex-mml-chtml.js
+(out)|       toc_tree.js
 (out)|       
-(out)\---mathjax
+(out)+---mathjax
 (out)        # Mathjax Files
 #+end_src
+
+** Customization
+
+To customize the theme you have to change the ~org-tailwind-class~ variables.
+Bellow are two different themes:
+
+- Dark mode,
+- Gitlab alike theme.
+
+You just have to copy-paste these settings to your config file:
+
+- if you're using Spacemacs, copy-paste it to ~(defun dotspacemacs/user-config
+  ()~ function,
+- if you're using Doom, copy-paste it to the ~config.el~ file, bellow the
+  import of the package.
+
+To customize the code blocks, you can just download another theme from the
+[[https://prismjs.com/download.html#themes=prism-tomorrow&languages=markup+css+clike+javascript+abap+abnf+actionscript+ada+agda+al+antlr4+apacheconf+apl+applescript+aql+arduino+arff+asciidoc+aspnet+asm6502+autohotkey+autoit+bash+basic+batch+bbcode+birb+bison+bnf+brainfuck+brightscript+bro+bsl+c+csharp+cpp+cil+clojure+cmake+coffeescript+concurnas+csp+crystal+css-extras+cypher+d+dart+dax+dhall+diff+django+dns-zone-file+docker+ebnf+editorconfig+eiffel+ejs+elixir+elm+etlua+erb+erlang+excel-formula+fsharp+factor+firestore-security-rules+flow+fortran+ftl+gml+gcode+gdscript+gedcom+gherkin+git+glsl+go+graphql+groovy+haml+handlebars+haskell+haxe+hcl+hlsl+http+hpkp+hsts+ichigojam+icon+ignore+inform7+ini+io+j+java+javadoc+javadoclike+javastacktrace+jolie+jq+jsdoc+js-extras+json+json5+jsonp+jsstacktrace+js-templates+julia+keyman+kotlin+latex+latte+less+lilypond+liquid+lisp+livescript+llvm+lolcode+lua+makefile+markdown+markup-templating+matlab+mel+mizar+mongodb+monkey+moonscript+n1ql+n4js+nand2tetris-hdl+naniscript+nasm+neon+nginx+nim+nix+nsis+objectivec+ocaml+opencl+oz+parigp+parser+pascal+pascaligo+pcaxis+peoplecode+perl+php+phpdoc+php-extras+plsql+powerquery+powershell+processing+prolog+properties+protobuf+pug+puppet+pure+purebasic+purescript+python+q+qml+qore+r+racket+jsx+tsx+reason+regex+renpy+rest+rip+roboconf+robotframework+ruby+rust+sas+sass+scss+scala+scheme+shell-session+smali+smalltalk+smarty+sml+solidity+solution-file+soy+sparql+splunk-spl+sqf+sql+stan+iecst+stylus+swift+t4-templating+t4-cs+t4-vb+tap+tcl+tt2+textile+toml+turtle+twig+typescript+typoscript+unrealscript+vala+vbnet+velocity+verilog+vhdl+vim+visual-basic+warpscript+wasm+wiki+xeora+xml-doc+xojo+xquery+yaml+yang+zig&plugins=line-highlight+line-numbers+autolinker+file-highlight+show-language+jsonp-highlight+highlight-keywords+inline-color+previewers+autoloader+keep-markup+command-line+unescaped-markup+normalize-whitespace+data-uri-highlight+toolbar+copy-to-clipboard+download-button+match-braces+diff-highlight+filter-highlight-all+treeview][Prism.js]] website and save both the ~js~ and the ~css~ file in your ~/dist~
+folder.
+
+*** Dark Theme
+
+#+ATTR_FILENAME: your_config.el
+#+BEGIN_SRC elisp
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+                                       ;        org-tailwind dark mode        ;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(setq org-tailwind-headlines "h1,h2,h3")
+
+(setq org-tailwind-class-h1 "mt-32 mb-6 text-6xl text-yellow-600
+border-b hover:text-green-500 border-gray-500")
+
+(setq org-tailwind-class-h2 "mt-20 mb-6 text-5xl text-yellow-600
+border-b hover:text-green-500 border-gray-500")
+
+(setq org-tailwind-class-h3 "mt-12 mb-6 text-4xl text-yellow-600
+border-b hover:text-green-500 border-gray-500")
+
+(setq org-tailwind-class-h4 "mt-8 mb-6 text-3xl text-yellow-600
+border-b hover:text-green-500 border-gray-500")
+
+(setq org-tailwind-class-h5 "mt-6 mb-6 text-2xl text-yellow-600
+border-b hover:text-green-500 border-gray-500")
+
+(setq org-tailwind-class-h6 "mt-4 mb-6 text-xl text-yellow-600
+border-b hover:text-green-500 border-gray-500")
+
+(setq org-tailwind-class-h7 "mt-2 mb-6 text-lg text-yellow-600
+border-b hover:text-green-500 border-gray-500")
+
+(setq org-tailwind-class-h8 "mt-1 mb-6 text-base text-yellow-600
+border-b hover:text-green-500 border-gray-500")
+
+(setq org-tailwind-class-code "px-2 rounded-md text-green-600
+bg-gray-900")
+
+(setq org-tailwind-class-verbatim "px-2 rounded-md text-red-600
+bg-gray-900")
+
+(setq org-tailwind-class-body "flex flex-col h-screen
+text-gray-200 bg-gray-800")
+
+(setq org-tailwind-class-header "w-full border-b border-gray-500
+bg-gray-900 shadow-md items-center h-16")
+
+(setq org-tailwind-class-footer "fixed bottom-0 w-full border-t
+border-solid border-gray-500 h-8 text-center bg-gray-900")
+
+(setq org-tailwind-class-sidebar "px-24 py-12 bg-gray-900
+lg:border-r lg:border-gray-500 lg:fixed lg:pt-2 lg:w-64 lg:px-2
+lg:overflow-y-auto lg:inset-y-0 lg:mt-16 lg:mb-8")
+
+(setq org-tailwind-class-toc-items "text-sm border-b border-l-4 \
+border-gray-900 hover:border-yellow-700")
+
+(setq org-tailwind-class-current-toc "border-yellow-700")
+
+(setq org-tailwind-class-search-bar "float-right mx-4 w-1/6
+rounded-lg px-4 py-1 border-solid border-2 border-gray-700
+bg-gray-900 text-gray-700 focus:border-yellow-700
+focus:text-gray-200")
+
+(setq org-tailwind-class-search-bar-results-list "z-50 absolute
+w-5/6 sm:w-4/6 md:w-3/6 lg:w-2/6 xl:w-1/6 right-0 mt-12 mr-20
+bg-gray-900 p-4 shadow-lg border border-solid border-gray-500
+rounded-md text-gray-200")
+
+(setq org-tailwind-class-search-bar-results-item "p-2 block \
+rounded-md hover:bg-yellow-700")
+
+(setq org-tailwind-class-blockquote "my-2 mx-20 px-4 border-l-8
+rounded-md border border-gray-500 bg-gray-900")
+
+(setq org-tailwind-class-table-body-row "hover:bg-gray-900")
+
+(setq org-tailwind-class-table-last-body-row "border-b-2
+border-gray-400 hover:bg-gray-900")
+
+(setq org-tailwind-class-src-window "bg-gray-400 text-gray-700")
+#+END_SRC
+
+*** Gitlab alike Theme
+
+#+ATTR_FILENAME: your_config.el
+#+BEGIN_SRC elisp
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+                                       ;      org-tailwind gitlab theme       ;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(setq org-tailwind-headlines "h1,h2,h3")
+
+(setq org-tailwind-class-h1 "mt-32 mb-6 text-4xl text-gray-800
+border-b hover:text-blue-500 border-gray-500")
+
+(setq org-tailwind-class-h2 "mt-20 mb-6 text-3xl text-gray-800
+border-b hover:text-blue-500 border-gray-500")
+
+(setq org-tailwind-class-h3 "mt-12 mb-6 text-2xl text-gray-800
+border-b hover:text-blue-500 border-gray-500")
+
+(setq org-tailwind-class-h4 "mt-8 mb-6 text-xl text-gray-800
+border-b hover:text-blue-500 border-gray-500")
+
+(setq org-tailwind-class-h5 "mt-6 mb-6 text-lg text-gray-800
+border-b hover:text-blue-500 border-gray-500")
+
+(setq org-tailwind-class-h6 "mt-4 mb-6 text-lg text-gray-800
+border-b hover:text-blue-500 border-gray-500")
+
+(setq org-tailwind-class-h7 "mt-2 mb-6 text-base text-gray-800
+border-b hover:text-blue-500 border-gray-500")
+
+(setq org-tailwind-class-h8 "mt-1 mb-6 text-base text-gray-800
+border-b hover:text-green-500 border-gray-500")
+
+(setq org-tailwind-class-code "px-2 rounded-md text-teal-500
+bg-gray-300")
+
+(setq org-tailwind-class-verbatim "px-2 rounded-md text-pink-500
+bg-gray-300")
+
+(setq org-tailwind-class-link "text-blue-700 hover:text-blue-800 hover:underline")
+
+(setq org-tailwind-class-body "flex flex-col h-screen
+text-gray-800")
+
+(setq org-tailwind-class-file-name "flex rounded-t border \
+border-gray-300 bg-gray-100 py-2 pl-4 font-bold")
+
+(setq org-tailwind-class-inner-container "px-20 pb-24 mb-12 border border-gray-300")
+
+(setq org-tailwind-class-header "w-full border-b border-gray-500
+bg-purple-900 shadow-md items-center h-16 text-white")
+
+(setq org-tailwind-class-footer "hidden fixed bottom-0 w-full border-t \
+border-solid border-gray-500 h-8 text-center bg-gray-900")
+
+(setq org-tailwind-class-sidebar "px-24 py-12 bg-gray-100
+lg:border-r-4 lg:border-gray-300 lg:fixed lg:pt-2 lg:w-64 lg:px-2
+lg:overflow-y-auto lg:inset-y-0 lg:mt-16")
+
+(setq org-tailwind-class-content-container "flex-grow px-4 py-12 \
+sm:px-8 md:px-12 lg:ml-64 lg:px-24 lg:overflow-x-auto xl:px-56")
+
+(setq org-tailwind-class-toc-items "text-sm hover:bg-gray-500")
+
+(setq org-tailwind-class-current-toc "bg-gray-400 border-r-4 border-indigo-900")
+
+(setq org-tailwind-class-search-bar "float-right mx-4 w-1/6 \
+rounded-lg px-4 py-1 border-solid border border-purple-900 \
+bg-purple-800 text-gray-800 focus:text-white")
+
+(setq org-tailwind-class-search-bar-results-list "z-50 absolute \
+w-5/6 sm:w-4/6 md:w-3/6 lg:w-2/6 xl:w-1/6 right-0 mt-12 mr-20 \
+bg-white p-4 shadow-lg border border-indigo-700 \
+rounded-md text-gray-800")
+
+(setq org-tailwind-class-search-bar-results-item "p-2 block \
+rounded hover:bg-gray-500")
+
+(setq org-tailwind-html-template
+      "<!doctype html>
+<html lang=\"en\">
+<head>
+  <meta charset=\"utf-8\">
+  <title>%s</title>
+  %s
+</head>
+<body class=\"%s\">
+
+<div id=\"header\" class=\"%s\">
+%s
+</div>
+
+<div id=\"content\" class=\"top %s\" onclick=\"hideResults()\">
+  <div id=\"sidebar\" class=\"%s\">
+  %s
+  </div>
+
+  <div id=\"content-container\" class=\"%s\" onscroll=\"scrollSpy()\">
+    <div id=\"top\"></div>
+    <div id=\"file-name\" class=\"%s\">
+      <img class=\"w-6 h-6 mr-2\" src=\"./icons/folders.png\">
+      <p>%s</p>
+    </div>
+    <div id=\"inner-container\" class=\"%s\">
+      %s
+    </div>
+  </div>
+</div>
+
+<div id=\"footer\" class=\"%s\">
+%s
+</div>
+
+<script>
+%s
+</script>
+
+%s
+
+</body>
+</html>
+")
+
+(defun org-tailwind-template (contents info)
+  "Format the HTML Template and add the CONTENTS of the export."
+  (format org-tailwind-html-template
+          (plist-get (org-export-get-environment 'tailwind) :html-title)
+          org-tailwind-head-files
+          org-tailwind-class-body
+          org-tailwind-class-header
+          (format org-tailwind-header
+                  org-tailwind-class-top-button
+                  org-tailwind-class-search-bar
+                  org-tailwind-class-search-bar-results-list)
+          org-tailwind-class-content
+          org-tailwind-class-sidebar
+          org-tailwind-sidebar
+          org-tailwind-class-content-container
+          ;; add the file name before the content box
+          org-tailwind-class-file-name
+          (plist-get info :input-buffer)
+          org-tailwind-class-inner-container
+          contents
+          org-tailwind-class-footer
+          org-tailwind-footer
+          ;; Generate TOC Javascript
+          (format org-tailwind-javascript
+                  org-tailwind-class-top-button
+                  org-tailwind-headlines
+                  org-tailwind-class-toc-items
+                  org-tailwind-class-current-toc
+                  org-tailwind-class-search-bar-results-item
+                  org-tailwind-class-current-toc)
+          org-tailwind-bottom-files))
+#+END_SRC
 
 ** Elements
 *** Markup
@@ -482,245 +733,9 @@ These blocks have custom attributes that you can change:
 - Blockquotes ::
   - ~#+NAME~ :: the name of the author
 
-** Customization
-*** Dark Theme
+** Known bugs
 
-To get dark mode, add this to your ~config.el~ or ~.spacemacs~ file:
-
-#+ATTR_FILENAME: Your settings
-#+BEGIN_SRC elisp
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-                                       ;        org-tailwind dark mode        ;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-(setq org-tailwind-headlines "h1,h2,h3")
-
-(setq org-tailwind-class-h1 "mt-32 mb-6 text-6xl text-yellow-600
-border-b hover:text-green-500 border-gray-500")
-
-(setq org-tailwind-class-h2 "mt-20 mb-6 text-5xl text-yellow-600
-border-b hover:text-green-500 border-gray-500")
-
-(setq org-tailwind-class-h3 "mt-12 mb-6 text-4xl text-yellow-600
-border-b hover:text-green-500 border-gray-500")
-
-(setq org-tailwind-class-h4 "mt-8 mb-6 text-3xl text-yellow-600
-border-b hover:text-green-500 border-gray-500")
-
-(setq org-tailwind-class-h5 "mt-6 mb-6 text-2xl text-yellow-600
-border-b hover:text-green-500 border-gray-500")
-
-(setq org-tailwind-class-h6 "mt-4 mb-6 text-xl text-yellow-600
-border-b hover:text-green-500 border-gray-500")
-
-(setq org-tailwind-class-h7 "mt-2 mb-6 text-lg text-yellow-600
-border-b hover:text-green-500 border-gray-500")
-
-(setq org-tailwind-class-h8 "mt-1 mb-6 text-base text-yellow-600
-border-b hover:text-green-500 border-gray-500")
-
-(setq org-tailwind-class-code "px-2 rounded-md text-green-600
-bg-gray-900")
-
-(setq org-tailwind-class-verbatim "px-2 rounded-md text-red-600
-bg-gray-900")
-
-(setq org-tailwind-class-body "flex flex-col h-screen
-text-gray-200 bg-gray-800")
-
-(setq org-tailwind-class-header "w-full border-b border-gray-500
-bg-gray-900 shadow-md items-center h-16")
-
-(setq org-tailwind-class-footer "fixed bottom-0 w-full border-t
-border-solid border-gray-500 h-8 text-center bg-gray-900")
-
-(setq org-tailwind-class-sidebar "px-24 py-12 bg-gray-900
-lg:border-r lg:border-gray-500 lg:fixed lg:pt-2 lg:w-64 lg:px-2
-lg:overflow-y-auto lg:inset-y-0 lg:mt-16 lg:mb-8")
-
-(setq org-tailwind-class-toc-items "text-sm border-b border-l-4 \
-border-gray-900 hover:border-yellow-700")
-
-(setq org-tailwind-class-current-toc "border-yellow-700")
-
-(setq org-tailwind-class-search-bar "float-right mx-4 w-1/6
-rounded-lg px-4 py-1 border-solid border-2 border-gray-700
-bg-gray-900 text-gray-700 focus:border-yellow-700
-focus:text-gray-200")
-
-(setq org-tailwind-class-search-bar-results-list "z-50 absolute
-w-5/6 sm:w-4/6 md:w-3/6 lg:w-2/6 xl:w-1/6 right-0 mt-12 mr-20
-bg-gray-900 p-4 shadow-lg border border-solid border-gray-500
-rounded-md text-gray-200")
-
-(setq org-tailwind-class-search-bar-results-item "p-2 block \
-rounded-md hover:bg-yellow-700")
-
-(setq org-tailwind-class-blockquote "my-2 mx-20 px-4 border-l-8
-rounded-md border border-gray-500 bg-gray-900")
-
-(setq org-tailwind-class-table-body-row "hover:bg-gray-900")
-
-(setq org-tailwind-class-table-last-body-row "border-b-2
-border-gray-400 hover:bg-gray-900")
-
-(setq org-tailwind-class-src-window "bg-gray-400 text-gray-700")
-#+END_SRC
-
-*** Gitlab alike Theme
-
-#+ATTR_FILENAME: Your settings
-#+BEGIN_SRC elisp
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-                                       ;      org-tailwind gitlab theme       ;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-(setq org-tailwind-headlines "h1,h2,h3")
-
-(setq org-tailwind-class-h1 "mt-32 mb-6 text-4xl text-gray-800
-border-b hover:text-blue-500 border-gray-500")
-
-(setq org-tailwind-class-h2 "mt-20 mb-6 text-3xl text-gray-800
-border-b hover:text-blue-500 border-gray-500")
-
-(setq org-tailwind-class-h3 "mt-12 mb-6 text-2xl text-gray-800
-border-b hover:text-blue-500 border-gray-500")
-
-(setq org-tailwind-class-h4 "mt-8 mb-6 text-xl text-gray-800
-border-b hover:text-blue-500 border-gray-500")
-
-(setq org-tailwind-class-h5 "mt-6 mb-6 text-lg text-gray-800
-border-b hover:text-blue-500 border-gray-500")
-
-(setq org-tailwind-class-h6 "mt-4 mb-6 text-lg text-gray-800
-border-b hover:text-blue-500 border-gray-500")
-
-(setq org-tailwind-class-h7 "mt-2 mb-6 text-base text-gray-800
-border-b hover:text-blue-500 border-gray-500")
-
-(setq org-tailwind-class-h8 "mt-1 mb-6 text-base text-gray-800
-border-b hover:text-green-500 border-gray-500")
-
-(setq org-tailwind-class-code "px-2 rounded-md text-teal-500
-bg-gray-300")
-
-(setq org-tailwind-class-verbatim "px-2 rounded-md text-pink-500
-bg-gray-300")
-
-(setq org-tailwind-class-link "text-blue-700 hover:text-blue-800 hover:underline")
-
-(setq org-tailwind-class-body "flex flex-col h-screen
-text-gray-800")
-
-(setq org-tailwind-class-file-name "flex rounded-t border \
-border-gray-300 bg-gray-100 py-2 pl-4 font-bold")
-
-(setq org-tailwind-class-inner-container "px-20 pb-24 mb-12 border border-gray-300")
-
-(setq org-tailwind-class-header "w-full border-b border-gray-500
-bg-purple-900 shadow-md items-center h-16 text-white")
-
-(setq org-tailwind-class-footer "hidden fixed bottom-0 w-full border-t \
-border-solid border-gray-500 h-8 text-center bg-gray-900")
-
-(setq org-tailwind-class-sidebar "px-24 py-12 bg-gray-100
-lg:border-r-4 lg:border-gray-300 lg:fixed lg:pt-2 lg:w-64 lg:px-2
-lg:overflow-y-auto lg:inset-y-0 lg:mt-16")
-
-(setq org-tailwind-class-content-container "flex-grow px-4 py-12 \
-sm:px-8 md:px-12 lg:ml-64 lg:px-24 lg:overflow-x-auto xl:px-56")
-
-(setq org-tailwind-class-toc-items "text-sm hover:bg-gray-500")
-
-(setq org-tailwind-class-current-toc "bg-gray-400 border-r-4 border-indigo-900")
-
-(setq org-tailwind-class-search-bar "float-right mx-4 w-1/6 \
-rounded-lg px-4 py-1 border-solid border border-purple-900 \
-bg-purple-800 text-gray-800 focus:text-white")
-
-(setq org-tailwind-class-search-bar-results-list "z-50 absolute \
-w-5/6 sm:w-4/6 md:w-3/6 lg:w-2/6 xl:w-1/6 right-0 mt-12 mr-20 \
-bg-white p-4 shadow-lg border border-indigo-700 \
-rounded-md text-gray-800")
-
-(setq org-tailwind-class-search-bar-results-item "p-2 block \
-rounded hover:bg-gray-500")
-
-(setq org-tailwind-html-template
-      "<!doctype html>
-<html lang=\"en\">
-<head>
-  <meta charset=\"utf-8\">
-  <title>%s</title>
-  %s
-</head>
-<body class=\"%s\">
-
-<div id=\"header\" class=\"%s\">
-%s
-</div>
-
-<div id=\"content\" class=\"top %s\" onclick=\"hideResults()\">
-  <div id=\"sidebar\" class=\"%s\">
-  %s
-  </div>
-
-  <div id=\"content-container\" class=\"%s\" onscroll=\"scrollSpy()\">
-    <div id=\"top\"></div>
-    <div id=\"file-name\" class=\"%s\">
-      <img class=\"w-6 h-6 mr-2\" src=\"./icons/folders.png\">
-      <p>%s</p>
-    </div>
-    <div id=\"inner-container\" class=\"%s\">
-      %s
-    </div>
-  </div>
-</div>
-
-<div id=\"footer\" class=\"%s\">
-%s
-</div>
-
-<script>
-%s
-</script>
-
-%s
-
-</body>
-</html>
-")
-
-(defun org-tailwind-template (contents info)
-  "Format the HTML Template and add the CONTENTS of the export."
-  (format org-tailwind-html-template
-          (plist-get (org-export-get-environment 'tailwind) :html-title)
-          org-tailwind-head-files
-          org-tailwind-class-body
-          org-tailwind-class-header
-          (format org-tailwind-header
-                  org-tailwind-class-top-button
-                  org-tailwind-class-search-bar
-                  org-tailwind-class-search-bar-results-list)
-          org-tailwind-class-content
-          org-tailwind-class-sidebar
-          org-tailwind-sidebar
-          org-tailwind-class-content-container
-          ;; add the file name before the content box
-          org-tailwind-class-file-name
-          (plist-get info :input-buffer)
-          org-tailwind-class-inner-container
-          contents
-          org-tailwind-class-footer
-          org-tailwind-footer
-          ;; Generate TOC Javascript
-          (format org-tailwind-javascript
-                  org-tailwind-class-top-button
-                  org-tailwind-headlines
-                  org-tailwind-class-toc-items
-                  org-tailwind-class-current-toc
-                  org-tailwind-class-search-bar-results-item
-                  org-tailwind-class-current-toc)
-          org-tailwind-bottom-files))
-#+END_SRC
-
+- It crashes when it encounters a line that ends in ~\\~ - it works if it is
+  inside a block;
+- It won't export ~TODO~ keywords and ~SCHEDULE~ dates.
+  

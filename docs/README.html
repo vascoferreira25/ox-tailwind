@@ -1,0 +1,1268 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Notes & Guides</title>
+  <!-- Tailwind CSS -->
+<link href="./css/tailwind.min.css" rel="stylesheet"/>
+
+<!-- Prism Css -->
+<link href="./css/prism.css" rel="stylesheet" />
+
+<!-- Mathjax -->
+<script>
+MathJax = {
+  tex: {
+  	processEscapes: true
+  }
+}
+</script>
+
+<script type="text/javascript" async
+  src="./mathjax/tex-mml-chtml.js">
+</script>
+
+<!-- Your CSS file should come here -->
+<link href="./css/style.css" rel="stylesheet" />
+
+<!-- Toc tree file -->
+<script src="./js/toc_tree.js"></script>
+
+</head>
+<body class="flex flex-col h-screen
+text-gray-800">
+
+<div id="header" class="w-full border-b border-gray-500
+bg-purple-900 shadow-md items-center h-16 text-white">
+<nav class="flex items-center justify-between flex-wrap p-4">
+  <div class="flex items-center flex-no-shrink mr-6">
+    <span class="font-semibold text-xl tracking-tight">
+      <a href="./index.html">Notes</a>
+    </span>
+  </div>
+  <div class="block flex-grow lg:flex lg:items-center lg:w-auto">
+    <div class="text-sm lg:flex-grow">
+      <a href="#top" class="float-right tracking-tight font-bold mt-1">
+        Top
+      </a>
+      <input id="search-bar" onkeyup="search()"
+      onfocusin='showResults()'
+      class="float-right mx-4 w-1/6 rounded-lg px-4 py-1 border-solid border border-purple-900 bg-purple-800 text-gray-800 focus:text-white" placeholder="Search..."/>
+      <ul id="search-bar-results"
+      class="z-50 absolute w-5/6 sm:w-4/6 md:w-3/6 lg:w-2/6 xl:w-1/6 right-0 mt-12 mr-20 bg-white p-4 shadow-lg border border-indigo-700 rounded-md text-gray-800" style="display: none;"></ul>
+    </div>
+  </div>
+</nav>
+</div>
+
+<div id="content" class="top flex flex-col lg:flex-row overflow-y-auto" onclick="hideResults()">
+  <div id="sidebar" class="px-24 py-12 bg-gray-100
+lg:border-r-4 lg:border-gray-300 lg:fixed lg:pt-2 lg:w-64 lg:px-2
+lg:overflow-y-auto lg:inset-y-0 lg:mt-16">
+  <div id="toc"></div>
+  </div>
+
+  <div id="content-container" class="flex-grow px-4 py-12 sm:px-8 md:px-12 lg:ml-64 lg:px-24 lg:overflow-x-auto xl:px-56" onscroll="scrollSpy()">
+    <div id="top"></div>
+    <div id="file-name" class="flex rounded-t border border-gray-300 bg-gray-100 py-2 pl-4 font-bold">
+      <img class="w-6 h-6 mr-2" src="./icons/folders.png">
+      <p> *temp*</p>
+    </div>
+    <div id="inner-container" class="px-20 pb-24 mb-12 border border-gray-300">
+      <h1 class="mt-32 mb-6 text-4xl text-gray-800
+border-b hover:text-blue-500 border-gray-500">Ox-Tailwind Export Back-End</h1><p class="my-2">This back-end has the purpose of allowing easy customization of the HTML
+output. Although it is called <code class="px-2 rounded-md text-teal-500
+bg-gray-300">Tailwind</code>, the only thing that it does is
+allowing you to customize the classes of the HTML and exporting a more
+barebones HTML (It does not create as many <code class="px-2 rounded-md text-teal-500
+bg-gray-300">divs</code> and <code class="px-2 rounded-md text-teal-500
+bg-gray-300">sections</code> as the normal
+HTML export back-end).
+</p>
+
+<p class="my-2">Instead of using Tailwind.css you can just name the classes of the elements and
+import your own css (or edit <code class="px-2 rounded-md text-teal-500
+bg-gray-300">./css/styles.css</code>).
+</p>
+
+<h2 class="mt-20 mb-6 text-3xl text-gray-800
+border-b hover:text-blue-500 border-gray-500">More Themes</h2><p class="my-2">Check the <a class="text-blue-700 hover:text-blue-800 hover:underline" href="https://vascoferreira25.github.io/ox-tailwind/">Light Theme</a>.
+</p>
+
+<p class="my-2">Check the <a class="text-blue-700 hover:text-blue-800 hover:underline" href="https://vascoferreira25.github.io/ox-tailwind/dark.html">Dark Theme</a>.
+</p>
+
+<p class="my-2">Check the <a class="text-blue-700 hover:text-blue-800 hover:underline" href="https://vascoferreira25.github.io/ox-tailwind/gitlab.html">Gitlab theme</a>.
+</p>
+
+<h2 class="mt-20 mb-6 text-3xl text-gray-800
+border-b hover:text-blue-500 border-gray-500">Installation</h2><h3 class="mt-12 mb-6 text-2xl text-gray-800
+border-b hover:text-blue-500 border-gray-500">Spacemacs</h3><p class="my-2">To install this back-end, clone this repo into your packages or private
+folder in your <code class="px-2 rounded-md text-teal-500
+bg-gray-300">~/.emacs.d</code> directory:
+</p>
+
+<div class="my-12 shadow-xl"><div class="h-8 rounded-t flex bg-gray-400">
+  <div class="bg-red-500 my-2 ml-2 mr-1 h-4 w-4 rounded-full"></div>
+  <div class="bg-yellow-500 my-2 ml-1 mr-1 h-4 w-4 rounded-full"></div>
+  <div class="bg-green-500 my-2 ml-1 mr-1 h-4 w-4 rounded-full"></div>
+  <p class="mx-2 my-1 w-full text-center">Console</p>
+</div><pre class="command-line rainbow-braces match-braces rounded-b" data-filter-output="(out)"  data-user="spacemacs" data-host="hostname"><code class="language-shell">git clone https://github.com/vascoferreira25/ox-tailwind ~/.emacs.d/private
+(out)Cloning into '~/.emacs.d/private'...
+(out)remote: Enumerating objects: 49, done.
+(out)remote: Counting objects: 100% (49/49), done.
+(out)remote: Compressing objects: 100% (40/40), done.
+(out)remote: Total 49 (delta 20), reused 28 (delta 8), pack-reused 0
+(out)Unpacking objects: 100% (49/49), done.
+</code></pre></div>
+
+<p class="my-2">Add the following to your <code class="px-2 rounded-md text-teal-500
+bg-gray-300">.spacemacs</code> file:
+</p>
+
+<div class="my-12 shadow-xl"><div class="h-8 rounded-t flex bg-gray-400">
+  <div class="bg-red-500 my-2 ml-2 mr-1 h-4 w-4 rounded-full"></div>
+  <div class="bg-yellow-500 my-2 ml-1 mr-1 h-4 w-4 rounded-full"></div>
+  <div class="bg-green-500 my-2 ml-1 mr-1 h-4 w-4 rounded-full"></div>
+  <p class="mx-2 my-1 w-full text-center">.spacemacs</p>
+</div><pre class="line-numbers rainbow-braces match-braces rounded-b"   data-line="8"><code class="language-elisp">(defun dotspacemacs/user-config ()
+  "Configuration for user code:
+This function is called at the very end of Spacemacs startup, after layer
+configuration.
+Put your configuration code here, except for variables that should be set
+before packages are loaded."
+  ;; ...
+  (load-file "~/.emacs.d/private/ox-tailwind/ox-tailwind.el")
+  ;; ...
+  )
+</code></pre></div>
+
+<p class="my-2">Then export your org file with the ox-tailwind back-end:
+</p>
+
+<p class="my-2">In Spacemacs you would use <code class="px-2 rounded-md text-teal-500
+bg-gray-300">, e e</code> for the export menu and then <code class="px-2 rounded-md text-teal-500
+bg-gray-300">x h</code>.
+</p>
+
+<h3 class="mt-12 mb-6 text-2xl text-gray-800
+border-b hover:text-blue-500 border-gray-500">Doom Emacs</h3><p class="my-2">To install this back-end, clone this repo into your packages or private
+folder in your <code class="px-2 rounded-md text-teal-500
+bg-gray-300">~/.doom.d</code> directory:
+</p>
+
+<div class="my-12 shadow-xl"><div class="h-8 rounded-t flex bg-gray-400">
+  <div class="bg-red-500 my-2 ml-2 mr-1 h-4 w-4 rounded-full"></div>
+  <div class="bg-yellow-500 my-2 ml-1 mr-1 h-4 w-4 rounded-full"></div>
+  <div class="bg-green-500 my-2 ml-1 mr-1 h-4 w-4 rounded-full"></div>
+  <p class="mx-2 my-1 w-full text-center">Console</p>
+</div><pre class="command-line rainbow-braces match-braces rounded-b" data-filter-output="(out)"  data-user="doom" data-host="hostname"><code class="language-shell">git clone https://github.com/vascoferreira25/ox-tailwind ~/.doom.d/ox-tailwind
+(out)Cloning into '~/.doom.d/ox-tailwind...
+(out)remote: Enumerating objects: 49, done.
+(out)remote: Counting objects: 100% (49/49), done.
+(out)remote: Compressing objects: 100% (40/40), done.
+(out)remote: Total 49 (delta 20), reused 28 (delta 8), pack-reused 0
+(out)Unpacking objects: 100% (49/49), done.
+</code></pre></div>
+
+<p class="my-2">Add the following to your <code class="px-2 rounded-md text-teal-500
+bg-gray-300">config.el</code> file:
+</p>
+
+<div class="my-12 shadow-xl"><div class="h-8 rounded-t flex bg-gray-400">
+  <div class="bg-red-500 my-2 ml-2 mr-1 h-4 w-4 rounded-full"></div>
+  <div class="bg-yellow-500 my-2 ml-1 mr-1 h-4 w-4 rounded-full"></div>
+  <div class="bg-green-500 my-2 ml-1 mr-1 h-4 w-4 rounded-full"></div>
+  <p class="mx-2 my-1 w-full text-center">config.el</p>
+</div><pre class="line-numbers rainbow-braces match-braces rounded-b"  ><code class="language-elisp">(add-load-path! "ox-tailwind")
+
+(use-package ox-tailwind
+  :after ox)
+</code></pre></div>
+
+<p class="my-2">Then export your org file with the ox-tailwind back-end:
+</p>
+
+<p class="my-2">In Spacemacs you would use <code class="px-2 rounded-md text-teal-500
+bg-gray-300">SPC M e</code> for the export menu and then <code class="px-2 rounded-md text-teal-500
+bg-gray-300">x h</code>.
+</p>
+
+<h3 class="mt-12 mb-6 text-2xl text-gray-800
+border-b hover:text-blue-500 border-gray-500">Your own config</h3><p class="my-2">To install this back-end into your own Emacs config, just add the following:
+</p>
+
+<div class="my-12 shadow-xl"><div class="h-8 rounded-t flex bg-gray-400">
+  <div class="bg-red-500 my-2 ml-2 mr-1 h-4 w-4 rounded-full"></div>
+  <div class="bg-yellow-500 my-2 ml-1 mr-1 h-4 w-4 rounded-full"></div>
+  <div class="bg-green-500 my-2 ml-1 mr-1 h-4 w-4 rounded-full"></div>
+  <p class="mx-2 my-1 w-full text-center">Console</p>
+</div><pre class="command-line rainbow-braces match-braces rounded-b" data-filter-output="(out)"  data-user="your-own-config" data-host="hostname"><code class="language-shell">git clone https://github.com/vascoferreira25/ox-tailwind ~/.emacs.d/private-packages/ox-tailwind
+(out)Cloning into '~/.emacs.d/private-packages/ox-tailwind...
+(out)remote: Enumerating objects: 49, done.
+(out)remote: Counting objects: 100% (49/49), done.
+(out)remote: Compressing objects: 100% (40/40), done.
+(out)remote: Total 49 (delta 20), reused 28 (delta 8), pack-reused 0
+(out)Unpacking objects: 100% (49/49), done.
+</code></pre></div>
+
+<p class="my-2">And add the following to your config file:
+</p>
+
+<div class="my-12 shadow-xl"><div class="h-8 rounded-t flex bg-gray-400">
+  <div class="bg-red-500 my-2 ml-2 mr-1 h-4 w-4 rounded-full"></div>
+  <div class="bg-yellow-500 my-2 ml-1 mr-1 h-4 w-4 rounded-full"></div>
+  <div class="bg-green-500 my-2 ml-1 mr-1 h-4 w-4 rounded-full"></div>
+  <p class="mx-2 my-1 w-full text-center">your_config.el</p>
+</div><pre class="line-numbers rainbow-braces match-braces rounded-b"  ><code class="language-elisp">;; ox-tailwind export back-end
+(load "~/.emacs.d/private-packages/ox-tailwind/ox-tailwind.el")
+</code></pre></div>
+
+<h2 class="mt-20 mb-6 text-3xl text-gray-800
+border-b hover:text-blue-500 border-gray-500">Notes structure</h2><p class="my-2">In order for the search bar to work, this export backend will search all <code class="px-2 rounded-md text-teal-500
+bg-gray-300">.org</code>
+files in the path of your project and store all the headings in a <code class="px-2 rounded-md text-teal-500
+bg-gray-300">.js</code> file.
+</p>
+
+<p class="my-2">The folder structure for your notes should be like this:
+</p>
+
+<div class="my-12 shadow-xl"><div class="h-8 rounded-t flex bg-gray-400">
+  <div class="bg-red-500 my-2 ml-2 mr-1 h-4 w-4 rounded-full"></div>
+  <div class="bg-yellow-500 my-2 ml-1 mr-1 h-4 w-4 rounded-full"></div>
+  <div class="bg-green-500 my-2 ml-1 mr-1 h-4 w-4 rounded-full"></div>
+  <p class="mx-2 my-1 w-full text-center">Console</p>
+</div><pre class="command-line rainbow-braces match-braces rounded-b" data-filter-output="(out)"  data-user="user" data-host="localhost"><code class="language-powershell">tree /F /a
+(out)C:/path/to/your_notes/
+(out)|   index.org
+(out)|   ... other org files
+(out)|   
+(out)+---files
+(out)|       # Your attachments
+(out)|
+(out)+---img
+(out)|       # Your image files
+(out)|       
+(out)+---dist
+(out)        # Org Publish Files
+</code></pre></div>
+
+<p class="my-2">The home page for your notes should be <code class="px-2 rounded-md text-teal-500
+bg-gray-300">index.org</code>.
+</p>
+
+<p class="my-2">For easier search and note management, the notes should be named as
+<code class="px-2 rounded-md text-teal-500
+bg-gray-300">&lt;subject&gt;_&lt;notes_name&gt;_&lt;guide|snippets|templates|...&gt;.org</code>.
+</p>
+
+<p class="my-2">Examples:
+</p>
+
+<div class="overflow-x-auto my-12"><table class="table-auto m-auto my-2"><thead><tr class="text-gray-600 border-b-2 border-gray-400"><th class="px-4 py-2 font-bold text-center">Notes</th><th class="px-4 py-2 font-bold text-center">File Name</th></tr>
+<tbody><tr class="hover:bg-green-200"><td class="px-4 py-2 text-left">Programming Guides Index</td><td class="px-4 py-2 text-left"><code class="px-2 rounded-md text-teal-500
+bg-gray-300">programming.org</code></td></tr>
+<tr class="hover:bg-green-200"><td class="px-4 py-2 text-left">Python notes Index</td><td class="px-4 py-2 text-left"><code class="px-2 rounded-md text-teal-500
+bg-gray-300">programming_python.org</code></td></tr>
+<tr class="hover:bg-green-200"><td class="px-4 py-2 text-left">Python guide</td><td class="px-4 py-2 text-left"><code class="px-2 rounded-md text-teal-500
+bg-gray-300">programming_python_guide.org</code></td></tr>
+<tr class="hover:bg-green-200"><td class="px-4 py-2 text-left">Python snippets</td><td class="px-4 py-2 text-left"><code class="px-2 rounded-md text-teal-500
+bg-gray-300">programming_python_snippets.org</code></td></tr>
+<tr class="hover:bg-green-200"><td class="px-2 py-2"></td><td class="px-2 py-2"></td></tr>
+<tr class="hover:bg-green-200"><td class="px-4 py-2 text-left">Guides Index</td><td class="px-4 py-2 text-left"><code class="px-2 rounded-md text-teal-500
+bg-gray-300">guides.org</code></td></tr>
+<tr class="hover:bg-green-200"><td class="px-4 py-2 text-left">How to download Ebooks guide</td><td class="px-4 py-2 text-left"><code class="px-2 rounded-md text-teal-500
+bg-gray-300">guides_download_ebooks.org</code></td></tr>
+<tr class="hover:bg-green-200"><td class="px-2 py-2"></td><td class="px-2 py-2"></td></tr>
+<tr class="hover:bg-green-200"><td class="px-4 py-2 text-left">Gaming Index</td><td class="px-4 py-2 text-left"><code class="px-2 rounded-md text-teal-500
+bg-gray-300">gaming.org</code></td></tr>
+<tr class="hover:bg-green-200"><td class="px-4 py-2 text-left">Skyrim guide</td><td class="px-4 py-2 text-left"><code class="px-2 rounded-md text-teal-500
+bg-gray-300">gaming_skyrim.org</code></td></tr>
+<tr class="hover:bg-green-200"><td class="px-2 py-2"></td><td class="px-2 py-2"></td></tr>
+<tr class="hover:bg-green-200"><td class="px-4 py-2 text-left">Subjects Index</td><td class="px-4 py-2 text-left"><code class="px-2 rounded-md text-teal-500
+bg-gray-300">subjects.org</code></td></tr>
+<tr class="hover:bg-green-200"><td class="px-4 py-2 text-left">Mathematics</td><td class="px-4 py-2 text-left"><code class="px-2 rounded-md text-teal-500
+bg-gray-300">subjects_mathematics.org</code></td></tr>
+<tr class="border-b-2 border-gray-400 hover:bg-green-200"><td class="px-4 py-2 text-left">Economics</td><td class="px-4 py-2 text-left"><code class="px-2 rounded-md text-teal-500
+bg-gray-300">subjects_economics.org</code></td></tr></tbody>
+</table></div>
+
+<p class="my-2">Index files should have the following template
+</p>
+
+<div class="my-12 shadow-xl"><div class="h-8 rounded-t flex bg-gray-400">
+  <div class="bg-red-500 my-2 ml-2 mr-1 h-4 w-4 rounded-full"></div>
+  <div class="bg-yellow-500 my-2 ml-1 mr-1 h-4 w-4 rounded-full"></div>
+  <div class="bg-green-500 my-2 ml-1 mr-1 h-4 w-4 rounded-full"></div>
+  <p class="mx-2 my-1 w-full text-center">subjects.org</p>
+</div><pre class="line-numbers rainbow-braces match-braces rounded-b"  ><code class="language-org">* Subjects
+** Pages
+   
+[[./subjects_accounting_and_finance.org][Accounting and Finance]]
+
+[[./subjects_computer_science.org][Computer Science]]
+
+[[./subjects_economics.org][Economics]]
+
+[[./subjects_elo_rating.org][Elo Rating System]]
+
+[[./subjects_mathematics.org][Mathematics]]
+
+[[./subjects_statistics.org][Statistics]]
+
+** References
+</code></pre></div>
+
+<h2 class="mt-20 mb-6 text-3xl text-gray-800
+border-b hover:text-blue-500 border-gray-500">Publish settings</h2><p class="my-2">To setup automatic export of all my org files I use the following settings:
+</p>
+
+<div class="my-12 shadow-xl"><div class="h-8 rounded-t flex bg-gray-400">
+  <div class="bg-red-500 my-2 ml-2 mr-1 h-4 w-4 rounded-full"></div>
+  <div class="bg-yellow-500 my-2 ml-1 mr-1 h-4 w-4 rounded-full"></div>
+  <div class="bg-green-500 my-2 ml-1 mr-1 h-4 w-4 rounded-full"></div>
+  <p class="mx-2 my-1 w-full text-center">your_config.el</p>
+</div><pre class="line-numbers rainbow-braces match-braces rounded-b"  ><code class="language-elisp">(setq org-publish-project-alist
+      '(("org-files"
+         :base-extension "org"
+         :base-directory "V:/orgmode/"
+         :publishing-directory "V:/orgmode/dist/"
+         :publishing-function org-tailwind-publish-to-html)
+        ("images"
+         :base-directory "V:/orgmode/img/"
+         :base-extension ".*"
+         :publishing-directory "V:/orgmode/dist/img/"
+         :publishing-function org-publish-attachment)
+        ("files"
+         :base-directory "V:/orgmode/files/"
+         :base-extension ".*"
+         :publishing-directory "V:/orgmode/dist/files/"
+         :publishing-function org-publish-attachment)
+        ("tangles"
+         :base-directory "V:/orgmode/tangles/"
+         :base-extension ".*"
+         :publishing-directory "V:/orgmode/dist/tangles/"
+         :publishing-function org-publish-attachment)
+        ;; Publish all in one time
+        ("notes" :components ("org-files" "images" "files" "tangles"))))
+</code></pre></div>
+
+<h2 class="mt-20 mb-6 text-3xl text-gray-800
+border-b hover:text-blue-500 border-gray-500">Notes output directory</h2><p class="my-2">In order for the export to be functional when offline, you need to put the
+needed files in the output folder.
+</p>
+
+<p class="my-2">The files used in the HTML file are:
+</p>
+
+<ul class="list-disc my-8"><li class="ml-10"><p class="my-2"><a class="text-blue-700 hover:text-blue-800 hover:underline" href="https://prismjs.com/">Prism.js</a>
+</p>
+</li>
+<li class="ml-10"><p class="my-2"><a class="text-blue-700 hover:text-blue-800 hover:underline" href="https://www.mathjax.org/">Mathjax</a>
+</p>
+</li>
+<li class="ml-10"><p class="my-2"><a class="text-blue-700 hover:text-blue-800 hover:underline" href="https://tailwindcss.com/">Tailwind CSS</a>
+</p>
+</li>
+</ul>
+
+<p class="my-2">Just copy the folders inside <code class="px-2 rounded-md text-teal-500
+bg-gray-300">/docs/</code> folder of this repository into your
+<code class="px-2 rounded-md text-teal-500
+bg-gray-300">/dist/</code> folder.
+</p>
+
+<p class="my-2">This is the directory structure of the export folder:
+</p>
+
+<div class="my-12 shadow-xl"><div class="h-8 rounded-t flex bg-gray-400">
+  <div class="bg-red-500 my-2 ml-2 mr-1 h-4 w-4 rounded-full"></div>
+  <div class="bg-yellow-500 my-2 ml-1 mr-1 h-4 w-4 rounded-full"></div>
+  <div class="bg-green-500 my-2 ml-1 mr-1 h-4 w-4 rounded-full"></div>
+  <p class="mx-2 my-1 w-full text-center">C:/notes/dist</p>
+</div><pre class="command-line rainbow-braces match-braces rounded-b" data-filter-output="(out)"  data-user="your-username" data-host="your-hostname" data-line="3-5,15,18,20-23"><code class="language-powershell">tree /F /a
+(out)C:/path/to/your_notes/dist/
+(out)|   # The HTML export
+(out)|   index.html
+(out)|   
+(out)+---css
+(out)|       prism.css
+(out)|       style.css # Your css file
+(out)|       tailwind.min.css
+(out)|       
+(out)+---files
+(out)|       # Your attachments
+(out)+---img
+(out)|       # Your image files
+(out)|       spacemacs_1.png
+(out)|       spacemacs_2.png
+(out)|       
+(out)+---js
+(out)|       clipboard.min.js
+(out)|       mermaid.min.js
+(out)|       polyfill.min.js
+(out)|       prism.js
+(out)|       tex-mml-chtml.js
+(out)|       toc_tree.js
+(out)|       
+(out)+---mathjax
+(out)        # Mathjax Files
+</code></pre></div>
+
+<h2 class="mt-20 mb-6 text-3xl text-gray-800
+border-b hover:text-blue-500 border-gray-500">Customization</h2><p class="my-2">To customize the theme you have to change the <code class="px-2 rounded-md text-teal-500
+bg-gray-300">org-tailwind-class</code> variables.
+Bellow are two different themes:
+</p>
+
+<ul class="list-disc my-8"><li class="ml-10"><p class="my-2">Dark mode,
+</p>
+</li>
+<li class="ml-10"><p class="my-2">Gitlab alike theme.
+</p>
+</li>
+</ul>
+
+<p class="my-2">You just have to copy-paste these settings to your config file:
+</p>
+
+<ul class="list-disc my-8"><li class="ml-10"><p class="my-2">if you're using Spacemacs, copy-paste it to <code class="px-2 rounded-md text-teal-500
+bg-gray-300">(defun dotspacemacs/user-config
+  ()</code> function,
+</p>
+</li>
+<li class="ml-10"><p class="my-2">if you're using Doom, copy-paste it to the <code class="px-2 rounded-md text-teal-500
+bg-gray-300">config.el</code> file, bellow the
+import of the package.
+</p>
+</li>
+</ul>
+
+<p class="my-2">To customize the code blocks, you can just download another theme from the
+<a class="text-blue-700 hover:text-blue-800 hover:underline" href="https://prismjs.com/download.html#themes=prism-tomorrow&languages=markup+css+clike+javascript+abap+abnf+actionscript+ada+agda+al+antlr4+apacheconf+apl+applescript+aql+arduino+arff+asciidoc+aspnet+asm6502+autohotkey+autoit+bash+basic+batch+bbcode+birb+bison+bnf+brainfuck+brightscript+bro+bsl+c+csharp+cpp+cil+clojure+cmake+coffeescript+concurnas+csp+crystal+css-extras+cypher+d+dart+dax+dhall+diff+django+dns-zone-file+docker+ebnf+editorconfig+eiffel+ejs+elixir+elm+etlua+erb+erlang+excel-formula+fsharp+factor+firestore-security-rules+flow+fortran+ftl+gml+gcode+gdscript+gedcom+gherkin+git+glsl+go+graphql+groovy+haml+handlebars+haskell+haxe+hcl+hlsl+http+hpkp+hsts+ichigojam+icon+ignore+inform7+ini+io+j+java+javadoc+javadoclike+javastacktrace+jolie+jq+jsdoc+js-extras+json+json5+jsonp+jsstacktrace+js-templates+julia+keyman+kotlin+latex+latte+less+lilypond+liquid+lisp+livescript+llvm+lolcode+lua+makefile+markdown+markup-templating+matlab+mel+mizar+mongodb+monkey+moonscript+n1ql+n4js+nand2tetris-hdl+naniscript+nasm+neon+nginx+nim+nix+nsis+objectivec+ocaml+opencl+oz+parigp+parser+pascal+pascaligo+pcaxis+peoplecode+perl+php+phpdoc+php-extras+plsql+powerquery+powershell+processing+prolog+properties+protobuf+pug+puppet+pure+purebasic+purescript+python+q+qml+qore+r+racket+jsx+tsx+reason+regex+renpy+rest+rip+roboconf+robotframework+ruby+rust+sas+sass+scss+scala+scheme+shell-session+smali+smalltalk+smarty+sml+solidity+solution-file+soy+sparql+splunk-spl+sqf+sql+stan+iecst+stylus+swift+t4-templating+t4-cs+t4-vb+tap+tcl+tt2+textile+toml+turtle+twig+typescript+typoscript+unrealscript+vala+vbnet+velocity+verilog+vhdl+vim+visual-basic+warpscript+wasm+wiki+xeora+xml-doc+xojo+xquery+yaml+yang+zig&plugins=line-highlight+line-numbers+autolinker+file-highlight+show-language+jsonp-highlight+highlight-keywords+inline-color+previewers+autoloader+keep-markup+command-line+unescaped-markup+normalize-whitespace+data-uri-highlight+toolbar+copy-to-clipboard+download-button+match-braces+diff-highlight+filter-highlight-all+treeview">Prism.js</a> website and save both the <code class="px-2 rounded-md text-teal-500
+bg-gray-300">js</code> and the <code class="px-2 rounded-md text-teal-500
+bg-gray-300">css</code> file in your <code class="px-2 rounded-md text-teal-500
+bg-gray-300">/dist</code>
+folder.
+</p>
+
+<h3 class="mt-12 mb-6 text-2xl text-gray-800
+border-b hover:text-blue-500 border-gray-500">Dark Theme</h3><div class="my-12 shadow-xl"><div class="h-8 rounded-t flex bg-gray-400">
+  <div class="bg-red-500 my-2 ml-2 mr-1 h-4 w-4 rounded-full"></div>
+  <div class="bg-yellow-500 my-2 ml-1 mr-1 h-4 w-4 rounded-full"></div>
+  <div class="bg-green-500 my-2 ml-1 mr-1 h-4 w-4 rounded-full"></div>
+  <p class="mx-2 my-1 w-full text-center">your_config.el</p>
+</div><pre class="line-numbers rainbow-braces match-braces rounded-b"  ><code class="language-elisp">;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+                                       ;        org-tailwind dark mode        ;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(setq org-tailwind-headlines "h1,h2,h3")
+
+(setq org-tailwind-class-h1 "mt-32 mb-6 text-6xl text-yellow-600
+border-b hover:text-green-500 border-gray-500")
+
+(setq org-tailwind-class-h2 "mt-20 mb-6 text-5xl text-yellow-600
+border-b hover:text-green-500 border-gray-500")
+
+(setq org-tailwind-class-h3 "mt-12 mb-6 text-4xl text-yellow-600
+border-b hover:text-green-500 border-gray-500")
+
+(setq org-tailwind-class-h4 "mt-8 mb-6 text-3xl text-yellow-600
+border-b hover:text-green-500 border-gray-500")
+
+(setq org-tailwind-class-h5 "mt-6 mb-6 text-2xl text-yellow-600
+border-b hover:text-green-500 border-gray-500")
+
+(setq org-tailwind-class-h6 "mt-4 mb-6 text-xl text-yellow-600
+border-b hover:text-green-500 border-gray-500")
+
+(setq org-tailwind-class-h7 "mt-2 mb-6 text-lg text-yellow-600
+border-b hover:text-green-500 border-gray-500")
+
+(setq org-tailwind-class-h8 "mt-1 mb-6 text-base text-yellow-600
+border-b hover:text-green-500 border-gray-500")
+
+(setq org-tailwind-class-code "px-2 rounded-md text-green-600
+bg-gray-900")
+
+(setq org-tailwind-class-verbatim "px-2 rounded-md text-red-600
+bg-gray-900")
+
+(setq org-tailwind-class-body "flex flex-col h-screen
+text-gray-200 bg-gray-800")
+
+(setq org-tailwind-class-header "w-full border-b border-gray-500
+bg-gray-900 shadow-md items-center h-16")
+
+(setq org-tailwind-class-footer "fixed bottom-0 w-full border-t
+border-solid border-gray-500 h-8 text-center bg-gray-900")
+
+(setq org-tailwind-class-sidebar "px-24 py-12 bg-gray-900
+lg:border-r lg:border-gray-500 lg:fixed lg:pt-2 lg:w-64 lg:px-2
+lg:overflow-y-auto lg:inset-y-0 lg:mt-16 lg:mb-8")
+
+(setq org-tailwind-class-toc-items "text-sm border-b border-l-4 \
+border-gray-900 hover:border-yellow-700")
+
+(setq org-tailwind-class-current-toc "border-yellow-700")
+
+(setq org-tailwind-class-search-bar "float-right mx-4 w-1/6
+rounded-lg px-4 py-1 border-solid border-2 border-gray-700
+bg-gray-900 text-gray-700 focus:border-yellow-700
+focus:text-gray-200")
+
+(setq org-tailwind-class-search-bar-results-list "z-50 absolute
+w-5/6 sm:w-4/6 md:w-3/6 lg:w-2/6 xl:w-1/6 right-0 mt-12 mr-20
+bg-gray-900 p-4 shadow-lg border border-solid border-gray-500
+rounded-md text-gray-200")
+
+(setq org-tailwind-class-search-bar-results-item "p-2 block \
+rounded-md hover:bg-yellow-700")
+
+(setq org-tailwind-class-blockquote "my-2 mx-20 px-4 border-l-8
+rounded-md border border-gray-500 bg-gray-900")
+
+(setq org-tailwind-class-table-body-row "hover:bg-gray-900")
+
+(setq org-tailwind-class-table-last-body-row "border-b-2
+border-gray-400 hover:bg-gray-900")
+
+(setq org-tailwind-class-src-window "bg-gray-400 text-gray-700")
+</code></pre></div>
+
+<h3 class="mt-12 mb-6 text-2xl text-gray-800
+border-b hover:text-blue-500 border-gray-500">Gitlab alike Theme</h3><div class="my-12 shadow-xl"><div class="h-8 rounded-t flex bg-gray-400">
+  <div class="bg-red-500 my-2 ml-2 mr-1 h-4 w-4 rounded-full"></div>
+  <div class="bg-yellow-500 my-2 ml-1 mr-1 h-4 w-4 rounded-full"></div>
+  <div class="bg-green-500 my-2 ml-1 mr-1 h-4 w-4 rounded-full"></div>
+  <p class="mx-2 my-1 w-full text-center">your_config.el</p>
+</div><pre class="line-numbers rainbow-braces match-braces rounded-b"  ><code class="language-elisp">;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+                                       ;      org-tailwind gitlab theme       ;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(setq org-tailwind-headlines "h1,h2,h3")
+
+(setq org-tailwind-class-h1 "mt-32 mb-6 text-4xl text-gray-800
+border-b hover:text-blue-500 border-gray-500")
+
+(setq org-tailwind-class-h2 "mt-20 mb-6 text-3xl text-gray-800
+border-b hover:text-blue-500 border-gray-500")
+
+(setq org-tailwind-class-h3 "mt-12 mb-6 text-2xl text-gray-800
+border-b hover:text-blue-500 border-gray-500")
+
+(setq org-tailwind-class-h4 "mt-8 mb-6 text-xl text-gray-800
+border-b hover:text-blue-500 border-gray-500")
+
+(setq org-tailwind-class-h5 "mt-6 mb-6 text-lg text-gray-800
+border-b hover:text-blue-500 border-gray-500")
+
+(setq org-tailwind-class-h6 "mt-4 mb-6 text-lg text-gray-800
+border-b hover:text-blue-500 border-gray-500")
+
+(setq org-tailwind-class-h7 "mt-2 mb-6 text-base text-gray-800
+border-b hover:text-blue-500 border-gray-500")
+
+(setq org-tailwind-class-h8 "mt-1 mb-6 text-base text-gray-800
+border-b hover:text-green-500 border-gray-500")
+
+(setq org-tailwind-class-code "px-2 rounded-md text-teal-500
+bg-gray-300")
+
+(setq org-tailwind-class-verbatim "px-2 rounded-md text-pink-500
+bg-gray-300")
+
+(setq org-tailwind-class-link "text-blue-700 hover:text-blue-800 hover:underline")
+
+(setq org-tailwind-class-body "flex flex-col h-screen
+text-gray-800")
+
+(setq org-tailwind-class-file-name "flex rounded-t border \
+border-gray-300 bg-gray-100 py-2 pl-4 font-bold")
+
+(setq org-tailwind-class-inner-container "px-20 pb-24 mb-12 border border-gray-300")
+
+(setq org-tailwind-class-header "w-full border-b border-gray-500
+bg-purple-900 shadow-md items-center h-16 text-white")
+
+(setq org-tailwind-class-footer "hidden fixed bottom-0 w-full border-t \
+border-solid border-gray-500 h-8 text-center bg-gray-900")
+
+(setq org-tailwind-class-sidebar "px-24 py-12 bg-gray-100
+lg:border-r-4 lg:border-gray-300 lg:fixed lg:pt-2 lg:w-64 lg:px-2
+lg:overflow-y-auto lg:inset-y-0 lg:mt-16")
+
+(setq org-tailwind-class-content-container "flex-grow px-4 py-12 \
+sm:px-8 md:px-12 lg:ml-64 lg:px-24 lg:overflow-x-auto xl:px-56")
+
+(setq org-tailwind-class-toc-items "text-sm hover:bg-gray-500")
+
+(setq org-tailwind-class-current-toc "bg-gray-400 border-r-4 border-indigo-900")
+
+(setq org-tailwind-class-search-bar "float-right mx-4 w-1/6 \
+rounded-lg px-4 py-1 border-solid border border-purple-900 \
+bg-purple-800 text-gray-800 focus:text-white")
+
+(setq org-tailwind-class-search-bar-results-list "z-50 absolute \
+w-5/6 sm:w-4/6 md:w-3/6 lg:w-2/6 xl:w-1/6 right-0 mt-12 mr-20 \
+bg-white p-4 shadow-lg border border-indigo-700 \
+rounded-md text-gray-800")
+
+(setq org-tailwind-class-search-bar-results-item "p-2 block \
+rounded hover:bg-gray-500")
+
+(setq org-tailwind-html-template
+      "&lt;!doctype html&gt;
+&lt;html lang=\"en\"&gt;
+&lt;head&gt;
+  &lt;meta charset=\"utf-8\"&gt;
+  &lt;title&gt;%s&lt;/title&gt;
+  %s
+&lt;/head&gt;
+&lt;body class=\"%s\"&gt;
+
+&lt;div id=\"header\" class=\"%s\"&gt;
+%s
+&lt;/div&gt;
+
+&lt;div id=\"content\" class=\"top %s\" onclick=\"hideResults()\"&gt;
+  &lt;div id=\"sidebar\" class=\"%s\"&gt;
+  %s
+  &lt;/div&gt;
+
+  &lt;div id=\"content-container\" class=\"%s\" onscroll=\"scrollSpy()\"&gt;
+    &lt;div id=\"top\"&gt;&lt;/div&gt;
+    &lt;div id=\"file-name\" class=\"%s\"&gt;
+      &lt;img class=\"w-6 h-6 mr-2\" src=\"./icons/folders.png\"&gt;
+      &lt;p&gt;%s&lt;/p&gt;
+    &lt;/div&gt;
+    &lt;div id=\"inner-container\" class=\"%s\"&gt;
+      %s
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div id=\"footer\" class=\"%s\"&gt;
+%s
+&lt;/div&gt;
+
+&lt;script&gt;
+%s
+&lt;/script&gt;
+
+%s
+
+&lt;/body&gt;
+&lt;/html&gt;
+")
+
+(defun org-tailwind-template (contents info)
+  "Format the HTML Template and add the CONTENTS of the export."
+  (format org-tailwind-html-template
+          (plist-get (org-export-get-environment 'tailwind) :html-title)
+          org-tailwind-head-files
+          org-tailwind-class-body
+          org-tailwind-class-header
+          (format org-tailwind-header
+                  org-tailwind-class-top-button
+                  org-tailwind-class-search-bar
+                  org-tailwind-class-search-bar-results-list)
+          org-tailwind-class-content
+          org-tailwind-class-sidebar
+          org-tailwind-sidebar
+          org-tailwind-class-content-container
+          ;; add the file name before the content box
+          org-tailwind-class-file-name
+          (plist-get info :input-buffer)
+          org-tailwind-class-inner-container
+          contents
+          org-tailwind-class-footer
+          org-tailwind-footer
+          ;; Generate TOC Javascript
+          (format org-tailwind-javascript
+                  org-tailwind-class-top-button
+                  org-tailwind-headlines
+                  org-tailwind-class-toc-items
+                  org-tailwind-class-current-toc
+                  org-tailwind-class-search-bar-results-item
+                  org-tailwind-class-current-toc)
+          org-tailwind-bottom-files))
+</code></pre></div>
+
+<h2 class="mt-20 mb-6 text-3xl text-gray-800
+border-b hover:text-blue-500 border-gray-500">Elements</h2><h3 class="mt-12 mb-6 text-2xl text-gray-800
+border-b hover:text-blue-500 border-gray-500">Markup</h3><h4 class="mt-8 mb-6 text-xl text-gray-800
+border-b hover:text-blue-500 border-gray-500">Text</h4><p class="my-2"><strong class="">Bold Text</strong>
+</p>
+
+<p class="my-2"><em class="">Italic Text</em> 
+</p>
+
+<p class="my-2"><span class="underline">Underlined Text</span> 
+</p>
+
+<p class="my-2"><del class="">Strike Through</del>
+</p>
+
+<p class="my-2"><code class="px-2 rounded-md text-pink-500
+bg-gray-300">Verbatim</code>
+</p>
+
+<p class="my-2"><code class="px-2 rounded-md text-teal-500
+bg-gray-300">Inline code</code>
+</p>
+
+<p class="my-2"><a class="text-blue-700 hover:text-blue-800 hover:underline" href="file:./index.html">HyperLinks</a>
+</p>
+
+<h4 class="mt-8 mb-6 text-xl text-gray-800
+border-b hover:text-blue-500 border-gray-500">Lists</h4><h5 class="mt-6 mb-6 text-lg text-gray-800
+border-b hover:text-blue-500 border-gray-500">Ordered List</h5><ol class="list-decimal my-8"><li class="ml-10"><p class="my-2">Item number 1
+</p>
+<ol class="list-decimal my-8"><li class="ml-10"><p class="my-2">Item number 1.1
+</p>
+</li>
+<li class="ml-10"><p class="my-2">Item number 1.2
+</p>
+</li>
+<li class="ml-10"><p class="my-2">Item number 1.3
+</p>
+</li>
+</ol>
+</li>
+<li class="ml-10"><p class="my-2">Item number 2
+</p>
+</li>
+<li class="ml-10"><p class="my-2">Item number 3
+</p>
+</li>
+<li class="ml-10"><p class="my-2">Item number 4
+</p>
+</li>
+<li class="ml-10"><p class="my-2">Item number 5
+</p>
+</li>
+</ol>
+
+<h5 class="mt-6 mb-6 text-lg text-gray-800
+border-b hover:text-blue-500 border-gray-500">Unordered List</h5><ul class="list-disc my-8"><li class="ml-10"><p class="my-2">Like
+</p>
+<ul class="list-disc my-8"><li class="ml-10"><p class="my-2">This
+</p>
+<ul class="list-disc my-8"><li class="ml-10"><p class="my-2">One
+</p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+<h5 class="mt-6 mb-6 text-lg text-gray-800
+border-b hover:text-blue-500 border-gray-500">Description List</h5><dl class="my-8"><dt class="font-bold">Tip Blocks</dt><dd class="ml-10">Are for displaying tips.
+</dd>
+<dt class="font-bold">Warning Blocks</dt><dd class="ml-10">Are for displaying warnings.
+</dd>
+<dt class="font-bold">Danger Blocks</dt><dd class="ml-10">Are for displaying dangers. 
+</dd>
+</dl>
+
+<h5 class="mt-6 mb-6 text-lg text-gray-800
+border-b hover:text-blue-500 border-gray-500">Checkboxes</h5><ul class="list-disc my-8"><li class="ml-10"><p class="my-2"><input type="checkbox" disabled unchecked> Unchecked 1
+</p>
+</li>
+<li class="ml-10"><p class="my-2"><input type="checkbox" disabled unchecked> Unchecked 2
+</p>
+</li>
+<li class="ml-10"><p class="my-2"><input type="checkbox" disabled checked> Checked 1
+</p>
+</li>
+</ul>
+
+<h4 class="mt-8 mb-6 text-xl text-gray-800
+border-b hover:text-blue-500 border-gray-500">Tables</h4><div class="overflow-x-auto my-12"><table class="table-auto m-auto my-2"><thead><tr class="text-gray-600 border-b-2 border-gray-400"><th class="px-4 py-2 font-bold text-center">A</th><th class="px-4 py-2 font-bold text-center">B</th><th class="px-4 py-2 font-bold text-center">C</th></tr>
+<tbody><tr class="hover:bg-green-200"><td class="px-4 py-2 text-left">In this column</td><td class="px-4 py-2 text-center">In this</td><td class="px-4 py-2 text-right">Finally,</td></tr>
+<tr class="hover:bg-green-200"><td class="px-4 py-2 text-left">the text</td><td class="px-4 py-2 text-center">column</td><td class="px-4 py-2 text-right">in this one</td></tr>
+<tr class="border-b-2 border-gray-400 hover:bg-green-200"><td class="px-4 py-2 text-left">is left aligned</td><td class="px-4 py-2 text-center">it is centered</td><td class="px-4 py-2 text-right">it is right aligned</td></tr></tbody>
+</table><p class="mx-48 text-center italic border-t border-gray-500">This is an example table and description</p></div>
+
+<h4 class="mt-8 mb-6 text-xl text-gray-800
+border-b hover:text-blue-500 border-gray-500">Images</h4><div class="my-12 max-w-full max-h-full"><img class="mx-auto mb-2 max-w-full max-h-full rounded-md border-2
+border-gray-500" src="./sample_files/weird_cat.gif"/><p class="mx-48 text-center italic border-t border-gray-500">I don't have words...</p>
+</div>
+
+<h4 class="mt-8 mb-6 text-xl text-gray-800
+border-b hover:text-blue-500 border-gray-500">Videos</h4><div class="my-12 max-w-full max-h-full"><video class="mx-auto mb-2 rounded-md border-2 border-gray-500" controls><source src="./sample_files/cat_treats.mp4" type="video/mp4"/></video><p class="mx-48 text-center italic border-t border-gray-500">What is this?</p>
+</div>
+
+<h3 class="mt-12 mb-6 text-2xl text-gray-800
+border-b hover:text-blue-500 border-gray-500">Formulas</h3><p class="my-2">Inline formulas: \(\sum_{i=0}^n i^2 = \frac{(n^2+n)(2n+1)}{6}\)
+</p>
+
+<p class="my-2">\[\sum_{i=0}^n i^2 = \frac{(n^2+n)(2n+1)}{6}\]
+</p>
+
+<h3 class="mt-12 mb-6 text-2xl text-gray-800
+border-b hover:text-blue-500 border-gray-500">Blocks</h3><h4 class="mt-8 mb-6 text-xl text-gray-800
+border-b hover:text-blue-500 border-gray-500">Blockquote</h4><div class="my-12"><blockquote class="my-2 mx-20 px-4 border-l-8 rounded-md border border-gray-500
+bg-gray-300"><p class="my-2">Once upon a time..........
+</p>
+</blockquote><p class="mx-48 text-right italic border-t border-gray-500">The name of the author</p></div>
+
+<h4 class="mt-8 mb-6 text-xl text-gray-800
+border-b hover:text-blue-500 border-gray-500">Source Blocks</h4><p class="my-2">Source code blocks can be downloaded directly from github:
+</p>
+
+<div class="my-12 shadow-xl"><div class="h-8 rounded-t flex bg-gray-400">
+  <div class="bg-red-500 my-2 ml-2 mr-1 h-4 w-4 rounded-full"></div>
+  <div class="bg-yellow-500 my-2 ml-1 mr-1 h-4 w-4 rounded-full"></div>
+  <div class="bg-green-500 my-2 ml-1 mr-1 h-4 w-4 rounded-full"></div>
+  <p class="mx-2 my-1 w-full text-center">core.cljs</p>
+</div><pre class="line-numbers rainbow-braces match-braces rounded-b"   data-line="2,6-8,11-20,48-51" data-jsonp="https://api.github.com/repos/vascoferreira25/discord-bot/contents/src/main/core.cljs" language-clojure><code class="language-clojure">
+</code></pre></div>
+
+<p class="my-2">This uses the following attributes:
+</p>
+
+<div class="my-12 shadow-xl"><div class="h-8 rounded-t flex bg-gray-400">
+  <div class="bg-red-500 my-2 ml-2 mr-1 h-4 w-4 rounded-full"></div>
+  <div class="bg-yellow-500 my-2 ml-1 mr-1 h-4 w-4 rounded-full"></div>
+  <div class="bg-green-500 my-2 ml-1 mr-1 h-4 w-4 rounded-full"></div>
+  <p class="mx-2 my-1 w-full text-center"></p>
+</div><pre class="line-numbers rainbow-braces match-braces rounded-b"  ><code class="language-org">#+ATTR_FILENAME: core.cljs
+#+ATTR_HIGHLIGHT: 2,6-8,11-20,48-51
+#+ATTR_FETCH: https://api.github.com/repos/vascoferreira25/discord-bot/contents/src/main/core.cljs
+</code></pre></div>
+
+<h3 class="mt-12 mb-6 text-2xl text-gray-800
+border-b hover:text-blue-500 border-gray-500">Custom Blocks</h3><p class="my-2">There are four custom blocks: <code class="px-2 rounded-md text-teal-500
+bg-gray-300">details</code>, <code class="px-2 rounded-md text-teal-500
+bg-gray-300">tip</code>, <code class="px-2 rounded-md text-teal-500
+bg-gray-300">warning</code> and <code class="px-2 rounded-md text-teal-500
+bg-gray-300">danger</code> and
+these blocks can contain other elements. In order to get syntax highlighting
+while editing in Emacs, use <code class="px-2 rounded-md text-teal-500
+bg-gray-300">org</code> as language.
+</p>
+
+<h4 class="mt-8 mb-6 text-xl text-gray-800
+border-b hover:text-blue-500 border-gray-500">Details</h4><details class="my-12 p-8 rounded-md border-l-8 border border-purple-500
+shadow-xl"><summary class="my-2">Details</summary><p class="my-2">All the stuff in here will be hidden ....
+</p>
+</details>
+
+<h4 class="mt-8 mb-6 text-xl text-gray-800
+border-b hover:text-blue-500 border-gray-500">Tip</h4><div class="tip my-12 p-8 rounded-md border-l-8 border border-teal-500
+shadow-xl"><p class="text-teal-500 font-bold"></p><p class="my-2">Tip text.
+</p>
+</div>
+
+<h4 class="mt-8 mb-6 text-xl text-gray-800
+border-b hover:text-blue-500 border-gray-500">Warning</h4><div class="warning my-12 p-8 rounded-md border-l-8 border border-yellow-500
+shadow-xl"><p class="text-yellow-500 font-bold"></p><p class="my-2">Warning text.
+</p>
+</div>
+
+<h4 class="mt-8 mb-6 text-xl text-gray-800
+border-b hover:text-blue-500 border-gray-500">Danger</h4><div class="danger my-12 p-8 rounded-md border-l-8 border border-red-500
+shadow-xl"><p class="text-red-500 font-bold">Danger Title</p><p class="my-2">These blocks can contain other blocks.
+</p>
+
+<p class="my-2">Code in a shell?
+</p>
+
+<div class="my-12 shadow-xl"><div class="h-8 rounded-t flex bg-gray-400">
+  <div class="bg-red-500 my-2 ml-2 mr-1 h-4 w-4 rounded-full"></div>
+  <div class="bg-yellow-500 my-2 ml-1 mr-1 h-4 w-4 rounded-full"></div>
+  <div class="bg-green-500 my-2 ml-1 mr-1 h-4 w-4 rounded-full"></div>
+  <p class="mx-2 my-1 w-full text-center">Console</p>
+</div><pre class="command-line rainbow-braces match-braces rounded-b" data-filter-output="(out)"  data-user="org-tailwind" data-host="remote.host.com"><code class="language-shell">cd c:/emacs/bin/runemacs.exe
+(out)I rocks!
+</code></pre></div>
+
+<p class="my-2">Cool! Isn't it?
+</p>
+</div>
+
+<h4 class="mt-8 mb-6 text-xl text-gray-800
+border-b hover:text-blue-500 border-gray-500">Mermaids</h4><p class="my-2">There are also mermaids.
+</p>
+
+<h5 class="mt-6 mb-6 text-lg text-gray-800
+border-b hover:text-blue-500 border-gray-500">Diagram</h5><div class="my-12"><div class="mermaid my-2 p-4 max-w-full max-h-full bg-white rounded-md">sequenceDiagram
+participant Alice
+participant Bob
+Alice->>John: Hello John, how are you?
+loop Healthcheck
+John->>John: Fight against hypochondria
+end
+Note right of John: Rational thoughts <br/>prevail!
+John-->>Alice: Great!
+John->>Bob: How about you?
+Bob-->>John: Jolly good!
+</div><p class="mx-20 text-center italic border-t border-gray-500">A simple diagram.</p></div>
+
+<h5 class="mt-6 mb-6 text-lg text-gray-800
+border-b hover:text-blue-500 border-gray-500">Gantt Chart</h5><div class="my-12"><div class="mermaid my-2 p-4 max-w-full max-h-full bg-white rounded-md">gantt
+dateFormat  YYYY-MM-DD
+title Adding GANTT diagram to mermaid
+
+section A section
+Completed task            :done,    des1, 2014-01-06,2014-01-08
+Active task               :active,  des2, 2014-01-09, 3d
+Future task               :         des3, after des2, 5d
+Future task2              :         des4, after des3, 5d
+
+section Critical tasks
+Completed task in the critical line :crit, done, 2014-01-06,24h
+Implement parser and jison          :crit, done, after des1, 2d
+Create tests for parser             :crit, active, 3d
+Future task in critical line        :crit, 5d
+Create tests for renderer           :2d
+Add to mermaid                      :1d
+
+section Documentation
+Describe gantt syntax               :active, a1, after des1, 3d
+Add gantt diagram to demo page      :after a1  , 20h
+Add another diagram to demo page    :doc1, after a1  , 48h
+
+section Last section
+Describe gantt syntax               :after doc1, 3d
+Add gantt diagram to demo page      : 20h
+Add another diagram to demo page    : 48h
+</div><p class="mx-20 text-center italic border-t border-gray-500">What a beautiful chart. What does it mean?</p></div>
+
+<h4 class="mt-8 mb-6 text-xl text-gray-800
+border-b hover:text-blue-500 border-gray-500">Custom Attributes</h4><p class="my-2">These blocks have custom attributes that you can change:
+</p>
+<dl class="my-8"><dt class="font-bold">Source code</dt><dl class="my-8"><dt class="font-bold"><code class="px-2 rounded-md text-teal-500
+bg-gray-300">#+ATTR_HIGHLIGHT</code></dt><dd class="ml-10">lines to highlight in the source code, e.g. <code class="px-2 rounded-md text-teal-500
+bg-gray-300">1,5-10,12</code>
+</dd>
+<dt class="font-bold"><code class="px-2 rounded-md text-teal-500
+bg-gray-300">#+ATTR_USERNAME</code></dt><dd class="ml-10">username to show in command-line blocks, e.g. <code class="px-2 rounded-md text-teal-500
+bg-gray-300">CrazyCat</code>
+</dd>
+<dt class="font-bold"><code class="px-2 rounded-md text-teal-500
+bg-gray-300">#+ATTR_HOSTNAME</code></dt><dd class="ml-10">hostname to show in command-line blocks, e.g. <code class="px-2 rounded-md text-teal-500
+bg-gray-300">localhost</code>
+</dd>
+<dt class="font-bold"><code class="px-2 rounded-md text-teal-500
+bg-gray-300">#+ATTR_FETCH</code></dt><dd class="ml-10">fetch files from the Github API
+</dd>
+<dt class="font-bold"><code class="px-2 rounded-md text-teal-500
+bg-gray-300">#+ATTR_FILEPATH</code></dt><dd class="ml-10">get files and add a download button, it uses HTTP so, no local files.
+</dd>
+<dt class="font-bold"><code class="px-2 rounded-md text-teal-500
+bg-gray-300">#+ATTR_FILENAME</code></dt><dd class="ml-10">name to display on the source code window.
+</dd>
+</dl>
+<dt class="font-bold">Custom blocks</dt><dl class="my-8"><dt class="font-bold"><code class="px-2 rounded-md text-teal-500
+bg-gray-300">#+NAME</code></dt><dd class="ml-10">the title of the block
+</dd>
+</dl>
+<dt class="font-bold">Tables</dt><dl class="my-8"><dt class="font-bold"><code class="px-2 rounded-md text-teal-500
+bg-gray-300">#+NAME</code></dt><dd class="ml-10">the description of the table or image or video
+</dd>
+</dl>
+<dt class="font-bold">Images and Videos</dt><dl class="my-8"><dt class="font-bold"><code class="px-2 rounded-md text-teal-500
+bg-gray-300">#+NAME</code></dt><dd class="ml-10">the description of the table or image or video
+</dd>
+</dl>
+<dt class="font-bold">Blockquotes</dt><dl class="my-8"><dt class="font-bold"><code class="px-2 rounded-md text-teal-500
+bg-gray-300">#+NAME</code></dt><dd class="ml-10">the name of the author
+</dd>
+</dl>
+</dl>
+
+<h2 class="mt-20 mb-6 text-3xl text-gray-800
+border-b hover:text-blue-500 border-gray-500">Known bugs</h2><ul class="list-disc my-8"><li class="ml-10"><p class="my-2">It crashes when it encounters a line that ends in <code class="px-2 rounded-md text-teal-500
+bg-gray-300">\\</code> - it works if it is
+inside a block;
+</p>
+</li>
+<li class="ml-10"><p class="my-2">It won't export <code class="px-2 rounded-md text-teal-500
+bg-gray-300">TODO</code> keywords and <code class="px-2 rounded-md text-teal-500
+bg-gray-300">SCHEDULE</code> dates.
+</p>
+</li>
+</ul>
+
+    </div>
+  </div>
+</div>
+
+<div id="footer" class="hidden fixed bottom-0 w-full border-t border-solid border-gray-500 h-8 text-center bg-gray-900">
+<p>Exported with org-tailwind</p>
+</div>
+
+<script>
+function getElementsByTagNames(list,obj) {
+	if (!obj) var obj = document;
+	var tagNames = list.split(',');
+	var resultArray = new Array();
+	for (var i=0;i < tagNames.length;i++) {
+		var tags = obj.getElementsByTagName(tagNames[i]);
+		for (var j=0;j < tags.length;j++) {
+			resultArray.push(tags[j]);
+		}
+	}
+	var testNode = resultArray[0];
+	if (!testNode) return [];
+	if (testNode.sourceIndex) {
+		resultArray.sort(function (a,b) {
+				return a.sourceIndex - b.sourceIndex;
+		});
+	}
+	else if (testNode.compareDocumentPosition) {
+		resultArray.sort(function (a,b) {
+				return 3 - (a.compareDocumentPosition(b) & 6);
+		});
+	}
+	return resultArray;
+}
+
+function createTOC() {
+	// Add go to top button
+	let top = document.createElement('a');
+	top.innerHTML = 'Top';
+	top.href = '#top';
+	top.className += 'top float-right tracking-tight font-bold mt-1';
+
+    // The tags with the headlines
+	let headlines = getElementsByTagNames('h1,h2,h3');
+
+	if (headlines.length < 2) return false;
+
+    // Populate the #toc div
+	let toc = document.getElementById('toc');
+
+    // Header counts for numbering
+    let header_1 = 0;
+    let header_2 = 0;
+    let header_3 = 0;
+    let header_4 = 0;
+    let header_5 = 0;
+    let header_6 = 0;
+
+	for (var i=0;i < headlines.length;i++) {
+
+		let tocHeader = document.createElement('a');
+
+        // Tailwind.css classes
+		tocHeader.className = 'px-2 py-1';
+        tocHeader.className += ' text-sm hover:bg-gray-500';
+
+        // Make the first header active
+        // This will be used for the scroll spy
+        if (i == 0) {
+            tocHeader.className += ' bg-gray-400 border-r-4 border-indigo-900';
+        }
+	
+        // Add the header to the table of contents
+        toc.appendChild(tocHeader);
+
+        switch (headlines[i].nodeName) {
+          case 'H1':
+            tocHeader.className += ' block mt-2 ml-0';
+            header_1 += 1;
+            header_2 = 0;
+            header_3 = 0;
+            header_4 = 0;
+            header_5 = 0;
+            header_6 = 0;
+
+          	// Numbering
+          	tocHeader.innerHTML += '<b>' + header_1 + '.</b> ';
+            
+            break;
+
+          case 'H2':
+            tocHeader.className += ' block ml-5';
+            header_2 += 1;
+            header_3 = 0;
+            header_4 = 0;
+            header_5 = 0;
+            header_6 = 0;
+
+          	// Numbering
+          	tocHeader.innerHTML += '<b>' + header_1 + '.' + header_2 + '.</b> ';
+            break;
+
+          case 'H3':
+            tocHeader.className += ' block ml-12';
+            header_3 += 1;
+            header_4 = 0;
+            header_5 = 0;
+            header_6 = 0;
+
+          	// Numbering
+          	tocHeader.innerHTML += '<b>' + header_1 + '.' + header_2 + '.' + header_3 + '.</b> ';
+            break;
+
+          case 'H4':
+            tocHeader.className += ' block ml-20';
+            header_4 += 1;
+            header_5 = 0;
+            header_6 = 0;
+
+          	// Numbering
+          	tocHeader.innerHTML += '<b>' + header_1 + '.' + header_2 + '.' + header_3 + '.' + header_4 + '.</b> ';
+            break;
+
+          case 'H5':
+            tocHeader.className += ' block ml-32';
+            header_5 += 1;
+            header_6 = 0;
+
+          	// Numbering
+          	tocHeader.innerHTML += '<b>' + header_1 + '.' + header_2 + '.' + header_3 + '.' + header_4 + '.' + header_5 + '.</b> ';
+            break;
+
+          case 'H6':
+            tocHeader.className += ' block ml-48';
+            header_6 += 1;
+
+          	// Numbering
+          	tocHeader.innerHTML += '<b>' + header_1 + '.' + header_2 + '.' + header_3 + '.' + header_4 + '.' + header_5 + '.' + header_6 + '.</b> ';
+            break;
+        }       
+        
+        // Header title
+        tocHeader.innerHTML += headlines[i].innerHTML;
+		
+        // Add a link to the header
+		let headerId = headlines[i].id || 'toc-link-' + i;
+		headlines[i].id = headerId;
+        tocHeader.id = "goto-" + headerId;
+		tocHeader.href = '#' + headerId;
+	}
+}
+
+createTOC();
+
+// Populate search bar
+let searchBar = document.getElementById('search-bar')
+let searchBarResults = document.getElementById('search-bar-results')
+for(let i = 0; i < tocTree.length; i++) {
+    let heading = tocTree[i]
+    let item = document.createElement('li')
+    let link = document.createElement('a')
+    link.href = heading.file + '#toc-link-' + heading.index
+    link.className = "p-2 block rounded hover:bg-gray-500"
+    link.style.display = 'none'
+
+    if (heading.name === heading.parent) {
+        link.innerText = heading.name
+    } else {
+        link.innerText = heading.name + ' > ' + heading.parent
+    }
+
+    item.appendChild(link)
+    searchBarResults.appendChild(item)
+}
+
+// Show results on search bar focus
+function showResults(){
+    searchBarResults.style.display = ''
+}
+
+function hideResults(){
+    searchBarResults.style.display = 'none'
+    searchBar.value = ''
+}
+
+// Search Bar
+function search(){
+    let searchBar = document.getElementById('search-bar')
+    let filter = searchBar.value.toUpperCase()
+    let count = 0
+
+    let searchResults = searchBarResults.getElementsByTagName('li')
+
+    for(let i = 0; i < searchResults.length; i++) {
+        let link = searchResults[i].getElementsByTagName('a')[0]
+        let txtValue = link.textContent || link.innerText
+
+        if (txtValue.toUpperCase().indexOf(filter) > -1 && count < 10) {
+            link.style.display = ''
+            count += 1
+        } else {
+            link.style.display = 'none'
+        }
+    }
+}
+
+
+// Check if an element is visible
+function isElementVisible (el, parent) {
+    let rect = el.getBoundingClientRect();
+
+    return (
+        rect.top >= parent.getBoundingClientRect().top &&
+        rect.left >= 0 &&
+        rect.bottom <= (parent.clientHeight + parent.getBoundingClientRect().top) &&
+        rect.right <= (parent.clientWidth)
+    );
+}
+
+
+DOMTokenList.prototype.addMany = function(classes) {
+    var array = classes.split(' ');
+    for (var i = 0, length = array.length; i < length; i++) {
+      this.add(array[i]);
+    }
+}
+
+DOMTokenList.prototype.removeMany = function(classes) {
+    var array = classes.split(' ');
+    for (var i = 0, length = array.length; i < length; i++) {
+      this.remove(array[i]);
+    }
+}
+
+// Scroll Spy
+// Everything is run inside the function because offsets
+// are created due to tailwind.css classes as it changes
+// the height/position of the elements after the page is loaded
+function scrollSpy () {
+  let headings = document.querySelectorAll('[id^="toc-link-"]');
+  let headingsTopOffsets = {};
+  let i = 0;
+
+  let selectedClassName = "bg-gray-400 border-r-4 border-indigo-900";
+
+  Array.prototype.forEach.call(headings, function(s) {
+    headingsTopOffsets[s.id] = s.offsetTop;
+  });
+  
+  
+  let scrollEl = document.getElementById("content-container");
+  let scrollPosition = scrollEl.scrollTop + 150;
+
+  let sidebar = document.getElementById('sidebar');
+
+  for (i in headingsTopOffsets) {
+    if (headingsTopOffsets[i] <= scrollPosition) {
+      document.getElementsByClassName(selectedClassName)[0].classList.removeMany(selectedClassName);
+      document.querySelector(`a[id^="goto-${i}"]`).classList.addMany(selectedClassName);
+
+      // Scroll the sidebar to the current heading if not visible
+      let tocItem = document.getElementById(`goto-${i}`);
+      if (!isElementVisible(tocItem, sidebar)) {
+          tocItem.scrollIntoView();
+      }
+    }
+  }
+
+};
+
+</script>
+
+<script src="./js/prism.js"></script>
+<script src="./js/mermaid.min.js"></script>
+<script>mermaid.initialize({startOnLoad:true});</script>
+
+</body>
+</html>
