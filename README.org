@@ -7,7 +7,15 @@ barebones HTML (It does not create as many ~divs~ and ~sections~ as the normal
 HTML export back-end).
   
 Instead of using Tailwind.css you can just name the classes of the elements and
-import your own css (or edit ~./css/styles.css~).
+import your own css (or edit ~./css/style.css~).
+
+**Note**: Although you can export any ~.org~ file as html by using ~C-c C-e x
+h~ (through ~org-export-dispatcher~), this method won't create the file inside
+the ~dist~ folder where you have all the required ~js~ and ~css~ files. If you
+open this file on a browser and open the console you will notice there are
+import errors. You should instead setup your notes directory with
+~org-publish-project-alist~ and then ~publish~ the project using
+~(org-publish-all)~ or ~(org-publish-all t)~ to forcefully publish files.
 
 ** More Themes
 
@@ -18,84 +26,13 @@ Check the [[https://vascoferreira25.github.io/ox-tailwind/dark.html][Dark Theme]
 Check the [[https://vascoferreira25.github.io/ox-tailwind/gitlab.html][Gitlab theme]].
 
 ** Installation
-*** Spacemacs
    
 To install this back-end, clone this repo into your packages or private
 folder in your ~~/.emacs.d~ directory:
 
-#+ATTR_USERNAME: spacemacs
-#+ATTR_HOSTNAME: hostname
 #+begin_src shell
 git clone https://github.com/vascoferreira25/ox-tailwind ~/.emacs.d/private
 (out)Cloning into '~/.emacs.d/private'...
-(out)remote: Enumerating objects: 49, done.
-(out)remote: Counting objects: 100% (49/49), done.
-(out)remote: Compressing objects: 100% (40/40), done.
-(out)remote: Total 49 (delta 20), reused 28 (delta 8), pack-reused 0
-(out)Unpacking objects: 100% (49/49), done.
-#+end_src
-
-Add the following to your ~.spacemacs~ file:
-
-#+ATTR_FILENAME: .spacemacs
-#+ATTR_HIGHLIGHT: 8
-#+begin_src elisp
-(defun dotspacemacs/user-config ()
-  "Configuration for user code:
-This function is called at the very end of Spacemacs startup, after layer
-configuration.
-Put your configuration code here, except for variables that should be set
-before packages are loaded."
-  ;; ...
-  (load-file "~/.emacs.d/private/ox-tailwind/ox-tailwind.el")
-  ;; ...
-  )
-#+end_src
-
-Then export your org file with the ox-tailwind back-end:
-
-In Spacemacs you would use ~, e e~ for the export menu and then ~x h~.
-
-*** Doom Emacs
-
-To install this back-end, clone this repo into your packages or private
-folder in your ~~/.doom.d~ directory:
-
-#+ATTR_USERNAME: doom
-#+ATTR_HOSTNAME: hostname
-#+begin_src shell
-git clone https://github.com/vascoferreira25/ox-tailwind ~/.doom.d/ox-tailwind
-(out)Cloning into '~/.doom.d/ox-tailwind...
-(out)remote: Enumerating objects: 49, done.
-(out)remote: Counting objects: 100% (49/49), done.
-(out)remote: Compressing objects: 100% (40/40), done.
-(out)remote: Total 49 (delta 20), reused 28 (delta 8), pack-reused 0
-(out)Unpacking objects: 100% (49/49), done.
-#+end_src
-
-Add the following to your ~config.el~ file:
-
-#+ATTR_FILENAME: config.el
-#+begin_src elisp
-(add-load-path! "ox-tailwind")
-
-(use-package ox-tailwind
-  :after ox)
-#+end_src
-
-Then export your org file with the ox-tailwind back-end:
-
-In Spacemacs you would use ~SPC M e~ for the export menu and then ~x h~.
-
-*** Your own config
-
-To install this back-end into your own Emacs config, just add the following:
-
-#+ATTR_USERNAME: your-own-config
-#+ATTR_HOSTNAME: hostname
-#+begin_src shell
-git clone https://github.com/vascoferreira25/ox-tailwind ~/.emacs.d/private-packages/ox-tailwind
-(out)Cloning into '~/.emacs.d/private-packages/ox-tailwind...
 (out)remote: Enumerating objects: 49, done.
 (out)remote: Counting objects: 100% (49/49), done.
 (out)remote: Compressing objects: 100% (40/40), done.
@@ -110,6 +47,11 @@ And add the following to your config file:
 ;; ox-tailwind export back-end
 (load "~/.emacs.d/private-packages/ox-tailwind/ox-tailwind.el")
 #+END_SRC
+
+Afterwards, copy the ~notes_example~ folder to get an already made directory
+structure for your notes. You just have to setup ~org-publish-project-alist~
+and then use the ~(org-publish-all)~ command and you are done. Check the
+~/notes_example/index.org~ file.
 
 ** Notes structure
 
@@ -211,6 +153,9 @@ To setup automatic export of all my org files I use the following settings:
         ;; Publish all in one time
         ("notes" :components ("org-files" "images" "files" "tangles"))))
 #+END_SRC
+
+After setting up your notes path, you should use ~(org-publish-all)~ to publish
+all the notes as html.
 
 ** Notes output directory
    

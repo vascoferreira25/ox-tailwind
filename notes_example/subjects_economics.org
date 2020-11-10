@@ -1,0 +1,11 @@
+* Economics
+** Simple Interest
+
+$$SI = P * (1 + r)^t$$
+
+Where:
+
+- SI = Simple Interest
+- P = Principal
+- r = Interest Rate
+- t = Time

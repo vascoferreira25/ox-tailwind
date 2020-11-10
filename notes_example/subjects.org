@@ -1,0 +1,5 @@
+* Subjects
+** Pages
+   
+[[./subjects_economics.org][Economics]]
+

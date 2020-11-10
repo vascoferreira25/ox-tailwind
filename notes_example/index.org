@@ -1,0 +1,26 @@
+[[file:./img/hero.png][Page Logo]]
+
+* Notes & Guides
+  
+A place to store all my Notes and Guides.
+It goes from simple Installation Guides and Programming Languages to steps
+of how to procede with some law subjects or Tax and Finance related.
+
+#+NAME: Don't forget to setup the org project 
+#+BEGIN_TIP org
+Setup this folder as an orgmode project to be able to use ~(org-publish-all)~:
+
+#+BEGIN_SRC elisp
+(setq org-publish-project-alist
+      '(("notes-example"
+         :base-extension "org"
+         :base-directory "/path/notes_example/"
+         :publishing-directory "/path/notes_example/dist/"
+         :publishing-function org-tailwind-publish-to-html)))
+#+END_SRC
+#+END_TIP
+
+** Pages
+
+[[./subjects.org][Subjects]]
+

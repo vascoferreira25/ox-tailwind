@@ -1,0 +1,353 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Notes & Guides</title>
+  <!-- Tailwind CSS -->
+<link href="./css/tailwind.min.css" rel="stylesheet"/>
+
+<!-- Prism Css -->
+<link href="./css/prism.css" rel="stylesheet" />
+
+<!-- Mathjax -->
+<script>
+MathJax = {
+  tex: {
+  	processEscapes: true
+  }
+}
+</script>
+
+<script type="text/javascript" async
+  src="./mathjax/tex-mml-chtml.js">
+</script>
+
+<!-- Your CSS file should come here -->
+<link href="./css/style.css" rel="stylesheet" />
+
+<!-- Toc tree file -->
+<script src="./js/toc_tree.js"></script>
+
+</head>
+<body class="flex flex-col h-screen
+text-gray-800">
+
+<div id="header" class="w-full border-b border-gray-500
+bg-purple-900 shadow-md items-center h-16 text-white">
+<nav class="flex items-center justify-between flex-wrap p-4">
+  <div class="flex items-center flex-no-shrink mr-6">
+    <span class="font-semibold text-xl tracking-tight">
+      <a href="./index.html">Notes</a>
+    </span>
+  </div>
+  <div class="block flex-grow lg:flex lg:items-center lg:w-auto">
+    <div class="text-sm lg:flex-grow">
+      <a href="#top" class="float-right tracking-tight font-bold mt-1">
+        Top
+      </a>
+      <input id="search-bar" onkeyup="search()"
+      onfocusin='showResults()'
+      class="float-right mx-4 w-1/6 rounded-lg px-4 py-1 border-solid border border-purple-900 bg-purple-800 text-gray-800 focus:text-white" placeholder="Search..."/>
+      <ul id="search-bar-results"
+      class="z-50 absolute w-5/6 sm:w-4/6 md:w-3/6 lg:w-2/6 xl:w-1/6 right-0 mt-12 mr-20 bg-white p-4 shadow-lg border border-indigo-700 rounded-md text-gray-800" style="display: none;"></ul>
+    </div>
+  </div>
+</nav>
+</div>
+
+<div id="content" class="top flex flex-col lg:flex-row overflow-y-auto" onclick="hideResults()">
+  <div id="sidebar" class="px-24 py-12 bg-gray-100
+lg:border-r-4 lg:border-gray-300 lg:fixed lg:pt-2 lg:w-64 lg:px-2
+lg:overflow-y-auto lg:inset-y-0 lg:mt-16">
+  <div id="toc"></div>
+  </div>
+
+  <div id="content-container" class="flex-grow px-4 py-12 sm:px-8 md:px-12 lg:ml-64 lg:px-24 lg:overflow-x-auto xl:px-56" onscroll="scrollSpy()">
+    <div id="top"></div>
+    <div id="file-name" class="flex rounded-t border border-gray-300 bg-gray-100 py-2 pl-4 font-bold">
+      <img class="w-6 h-6 mr-2" src="./icons/folders.png">
+      <p>subjects.org</p>
+    </div>
+    <div id="inner-container" class="px-20 pb-24 mb-12 border border-gray-300">
+      <h1 class="mt-32 mb-6 text-4xl text-gray-800
+border-b hover:text-blue-500 border-gray-500">Subjects</h1><h2 class="mt-20 mb-6 text-3xl text-gray-800
+border-b hover:text-blue-500 border-gray-500">Pages</h2><p class="my-2"><a class="text-blue-700 hover:text-blue-800 hover:underline" href="file:./subjects_economics.html">Economics</a>
+</p>
+
+    </div>
+  </div>
+</div>
+
+<div id="footer" class="hidden fixed bottom-0 w-full border-t border-solid border-gray-500 h-8 text-center bg-gray-900">
+<p>Exported with org-tailwind</p>
+</div>
+
+<script>
+function getElementsByTagNames(list,obj) {
+	if (!obj) var obj = document;
+	var tagNames = list.split(',');
+	var resultArray = new Array();
+	for (var i=0;i < tagNames.length;i++) {
+		var tags = obj.getElementsByTagName(tagNames[i]);
+		for (var j=0;j < tags.length;j++) {
+			resultArray.push(tags[j]);
+		}
+	}
+	var testNode = resultArray[0];
+	if (!testNode) return [];
+	if (testNode.sourceIndex) {
+		resultArray.sort(function (a,b) {
+				return a.sourceIndex - b.sourceIndex;
+		});
+	}
+	else if (testNode.compareDocumentPosition) {
+		resultArray.sort(function (a,b) {
+				return 3 - (a.compareDocumentPosition(b) & 6);
+		});
+	}
+	return resultArray;
+}
+
+function createTOC() {
+	// Add go to top button
+	let top = document.createElement('a');
+	top.innerHTML = 'Top';
+	top.href = '#top';
+	top.className += 'top float-right tracking-tight font-bold mt-1';
+
+    // The tags with the headlines
+	let headlines = getElementsByTagNames('h1,h2,h3');
+
+	if (headlines.length < 2) return false;
+
+    // Populate the #toc div
+	let toc = document.getElementById('toc');
+
+    // Header counts for numbering
+    let header_1 = 0;
+    let header_2 = 0;
+    let header_3 = 0;
+    let header_4 = 0;
+    let header_5 = 0;
+    let header_6 = 0;
+
+	for (var i=0;i < headlines.length;i++) {
+
+		let tocHeader = document.createElement('a');
+
+        // Tailwind.css classes
+		tocHeader.className = 'px-2 py-1';
+        tocHeader.className += ' text-sm hover:bg-gray-500';
+
+        // Make the first header active
+        // This will be used for the scroll spy
+        if (i == 0) {
+            tocHeader.className += ' bg-gray-400 border-r-4 border-indigo-900';
+        }
+	
+        // Add the header to the table of contents
+        toc.appendChild(tocHeader);
+
+        switch (headlines[i].nodeName) {
+          case 'H1':
+            tocHeader.className += ' block mt-2 ml-0';
+            header_1 += 1;
+            header_2 = 0;
+            header_3 = 0;
+            header_4 = 0;
+            header_5 = 0;
+            header_6 = 0;
+
+          	// Numbering
+          	tocHeader.innerHTML += '<b>' + header_1 + '.</b> ';
+            
+            break;
+
+          case 'H2':
+            tocHeader.className += ' block ml-5';
+            header_2 += 1;
+            header_3 = 0;
+            header_4 = 0;
+            header_5 = 0;
+            header_6 = 0;
+
+          	// Numbering
+          	tocHeader.innerHTML += '<b>' + header_1 + '.' + header_2 + '.</b> ';
+            break;
+
+          case 'H3':
+            tocHeader.className += ' block ml-12';
+            header_3 += 1;
+            header_4 = 0;
+            header_5 = 0;
+            header_6 = 0;
+
+          	// Numbering
+          	tocHeader.innerHTML += '<b>' + header_1 + '.' + header_2 + '.' + header_3 + '.</b> ';
+            break;
+
+          case 'H4':
+            tocHeader.className += ' block ml-20';
+            header_4 += 1;
+            header_5 = 0;
+            header_6 = 0;
+
+          	// Numbering
+          	tocHeader.innerHTML += '<b>' + header_1 + '.' + header_2 + '.' + header_3 + '.' + header_4 + '.</b> ';
+            break;
+
+          case 'H5':
+            tocHeader.className += ' block ml-32';
+            header_5 += 1;
+            header_6 = 0;
+
+          	// Numbering
+          	tocHeader.innerHTML += '<b>' + header_1 + '.' + header_2 + '.' + header_3 + '.' + header_4 + '.' + header_5 + '.</b> ';
+            break;
+
+          case 'H6':
+            tocHeader.className += ' block ml-48';
+            header_6 += 1;
+
+          	// Numbering
+          	tocHeader.innerHTML += '<b>' + header_1 + '.' + header_2 + '.' + header_3 + '.' + header_4 + '.' + header_5 + '.' + header_6 + '.</b> ';
+            break;
+        }       
+        
+        // Header title
+        tocHeader.innerHTML += headlines[i].innerHTML;
+		
+        // Add a link to the header
+		let headerId = headlines[i].id || 'toc-link-' + i;
+		headlines[i].id = headerId;
+        tocHeader.id = "goto-" + headerId;
+		tocHeader.href = '#' + headerId;
+	}
+}
+
+createTOC();
+
+// Populate search bar
+let searchBar = document.getElementById('search-bar')
+let searchBarResults = document.getElementById('search-bar-results')
+for(let i = 0; i < tocTree.length; i++) {
+    let heading = tocTree[i]
+    let item = document.createElement('li')
+    let link = document.createElement('a')
+    link.href = heading.file + '#toc-link-' + heading.index
+    link.className = "p-2 block rounded hover:bg-gray-500"
+    link.style.display = 'none'
+
+    if (heading.name === heading.parent) {
+        link.innerText = heading.name
+    } else {
+        link.innerText = heading.name + ' > ' + heading.parent
+    }
+
+    item.appendChild(link)
+    searchBarResults.appendChild(item)
+}
+
+// Show results on search bar focus
+function showResults(){
+    searchBarResults.style.display = ''
+}
+
+function hideResults(){
+    searchBarResults.style.display = 'none'
+    searchBar.value = ''
+}
+
+// Search Bar
+function search(){
+    let searchBar = document.getElementById('search-bar')
+    let filter = searchBar.value.toUpperCase()
+    let count = 0
+
+    let searchResults = searchBarResults.getElementsByTagName('li')
+
+    for(let i = 0; i < searchResults.length; i++) {
+        let link = searchResults[i].getElementsByTagName('a')[0]
+        let txtValue = link.textContent || link.innerText
+
+        if (txtValue.toUpperCase().indexOf(filter) > -1 && count < 10) {
+            link.style.display = ''
+            count += 1
+        } else {
+            link.style.display = 'none'
+        }
+    }
+}
+
+
+// Check if an element is visible
+function isElementVisible (el, parent) {
+    let rect = el.getBoundingClientRect();
+
+    return (
+        rect.top >= parent.getBoundingClientRect().top &&
+        rect.left >= 0 &&
+        rect.bottom <= (parent.clientHeight + parent.getBoundingClientRect().top) &&
+        rect.right <= (parent.clientWidth)
+    );
+}
+
+
+DOMTokenList.prototype.addMany = function(classes) {
+    var array = classes.split(' ');
+    for (var i = 0, length = array.length; i < length; i++) {
+      this.add(array[i]);
+    }
+}
+
+DOMTokenList.prototype.removeMany = function(classes) {
+    var array = classes.split(' ');
+    for (var i = 0, length = array.length; i < length; i++) {
+      this.remove(array[i]);
+    }
+}
+
+// Scroll Spy
+// Everything is run inside the function because offsets
+// are created due to tailwind.css classes as it changes
+// the height/position of the elements after the page is loaded
+function scrollSpy () {
+  let headings = document.querySelectorAll('[id^="toc-link-"]');
+  let headingsTopOffsets = {};
+  let i = 0;
+
+  let selectedClassName = "bg-gray-400 border-r-4 border-indigo-900";
+
+  Array.prototype.forEach.call(headings, function(s) {
+    headingsTopOffsets[s.id] = s.offsetTop;
+  });
+  
+  
+  let scrollEl = document.getElementById("content-container");
+  let scrollPosition = scrollEl.scrollTop + 150;
+
+  let sidebar = document.getElementById('sidebar');
+
+  for (i in headingsTopOffsets) {
+    if (headingsTopOffsets[i] <= scrollPosition) {
+      document.getElementsByClassName(selectedClassName)[0].classList.removeMany(selectedClassName);
+      document.querySelector(`a[id^="goto-${i}"]`).classList.addMany(selectedClassName);
+
+      // Scroll the sidebar to the current heading if not visible
+      let tocItem = document.getElementById(`goto-${i}`);
+      if (!isElementVisible(tocItem, sidebar)) {
+          tocItem.scrollIntoView();
+      }
+    }
+  }
+
+};
+
+</script>
+
+<script src="./js/prism.js"></script>
+<script src="./js/mermaid.min.js"></script>
+<script>mermaid.initialize({startOnLoad:true});</script>
+
+</body>
+</html>

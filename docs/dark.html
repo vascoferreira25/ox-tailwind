@@ -85,7 +85,26 @@ HTML export back-end).
 
 <p class="my-2">Instead of using Tailwind.css you can just name the classes of the elements and
 import your own css (or edit <code class="px-2 rounded-md text-green-600
-bg-gray-900">./css/styles.css</code>).
+bg-gray-900">./css/style.css</code>).
+</p>
+
+<p class="my-2"><strong class=""><strong class="">Note</strong></strong>: Although you can export any <code class="px-2 rounded-md text-green-600
+bg-gray-900">.org</code> file as html by using <code class="px-2 rounded-md text-green-600
+bg-gray-900">C-c C-e x
+h</code> (through <code class="px-2 rounded-md text-green-600
+bg-gray-900">org-export-dispatcher</code>), this method won't create the file inside
+the <code class="px-2 rounded-md text-green-600
+bg-gray-900">dist</code> folder where you have all the required <code class="px-2 rounded-md text-green-600
+bg-gray-900">js</code> and <code class="px-2 rounded-md text-green-600
+bg-gray-900">css</code> files. If you
+open this file on a browser and open the console you will notice there are
+import errors. You should instead setup your notes directory with
+<code class="px-2 rounded-md text-green-600
+bg-gray-900">org-publish-project-alist</code> and then <code class="px-2 rounded-md text-green-600
+bg-gray-900">publish</code> the project using
+<code class="px-2 rounded-md text-green-600
+bg-gray-900">(org-publish-all)</code> or <code class="px-2 rounded-md text-green-600
+bg-gray-900">(org-publish-all t)</code> to forcefully publish files.
 </p>
 
 <h2 class="mt-20 mb-6 text-5xl text-yellow-600
@@ -99,8 +118,7 @@ border-b hover:text-green-500 border-gray-500">More Themes</h2><p class="my-2">C
 </p>
 
 <h2 class="mt-20 mb-6 text-5xl text-yellow-600
-border-b hover:text-green-500 border-gray-500">Installation</h2><h3 class="mt-12 mb-6 text-4xl text-yellow-600
-border-b hover:text-green-500 border-gray-500">Spacemacs</h3><p class="my-2">To install this back-end, clone this repo into your packages or private
+border-b hover:text-green-500 border-gray-500">Installation</h2><p class="my-2">To install this back-end, clone this repo into your packages or private
 folder in your <code class="px-2 rounded-md text-green-600
 bg-gray-900">~/.emacs.d</code> directory:
 </p>
@@ -110,98 +128,8 @@ bg-gray-900">~/.emacs.d</code> directory:
   <div class="bg-yellow-500 my-2 ml-1 mr-1 h-4 w-4 rounded-full"></div>
   <div class="bg-green-500 my-2 ml-1 mr-1 h-4 w-4 rounded-full"></div>
   <p class="mx-2 my-1 w-full text-center">Console</p>
-</div><pre class="command-line rainbow-braces match-braces rounded-b" data-filter-output="(out)"  data-user="spacemacs" data-host="hostname"><code class="language-shell">git clone https://github.com/vascoferreira25/ox-tailwind ~/.emacs.d/private
+</div><pre class="command-line rainbow-braces match-braces rounded-b" data-filter-output="(out)"  data-user="user" data-host="localhost"><code class="language-shell">git clone https://github.com/vascoferreira25/ox-tailwind ~/.emacs.d/private
 (out)Cloning into '~/.emacs.d/private'...
-(out)remote: Enumerating objects: 49, done.
-(out)remote: Counting objects: 100% (49/49), done.
-(out)remote: Compressing objects: 100% (40/40), done.
-(out)remote: Total 49 (delta 20), reused 28 (delta 8), pack-reused 0
-(out)Unpacking objects: 100% (49/49), done.
-</code></pre></div>
-
-<p class="my-2">Add the following to your <code class="px-2 rounded-md text-green-600
-bg-gray-900">.spacemacs</code> file:
-</p>
-
-<div class="my-12 shadow-xl"><div class="h-8 rounded-t flex bg-gray-400 text-gray-700">
-  <div class="bg-red-500 my-2 ml-2 mr-1 h-4 w-4 rounded-full"></div>
-  <div class="bg-yellow-500 my-2 ml-1 mr-1 h-4 w-4 rounded-full"></div>
-  <div class="bg-green-500 my-2 ml-1 mr-1 h-4 w-4 rounded-full"></div>
-  <p class="mx-2 my-1 w-full text-center">.spacemacs</p>
-</div><pre class="line-numbers rainbow-braces match-braces rounded-b"   data-line="8"><code class="language-elisp">(defun dotspacemacs/user-config ()
-  "Configuration for user code:
-This function is called at the very end of Spacemacs startup, after layer
-configuration.
-Put your configuration code here, except for variables that should be set
-before packages are loaded."
-  ;; ...
-  (load-file "~/.emacs.d/private/ox-tailwind/ox-tailwind.el")
-  ;; ...
-  )
-</code></pre></div>
-
-<p class="my-2">Then export your org file with the ox-tailwind back-end:
-</p>
-
-<p class="my-2">In Spacemacs you would use <code class="px-2 rounded-md text-green-600
-bg-gray-900">, e e</code> for the export menu and then <code class="px-2 rounded-md text-green-600
-bg-gray-900">x h</code>.
-</p>
-
-<h3 class="mt-12 mb-6 text-4xl text-yellow-600
-border-b hover:text-green-500 border-gray-500">Doom Emacs</h3><p class="my-2">To install this back-end, clone this repo into your packages or private
-folder in your <code class="px-2 rounded-md text-green-600
-bg-gray-900">~/.doom.d</code> directory:
-</p>
-
-<div class="my-12 shadow-xl"><div class="h-8 rounded-t flex bg-gray-400 text-gray-700">
-  <div class="bg-red-500 my-2 ml-2 mr-1 h-4 w-4 rounded-full"></div>
-  <div class="bg-yellow-500 my-2 ml-1 mr-1 h-4 w-4 rounded-full"></div>
-  <div class="bg-green-500 my-2 ml-1 mr-1 h-4 w-4 rounded-full"></div>
-  <p class="mx-2 my-1 w-full text-center">Console</p>
-</div><pre class="command-line rainbow-braces match-braces rounded-b" data-filter-output="(out)"  data-user="doom" data-host="hostname"><code class="language-shell">git clone https://github.com/vascoferreira25/ox-tailwind ~/.doom.d/ox-tailwind
-(out)Cloning into '~/.doom.d/ox-tailwind...
-(out)remote: Enumerating objects: 49, done.
-(out)remote: Counting objects: 100% (49/49), done.
-(out)remote: Compressing objects: 100% (40/40), done.
-(out)remote: Total 49 (delta 20), reused 28 (delta 8), pack-reused 0
-(out)Unpacking objects: 100% (49/49), done.
-</code></pre></div>
-
-<p class="my-2">Add the following to your <code class="px-2 rounded-md text-green-600
-bg-gray-900">config.el</code> file:
-</p>
-
-<div class="my-12 shadow-xl"><div class="h-8 rounded-t flex bg-gray-400 text-gray-700">
-  <div class="bg-red-500 my-2 ml-2 mr-1 h-4 w-4 rounded-full"></div>
-  <div class="bg-yellow-500 my-2 ml-1 mr-1 h-4 w-4 rounded-full"></div>
-  <div class="bg-green-500 my-2 ml-1 mr-1 h-4 w-4 rounded-full"></div>
-  <p class="mx-2 my-1 w-full text-center">config.el</p>
-</div><pre class="line-numbers rainbow-braces match-braces rounded-b"  ><code class="language-elisp">(add-load-path! "ox-tailwind")
-
-(use-package ox-tailwind
-  :after ox)
-</code></pre></div>
-
-<p class="my-2">Then export your org file with the ox-tailwind back-end:
-</p>
-
-<p class="my-2">In Spacemacs you would use <code class="px-2 rounded-md text-green-600
-bg-gray-900">SPC M e</code> for the export menu and then <code class="px-2 rounded-md text-green-600
-bg-gray-900">x h</code>.
-</p>
-
-<h3 class="mt-12 mb-6 text-4xl text-yellow-600
-border-b hover:text-green-500 border-gray-500">Your own config</h3><p class="my-2">To install this back-end into your own Emacs config, just add the following:
-</p>
-
-<div class="my-12 shadow-xl"><div class="h-8 rounded-t flex bg-gray-400 text-gray-700">
-  <div class="bg-red-500 my-2 ml-2 mr-1 h-4 w-4 rounded-full"></div>
-  <div class="bg-yellow-500 my-2 ml-1 mr-1 h-4 w-4 rounded-full"></div>
-  <div class="bg-green-500 my-2 ml-1 mr-1 h-4 w-4 rounded-full"></div>
-  <p class="mx-2 my-1 w-full text-center">Console</p>
-</div><pre class="command-line rainbow-braces match-braces rounded-b" data-filter-output="(out)"  data-user="your-own-config" data-host="hostname"><code class="language-shell">git clone https://github.com/vascoferreira25/ox-tailwind ~/.emacs.d/private-packages/ox-tailwind
-(out)Cloning into '~/.emacs.d/private-packages/ox-tailwind...
 (out)remote: Enumerating objects: 49, done.
 (out)remote: Counting objects: 100% (49/49), done.
 (out)remote: Compressing objects: 100% (40/40), done.
@@ -220,6 +148,16 @@ border-b hover:text-green-500 border-gray-500">Your own config</h3><p class="my-
 </div><pre class="line-numbers rainbow-braces match-braces rounded-b"  ><code class="language-elisp">;; ox-tailwind export back-end
 (load "~/.emacs.d/private-packages/ox-tailwind/ox-tailwind.el")
 </code></pre></div>
+
+<p class="my-2">Afterwards, copy the <code class="px-2 rounded-md text-green-600
+bg-gray-900">notes_example</code> folder to get an already made directory
+structure for your notes. You just have to setup <code class="px-2 rounded-md text-green-600
+bg-gray-900">org-publish-project-alist</code>
+and then use the <code class="px-2 rounded-md text-green-600
+bg-gray-900">(org-publish-all)</code> command and you are done. Check the
+<code class="px-2 rounded-md text-green-600
+bg-gray-900">/notes_example/index.org</code> file.
+</p>
 
 <h2 class="mt-20 mb-6 text-5xl text-yellow-600
 border-b hover:text-green-500 border-gray-500">Notes structure</h2><p class="my-2">In order for the search bar to work, this export backend will search all <code class="px-2 rounded-md text-green-600
@@ -351,6 +289,11 @@ border-b hover:text-green-500 border-gray-500">Publish settings</h2><p class="my
         ;; Publish all in one time
         ("notes" :components ("org-files" "images" "files" "tangles"))))
 </code></pre></div>
+
+<p class="my-2">After setting up your notes path, you should use <code class="px-2 rounded-md text-green-600
+bg-gray-900">(org-publish-all)</code> to publish
+all the notes as html.
+</p>
 
 <h2 class="mt-20 mb-6 text-5xl text-yellow-600
 border-b hover:text-green-500 border-gray-500">Notes output directory</h2><p class="my-2">In order for the export to be functional when offline, you need to put the
