@@ -151,12 +151,25 @@ bg-gray-900">~/.emacs.d</code> directory:
 
 <p class="my-2">Afterwards, copy the <code class="px-2 rounded-md text-green-600
 bg-gray-900">notes_example</code> folder to get an already made directory
-structure for your notes. You just have to setup <code class="px-2 rounded-md text-green-600
-bg-gray-900">org-publish-project-alist</code>
-and then use the <code class="px-2 rounded-md text-green-600
-bg-gray-900">(org-publish-all)</code> command and you are done. Check the
-<code class="px-2 rounded-md text-green-600
+structure for your notes including all the required CSS and JS files. You just
+have to setup <code class="px-2 rounded-md text-green-600
+bg-gray-900">org-publish-project-alist</code> and then use the <code class="px-2 rounded-md text-green-600
+bg-gray-900">(org-publish-all)</code>
+command and you are done. Check the <code class="px-2 rounded-md text-green-600
 bg-gray-900">/notes_example/index.org</code> file.
+</p>
+
+<p class="my-2">If you prefer not to copy the <code class="px-2 rounded-md text-green-600
+bg-gray-900">/dist/</code> folder and instead to generate that
+folder each time you publish your files, you should create a <code class="px-2 rounded-md text-green-600
+bg-gray-900">/css/</code>, <code class="px-2 rounded-md text-green-600
+bg-gray-900">/js/</code>
+and <code class="px-2 rounded-md text-green-600
+bg-gray-900">/mathjax/</code> folders in your notes directory and setup the
+<code class="px-2 rounded-md text-green-600
+bg-gray-900">org-publish-project-alist</code> to also publish these folders. Don't forget to copy
+all the required files (Prism.js, TailwindCSS and MathJax) to those folders
+before publishing.
 </p>
 
 <h2 class="mt-20 mb-6 text-5xl text-yellow-600
@@ -213,8 +226,8 @@ bg-gray-900">programming_python_snippets.org</code></td></tr>
 <tr class="hover:bg-gray-900"><td class="px-2 py-2"></td><td class="px-2 py-2"></td></tr>
 <tr class="hover:bg-gray-900"><td class="px-4 py-2 text-left">Guides Index</td><td class="px-4 py-2 text-left"><code class="px-2 rounded-md text-green-600
 bg-gray-900">guides.org</code></td></tr>
-<tr class="hover:bg-gray-900"><td class="px-4 py-2 text-left">How to download Ebooks guide</td><td class="px-4 py-2 text-left"><code class="px-2 rounded-md text-green-600
-bg-gray-900">guides_download_ebooks.org</code></td></tr>
+<tr class="hover:bg-gray-900"><td class="px-4 py-2 text-left">How to manage Ebooks guide</td><td class="px-4 py-2 text-left"><code class="px-2 rounded-md text-green-600
+bg-gray-900">guides_manage_ebooks.org</code></td></tr>
 <tr class="hover:bg-gray-900"><td class="px-2 py-2"></td><td class="px-2 py-2"></td></tr>
 <tr class="hover:bg-gray-900"><td class="px-4 py-2 text-left">Gaming Index</td><td class="px-4 py-2 text-left"><code class="px-2 rounded-md text-green-600
 bg-gray-900">gaming.org</code></td></tr>
@@ -295,27 +308,20 @@ bg-gray-900">(org-publish-all)</code> to publish
 all the notes as html.
 </p>
 
+<p class="my-2"><strong class=""><strong class="">Note</strong></strong>: Before publishing, open a buffer on one of your <code class="px-2 rounded-md text-green-600
+bg-gray-900">.org</code> files or just
+<code class="px-2 rounded-md text-green-600
+bg-gray-900">dired</code> into the notes directory. As this back-end needs to create a <code class="px-2 rounded-md text-green-600
+bg-gray-900">.js</code> file
+based on your <code class="px-2 rounded-md text-green-600
+bg-gray-900">.org</code> files to enable searching, if the Emacs current directory
+isn't in the notes directory, it will fail to create this file.
+</p>
+
 <h2 class="mt-20 mb-6 text-5xl text-yellow-600
-border-b hover:text-green-500 border-gray-500">Notes output directory</h2><p class="my-2">In order for the export to be functional when offline, you need to put the
-needed files in the output folder.
-</p>
-
-<p class="my-2">The files used in the HTML file are:
-</p>
-
-<ul class="list-disc my-8"><li class="ml-10"><p class="my-2"><a class="text-green-500 hover:text-green-900" href="https://prismjs.com/">Prism.js</a>
-</p>
-</li>
-<li class="ml-10"><p class="my-2"><a class="text-green-500 hover:text-green-900" href="https://www.mathjax.org/">Mathjax</a>
-</p>
-</li>
-<li class="ml-10"><p class="my-2"><a class="text-green-500 hover:text-green-900" href="https://tailwindcss.com/">Tailwind CSS</a>
-</p>
-</li>
-</ul>
-
-<p class="my-2">Just copy the folders inside <code class="px-2 rounded-md text-green-600
-bg-gray-900">/docs/</code> folder of this repository into your
+border-b hover:text-green-500 border-gray-500">Notes output directory</h2><p class="my-2">In order for the export to work, you need to put the required files in the
+output folder. Just copy the <code class="px-2 rounded-md text-green-600
+bg-gray-900">/notes_example/dist</code> folder into your notes
 <code class="px-2 rounded-md text-green-600
 bg-gray-900">/dist/</code> folder.
 </p>
@@ -356,6 +362,49 @@ bg-gray-900">/dist/</code> folder.
 (out)+---mathjax
 (out)        # Mathjax Files
 </code></pre></div>
+
+<h2 class="mt-20 mb-6 text-5xl text-yellow-600
+border-b hover:text-green-500 border-gray-500">Cleaning the output folder</h2><p class="my-2">When publishing your org files, Org-Mode won't delete any files in the <code class="px-2 rounded-md text-green-600
+bg-gray-900">/dist/</code>
+folder. If you delete org files and don't delete those files from the <code class="px-2 rounded-md text-green-600
+bg-gray-900">/dist/</code>
+folder, you will end up with obsolete html files. In this case, what you should
+is delete all the html files and then use <code class="px-2 rounded-md text-green-600
+bg-gray-900">(org-publish-all t)</code> to force
+publish all your org files again.
+</p>
+
+<p class="my-2">Also, if you delete images, tangles or other files from <code class="px-2 rounded-md text-green-600
+bg-gray-900">/your_notes/files</code>,
+<code class="px-2 rounded-md text-green-600
+bg-gray-900">/your_notes/tangles</code> or <code class="px-2 rounded-md text-green-600
+bg-gray-900">/your_notes/img</code> there will be a copy of them in the
+<code class="px-2 rounded-md text-green-600
+bg-gray-900">/dist/</code> folder.
+</p>
+
+<p class="my-2">To completely clean the <code class="px-2 rounded-md text-green-600
+bg-gray-900">/dist/</code> folder you can delete all the following files
+and folders:
+</p>
+
+<ul class="list-disc my-8"><li class="ml-10"><p class="my-2"><code class="px-2 rounded-md text-green-600
+bg-gray-900">/dist/files</code>,
+</p>
+</li>
+<li class="ml-10"><p class="my-2"><code class="px-2 rounded-md text-green-600
+bg-gray-900">/dist/img</code>,
+</p>
+</li>
+<li class="ml-10"><p class="my-2"><code class="px-2 rounded-md text-green-600
+bg-gray-900">/dist/tangles</code>,
+</p>
+</li>
+<li class="ml-10"><p class="my-2">all <code class="px-2 rounded-md text-green-600
+bg-gray-900">.html</code> files.
+</p>
+</li>
+</ul>
 
 <h2 class="mt-20 mb-6 text-5xl text-yellow-600
 border-b hover:text-green-500 border-gray-500">Customization</h2><p class="my-2">To customize the theme you have to change the <code class="px-2 rounded-md text-green-600

@@ -1569,9 +1569,9 @@ The JSON format will"
 
 (defun org-tailwind--json-toc-all-files (notes-directory output-directory)
   "Read all the files in the notes directory and create a toc tree."
- 
+  
   (setq files (directory-files notes-directory nil ".org"))
- 
+  
   (setq file-tree (concat output-directory "/js/" "toc_tree.js"))
 
   ;; Clear the file
@@ -1588,8 +1588,6 @@ The JSON format will"
 
   ;; Close the js object
   (write-region "\n];" nil file-tree 'append))
-
-;;(org-tailwind--json-toc-all-files "./resources" "./out")
 
 
 ;;;###autoload
