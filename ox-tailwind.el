@@ -1,3 +1,5 @@
+;; Debugging purposes
+
 ;; ox-tailwind.el --- Tailwind.css Back-End for Org Export Engine -*- lexical-binding: t -*-
 
 ;; Author: Vasco Ferreira <vasco_mmf@hotmail.com>
@@ -150,6 +152,16 @@
 
 ;;; Element Classes
 
+;; Other
+;; 
+(defcustom org-tailwind-class-checkbox
+  "form-tick appearance-none h-6 w-6 mr-2 border border-gray-300 \
+rounded-md checked:bg-blue-600 checked:border-transparent \
+focus:outline-none align-text-bottom"
+  "Tailwind.css classes for Heading 1"
+  :type '(string))
+
+
 ;; Headings
 
 (defcustom org-tailwind-class-h1
@@ -219,12 +231,12 @@ border-gray-500"
   :type '(string))
 
 (defcustom org-tailwind-class-code
-  "px-2 rounded-md text-green-600 bg-gray-400"
+  "px-2 rounded-md text-green-600 bg-gray-300"
   "Tailwind.css classes for the HTML UNDERLINE attribute."
   :type '(string))
 
 (defcustom org-tailwind-class-verbatim
-  "px-2 rounded-md text-red-600 bg-gray-400"
+  "px-2 rounded-md text-red-600 bg-gray-300"
   "Tailwind.css classes for the HTML VERBATIM attribute."
   :type '(string))
 
@@ -310,7 +322,7 @@ the end."
   :type '(string))
 
 (defcustom org-tailwind-class-description-list-title
-  "font-bold"
+  "font-bold border-b-2 mr-72"
   "Tailwind.css classes for the HTML DESCRIPTION title."
   :type '(string))
 
@@ -489,9 +501,10 @@ shadow-md items-center h-16"
   :type '(string))
 
 (defcustom org-tailwind-class-sidebar
-  "px-24 py-12 bg-gray-200 lg:border-r lg:border-gray-500
-lg:fixed lg:pt-2 lg:w-64 lg:px-2 lg:overflow-y-auto lg:inset-y-0
-lg:mt-16 lg:mb-8"
+  "bg-gray-200 md:shadow-2xl md:rounded-md md:mt-12 md:mx-12 \
+md:px-24 md:py-12 lg:m-0 lg:rounded-none lg:border-r \
+lg:border-gray-500 lg:fixed lg:pt-2 lg:w-64 lg:px-2 \
+lg:overflow-y-auto lg:inset-y-0 lg:mt-16"
   "Tailwind.css classes for the HTML SIDEBAR."
   :type '(string))
 
@@ -501,8 +514,8 @@ lg:mt-16 lg:mb-8"
   :type '(string))
 
 (defcustom org-tailwind-class-content-container
-  "flex-grow px-4 py-12 mb-8 sm:px-8 md:px-12 lg:ml-64 lg:px-12
-lg:overflow-x-auto xl:px-32"
+  "flex-grow px-4 py-12 sm:px-8 md:px-12 lg:ml-64 lg:px-16
+lg:overflow-x-auto xl:px-48"
   "Tailwind.css classes for the HTML contents CONTAINER."
   :type '(string))
 
@@ -512,13 +525,25 @@ lg:overflow-x-auto xl:px-32"
   :type '(string))
 
 (defcustom org-tailwind-class-footer
-  "fixed bottom-0 w-full border-t border-solid border-gray-500
+  "hidden fixed bottom-0 w-full border-t border-solid border-gray-500
 h-8 text-center bg-white"
   "Tailwind.css classes for the HTML FOOTER."
   :type '(string))
 
+(defcustom org-tailwind-class-toggle-button
+  "bg-black text-white dark:bg-white dark:text-black"
+  "Tailwind.css classes for the HTML go to TOP button.
+There are already some prefixed classes:
+- p-2
+- block
+- mt-2
+- ml-0"
+  :type '(string))
+
 (defcustom org-tailwind-class-top-button
-  "float-right tracking-tight font-bold mt-1"
+  "absolute right-0 bottom-0 mb-8 mr-8 z-100 bg-gray-500 \
+hover:bg-gray-700 text-white font-bold rounded-full h-12 w-12 \
+flex items-center justify-center"
   "Tailwind.css classes for the HTML go to TOP button.
 There are already some prefixed classes:
 - p-2
@@ -592,6 +617,7 @@ MathJax = {
       <a href=\"#top\" class=\"%s\">
         Top
       </a>
+      <button type=\"button\" class=\"%s\" onclick=\"toggleLight()\">Toggle light!</button>
       <input id=\"search-bar\" onkeyup=\"search()\"
       onfocusin='showResults()'
       class=\"%s\" placeholder=\"Search...\"/>
@@ -885,6 +911,24 @@ function scrollSpy () {
   }
 
 };
+
+// Manage dark theme
+// On page load or when changing themes, best to add inline in `head` to avoid FOUC
+if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+  document.documentElement.classList.add('dark')
+} else {
+  document.documentElement.classList.remove('dark')
+}
+
+function toggleLight() {
+  if (localStorage.theme === 'light') {
+    localStorage.setItem('theme', 'dark');
+  } else {
+    localStorage.setItem('theme', 'light');
+  }
+  location.reload();
+  return false;
+}
 "
   "Javascript code needed in the HTML file."
   :type '(string))
@@ -967,6 +1011,7 @@ By not doing anything to the contents, it exports the elements at the root level
           org-tailwind-class-header
           (format org-tailwind-header
                   org-tailwind-class-top-button
+                  org-tailwind-class-toggle-button
                   org-tailwind-class-search-bar
                   org-tailwind-class-search-bar-results-list)
           org-tailwind-class-content
@@ -1025,11 +1070,14 @@ By not doing anything to the contents, it exports the elements at the root level
 
 (defun org-tailwind-checkbox (checkbox)
   "Format a checkbox item into the corresponding HTML tag."
-  (let ((checkbox-tag "<input type=\"checkbox\" disabled %s>"))
+  (let ((checkbox-tag "<input type=\"checkbox\" class=\"%s\" disabled %s>"))
     (pcase checkbox
-      (`on (format checkbox-tag "checked"))
-      (`off (format checkbox-tag "unchecked"))
-      (_ (format checkbox-tag "unchecked")))))
+      (`on (format checkbox-tag
+                   org-tailwind-class-checkbox "checked"))
+      (`off (format checkbox-tag
+                    org-tailwind-class-checkbox "unchecked"))
+      (_ (format checkbox-tag
+                 org-tailwind-class-checkbox "unchecked")))))
 
 (defun org-tailwind-paragraph (paragraph contents info)
   "Transcode PARAGRAPH from Org to HTML."
@@ -1178,7 +1226,7 @@ It has two format places:
   <div class=\"bg-red-500 my-2 ml-2 mr-1 h-4 w-4 rounded-full\"></div>
   <div class=\"bg-yellow-500 my-2 ml-1 mr-1 h-4 w-4 rounded-full\"></div>
   <div class=\"bg-green-500 my-2 ml-1 mr-1 h-4 w-4 rounded-full\"></div>
-  <p class=\"mx-2 my-1 w-full text-center\">%s</p>
+  <p class=\"ml-2 mr-16 my-1 w-full text-center\">%s</p>
 </div>"
   "Make it look like the code is in a mac OS code editor.")
 

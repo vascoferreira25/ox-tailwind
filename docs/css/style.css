@@ -10,3 +10,6 @@ pre[class*="language-"] {
 	margin: 0rem;
 }
 
+#content {
+	scrollbar-color: #44337a #a0aec0;
+}
