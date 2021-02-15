@@ -47,7 +47,6 @@
 ;; - file highlight
 ;; - show language
 ;; - jsonp highlight
-;; - inline colors
 ;; - inline color
 ;; - previewers
 ;; - autoloader
@@ -55,7 +54,6 @@
 ;; - command-line
 ;; - unescaped markup
 ;; - normalize whitespace
-;; - toolbar
 ;; - data-uri highlight
 ;; - toolbar
 ;; - copy to clipboard button
@@ -158,57 +156,63 @@
   "form-tick appearance-none h-6 w-6 mr-2 border border-gray-300 \
 rounded-md checked:bg-blue-600 checked:border-transparent \
 focus:outline-none align-text-bottom"
-  "Tailwind.css classes for Heading 1"
+  "Tailwind.css classes for Checkbox"
+  :type '(string))
+
+(defcustom org-tailwind-class-file-name
+  "flex rounded-t border border-gray-300 dark:border-gray-700 \
+bg-gray-100 dark:bg-midgray py-2 pl-4 font-bold"
+  "Tailwind.css classes for File Name"
   :type '(string))
 
 
 ;; Headings
 
 (defcustom org-tailwind-class-h1
-  "mt-32 mb-6 text-6xl text-gray-700 border-b hover:text-green-500
-border-gray-500"
+  "mt-32 mb-6 text-6xl text-gray-700 dark:text-gray-400 border-b \
+hover:text-green-500 dark:hover:text-blue-500 border-gray-500"
   "Tailwind.css classes for Heading 1"
   :type '(string))
 
 (defcustom org-tailwind-class-h2
-  "mt-20 mb-6 text-5xl text-gray-700 border-b hover:text-green-500
-border-gray-500"
+  "mt-20 mb-6 text-5xl text-gray-700 dark:text-gray-400 border-b \
+hover:text-green-500 dark:hover:text-blue-500 border-gray-500"
   "Tailwind.css classes for Heading 2"
   :type '(string))
 
 (defcustom org-tailwind-class-h3
-  "mt-12 mb-6 text-4xl text-gray-700 border-b hover:text-green-500
-border-gray-500"
+  "mt-12 mb-6 text-4xl text-gray-700 dark:text-gray-400 border-b \
+hover:text-green-500 dark:hover:text-blue-500 border-gray-500"
   "Tailwind.css classes for Heading 3"
   :type '(string))
 
 (defcustom org-tailwind-class-h4
-  "mt-8 mb-6 text-3xl text-gray-700 border-b hover:text-green-500
-border-gray-500"
+  "mt-8 mb-6 text-3xl text-gray-700 dark:text-gray-400 border-b \
+hover:text-green-500 dark:hover:text-blue-500 border-gray-500"
   "Tailwind.css classes for Heading 4"
   :type '(string))
 
 (defcustom org-tailwind-class-h5
-  "mt-6 mb-6 text-2xl text-gray-700 border-b hover:text-green-500
-border-gray-500"
+  "mt-6 mb-6 text-2xl text-gray-700 dark:text-gray-400 border-b \
+hover:text-green-500 dark:hover:text-blue-500 border-gray-500"
   "Tailwind.css classes for Heading 5"
   :type '(string))
 
 (defcustom org-tailwind-class-h6
-  "mt-4 mb-6 text-xl text-gray-700 border-b hover:text-green-500
-border-gray-500"
+  "mt-4 mb-6 text-xl text-gray-700 dark:text-gray-400 border-b \
+hover:text-green-500 dark:hover:text-blue-500 border-gray-500"
   "Tailwind.css classes for Heading 6"
   :type '(string))
 
 (defcustom org-tailwind-class-h7
-  "mt-2 mb-6 text-lg text-gray-700 border-b hover:text-green-500
-border-gray-500"
+  "mt-2 mb-6 text-lg text-gray-700 dark:text-gray-400 border-b \
+hover:text-green-500 dark:hover:text-blue-500 border-gray-500"
   "Tailwind.css classes for Heading 7."
   :type '(string))
 
 (defcustom org-tailwind-class-h8
-  "mt-1 mb-6 text-base text-gray-700 border-b hover:text-green-500
-border-gray-500"
+  "mt-1 mb-6 text-base text-gray-700 dark:text-gray-400 border-b \
+hover:text-green-500 dark:hover:text-blue-500 border-gray-500"
   "Tailwind.css classes for Heading 8 and beyond."
   :type '(string))
 
@@ -231,17 +235,18 @@ border-gray-500"
   :type '(string))
 
 (defcustom org-tailwind-class-code
-  "px-2 rounded-md text-green-600 bg-gray-300"
+  "px-2 rounded-md text-green-600 dark:text-yellow-500 \
+bg-gray-300 dark:bg-gray-700"
   "Tailwind.css classes for the HTML UNDERLINE attribute."
   :type '(string))
 
 (defcustom org-tailwind-class-verbatim
-  "px-2 rounded-md text-red-600 bg-gray-300"
+  "px-2 rounded-md text-red-600 bg-gray-300 dark:bg-gray-700"
   "Tailwind.css classes for the HTML VERBATIM attribute."
   :type '(string))
 
 (defcustom org-tailwind-class-link
-  "text-green-500 hover:text-green-900"
+  "text-blue-500 hover:text-blue-900"
   "Tailwind.css classes for the HTML LINK attribute."
   :type '(string))
 
@@ -282,14 +287,16 @@ border-gray-500"
   :type '(string))
 
 (defcustom org-tailwind-class-toc-items
-  "text-sm border-b border-l-4 border-gray-200 hover:bg-green-300"
+  "text-sm my-1 hover:bg-gray-300 dark:hover:bg-darkgray \
+dark:border-gray-500"
   "Tailwind.css classes for the HTML Table of Contents items.
-Do not break the line with while inserting a `newline'. Use `\' at
-the end."
+Do not break the line with while inserting a `newline'. Use a
+single `\\' at the end."
   :type '(string))
 
 (defcustom org-tailwind-class-current-toc
-  "border-green-500"
+  "border-r-4 border-green-500 dark:border-blue-500 bg-gray-300 \
+dark:bg-darkgray"
   "Tailwind.css classes for the CURRENT HTML Table of Contents item."
   :type '(string))
 
@@ -322,7 +329,7 @@ the end."
   :type '(string))
 
 (defcustom org-tailwind-class-description-list-title
-  "font-bold border-b-2 mr-72"
+  "font-bold border-b mr-72 dark:border-gray-700"
   "Tailwind.css classes for the HTML DESCRIPTION title."
   :type '(string))
 
@@ -414,8 +421,8 @@ This makes it look like the code is in an editor on mac OS."
   :type '(string))
 
 (defcustom org-tailwind-class-blockquote
-  "my-2 mx-20 px-4 border-l-8 rounded-md border border-gray-500
-bg-gray-300"
+  "my-2 mx-20 px-4 border-l-8 rounded-md border border-gray-500 \
+bg-gray-300 dark:bg-gray-600"
   "Tailwind.css classes for the HTML BLOCKQUOTE block."
   :type '(string))
 
@@ -443,7 +450,7 @@ bg-gray-300"
   :type '(string))
 
 (defcustom org-tailwind-class-details-block
-  "my-12 p-8 rounded-md border-l-8 border border-purple-500
+  "my-12 p-8 rounded-md border-l-8 border border-purple-500 \
 shadow-xl"
   "Tailwind.css classes for the HTML DETAILS block."
   :type '(string))
@@ -454,7 +461,7 @@ shadow-xl"
   :type '(string))
 
 (defcustom org-tailwind-class-tip-block
-  "my-12 p-8 rounded-md border-l-8 border border-teal-500
+  "my-12 p-8 rounded-md border-l-8 border border-blue-500 \
 shadow-xl"
   "Tailwind.css classes for the HTML TIP block."
   :type '(string))
@@ -465,7 +472,7 @@ shadow-xl"
   :type '(string))
 
 (defcustom org-tailwind-class-warning-block
-  "my-12 p-8 rounded-md border-l-8 border border-yellow-500
+  "my-12 p-8 rounded-md border-l-8 border border-yellow-500 \
 shadow-xl"
   "Tailwind.css classes for the HTML WARNING block."
   :type '(string))
@@ -476,7 +483,7 @@ shadow-xl"
   :type '(string))
 
 (defcustom org-tailwind-class-danger-block
-  "my-12 p-8 rounded-md border-l-8 border border-red-500
+  "my-12 p-8 rounded-md border-l-8 border border-red-500 \
 shadow-xl"
   "Tailwind.css classes for the HTML DANGER block."
   :type '(string))
@@ -490,7 +497,8 @@ shadow-xl"
 ;; Page Divs
 
 (defcustom org-tailwind-class-body
-  "flex flex-col h-screen text-gray-700"
+  "flex flex-col h-screen text-gray-700 dark:bg-darkgray \
+dark:text-gray-400"
   "Tailwind.css classes for the HTML BODY."
   :type '(string))
 
@@ -501,7 +509,7 @@ shadow-md items-center h-16"
   :type '(string))
 
 (defcustom org-tailwind-class-sidebar
-  "bg-gray-200 md:shadow-2xl md:rounded-md md:mt-12 md:mx-12 \
+  "bg-gray-200 dark:bg-midgray md:shadow-2xl md:rounded-md md:mt-12 md:mx-12 \
 md:px-24 md:py-12 lg:m-0 lg:rounded-none lg:border-r \
 lg:border-gray-500 lg:fixed lg:pt-2 lg:w-64 lg:px-2 \
 lg:overflow-y-auto lg:inset-y-0 lg:mt-16"
@@ -514,8 +522,8 @@ lg:overflow-y-auto lg:inset-y-0 lg:mt-16"
   :type '(string))
 
 (defcustom org-tailwind-class-content-container
-  "flex-grow px-4 py-12 sm:px-8 md:px-12 lg:ml-64 lg:px-16
-lg:overflow-x-auto xl:px-48"
+  "flex-grow px-8 py-12 sm:px-12 md:px-16 lg:ml-64 lg:px-20
+lg:overflow-x-auto xl:px-56"
   "Tailwind.css classes for the HTML contents CONTAINER."
   :type '(string))
 
@@ -531,8 +539,9 @@ h-8 text-center bg-white"
   :type '(string))
 
 (defcustom org-tailwind-class-toggle-button
-  "bg-black text-white dark:bg-white dark:text-black"
-  "Tailwind.css classes for the HTML go to TOP button.
+  "float-right rounded-lg px-4 py-1 border-2 bg-black \
+text-gray-300 bg-gray-500 dark:bg-gray-300 dark:text-gray-700"
+  "Tailwind.css classes for the HTML go to Toggle dark-mode button.
 There are already some prefixed classes:
 - p-2
 - block
@@ -541,7 +550,7 @@ There are already some prefixed classes:
   :type '(string))
 
 (defcustom org-tailwind-class-top-button
-  "absolute right-0 bottom-0 mb-8 mr-8 z-100 bg-gray-500 \
+  "absolute right-0 bottom-0 mb-8 mr-24 z-100 bg-gray-500 \
 hover:bg-gray-700 text-white font-bold rounded-full h-12 w-12 \
 flex items-center justify-center"
   "Tailwind.css classes for the HTML go to TOP button.
@@ -553,21 +562,23 @@ There are already some prefixed classes:
   :type '(string))
 
 (defcustom org-tailwind-class-search-bar
-  "float-right mx-4 w-1/6 rounded-lg px-4 py-1 border-solid
-border-2 border-gray-700 text-gray-400 focus:border-green-500
-focus:text-gray-700"
+  "float-right mx-4 w-1/6 rounded-lg px-4 py-1 border-solid \
+border-2 border-gray-700 dark:border-gray-500 text-gray-400 \
+dark:text-gray-900 focus:border-green-500 \
+dark:focus:border-blue-500 focus:text-gray-500 \
+dark:focus:text-gray-500 dark:bg-midgray"
   "Tailwind.css classes for the HTML SEARCH BAR."
   :type '(string))
 
 (defcustom org-tailwind-class-search-bar-results-list
   "z-50 absolute w-5/6 sm:w-4/6 md:w-3/6 lg:w-2/6 xl:w-1/6
-right-0 mt-12 mr-20 bg-white p-4 shadow-lg border
+right-0 mt-12 mr-20 bg-white dark:bg-midgray p-4 shadow-lg border
 border-solid border-gray-500 rounded-md"
   "Tailwind.css classes for the HTML RESULTS LIST."
   :type '(string))
 
 (defcustom org-tailwind-class-search-bar-results-item
-  "p-2 block rounded-md hover:bg-green-300"
+  "p-2 block rounded-md hover:bg-gray-300 dark:hover:bg-darkgray"
   "Tailwind.css classes for the HTML RESULTS ITEM.
 Do not break the line with while inserting a `newline'. Use `\' at
 the end."
@@ -578,7 +589,7 @@ the end."
 
 (defcustom org-tailwind-head-files
   "<!-- Tailwind CSS -->
-<link href=\"./css/tailwind.min.css\" rel=\"stylesheet\"/>
+<link href=\"./css/tailwind.css\" rel=\"stylesheet\"/>
 
 <!-- Prism Css -->
 <link href=\"./css/prism.css\" rel=\"stylesheet\" />
@@ -617,12 +628,12 @@ MathJax = {
       <a href=\"#top\" class=\"%s\">
         Top
       </a>
-      <button type=\"button\" class=\"%s\" onclick=\"toggleLight()\">Toggle light!</button>
       <input id=\"search-bar\" onkeyup=\"search()\"
       onfocusin='showResults()'
       class=\"%s\" placeholder=\"Search...\"/>
       <ul id=\"search-bar-results\"
       class=\"%s\" style=\"display: none;\"></ul>
+      <button type=\"button\" class=\"%s\" onclick=\"toggleLight()\">Toggle dark-mode</button>
     </div>
   </div>
 </nav>"
@@ -934,7 +945,7 @@ function toggleLight() {
   :type '(string))
 
 (defcustom org-tailwind-html-template
-      "<!doctype html>
+  "<!doctype html>
 <html lang=\"en\">
 <head>
   <meta charset=\"utf-8\">
@@ -954,6 +965,10 @@ function toggleLight() {
 
   <div id=\"content-container\" class=\"%s\" onscroll=\"scrollSpy()\">
     <div id=\"top\"></div>
+    <div id=\"file-name\" class=\"%s\">
+      <img class=\"w-6 h-6 mr-2\" src=\"./icons/folders.png\">
+      <p>%s</p>
+    </div>
     <div id=\"inner-container\" class=\"%s\">
       %s
     </div>
@@ -973,7 +988,7 @@ function toggleLight() {
 </body>
 </html>
 "
-      "Default HTML template.
+  "Default HTML template.
 The default template needs the format place for the following
 values, in this order:
 
@@ -992,7 +1007,7 @@ values, in this order:
 - footer contents
 - bottom page javascript
 - bottom page files."
-      :type '(string))
+  :type '(string))
 
 
 ;;; Transcode Elements
@@ -1011,13 +1026,16 @@ By not doing anything to the contents, it exports the elements at the root level
           org-tailwind-class-header
           (format org-tailwind-header
                   org-tailwind-class-top-button
-                  org-tailwind-class-toggle-button
                   org-tailwind-class-search-bar
-                  org-tailwind-class-search-bar-results-list)
+                  org-tailwind-class-search-bar-results-list
+                  org-tailwind-class-toggle-button)
           org-tailwind-class-content
           org-tailwind-class-sidebar
           org-tailwind-sidebar
           org-tailwind-class-content-container
+          ;; add the file name before the content box
+          org-tailwind-class-file-name
+          (plist-get info :input-buffer)
           org-tailwind-class-inner-container
           contents
           org-tailwind-class-footer
