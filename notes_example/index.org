@@ -10,7 +10,7 @@ of how to procede with some law subjects or Tax and Finance related.
 #+BEGIN_TIP org
 Setup this folder as an orgmode project to be able to use ~(org-publish-all)~:
 
-#+BEGIN_SRC elisp
+#+BEGIN_SRC elisp :tangle ./tangles/example_tangle.el
 (setq org-publish-project-alist
       '(("notes-example"
          :base-extension "org"
@@ -19,6 +19,12 @@ Setup this folder as an orgmode project to be able to use ~(org-publish-all)~:
          :publishing-function org-tailwind-publish-to-html)))
 #+END_SRC
 #+END_TIP
+
+** Attachments
+
+Here is an example file:
+
+file:./files/example_file.txt
 
 ** Pages
 

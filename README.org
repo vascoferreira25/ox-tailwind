@@ -463,9 +463,10 @@ Add gantt diagram to demo page      : 20h
 Add another diagram to demo page    : 48h
 #+end_mermaid
 
-**** Custom Attributes
+*** Custom Attributes
 
-These blocks have custom attributes that you can change:
+The following blocks have custom attributes that you can change:
+
 - Source code ::
   - ~#+ATTR_HIGHLIGHT~ :: lines to highlight in the source code, e.g. ~1,5-10,12~
   - ~#+ATTR_USERNAME~ :: username to show in command-line blocks, e.g. ~CrazyCat~
@@ -476,10 +477,11 @@ These blocks have custom attributes that you can change:
 - Custom blocks ::
   - ~#+NAME~ :: the title of the block
 - Tables ::
-  - ~#+NAME~ :: the description of the table or image or video
--  Images and Videos ::
-  - ~#+NAME~ :: the description of the table or image or video
+  - ~#+NAME~ :: the description of the table
+-  Images ::
+  - ~#+NAME~ :: the description of the image
 - Videos ::
+  - ~#+NAME~ :: the description of the video
   - ~#+ATTR_TIMELINE~ :: the time of the start and/or end of the video, for
     example:
     
