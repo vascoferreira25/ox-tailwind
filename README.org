@@ -335,6 +335,7 @@ _Underlined Text_
 **** Videos
 
 #+NAME: What is this?
+#+ATTR_TIMELINE: 5
 [[./files/cat_treats.mp4]]
 
 *** Formulas
@@ -478,6 +479,12 @@ These blocks have custom attributes that you can change:
   - ~#+NAME~ :: the description of the table or image or video
 -  Images and Videos ::
   - ~#+NAME~ :: the description of the table or image or video
+- Videos ::
+  - ~#+ATTR_TIMELINE~ :: the time of the start and/or end of the video, for
+    example:
+    
+    - ~#+ATTR_TIMELINE: 5~
+    - ~#+ATTR_TIMELINE: 5,9~
 - Blockquotes ::
   - ~#+NAME~ :: the name of the author
 

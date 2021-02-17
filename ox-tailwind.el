@@ -1150,11 +1150,11 @@ information."
          (type (org-element-property :type link))
          (parent (org-element-property :parent link))
          (description (org-element-property :name parent))
+         (timeline (org-tailwind--get-attribute :attr_timeline parent))
          (file-extension (file-name-extension path))
          (link-tag "<a class=\"%s\" href=\"%s\">%s</a>")
-         (video-description "<p class=\"%s\">%s</p>")
          (video-tag "<video class=\"%s\" controls><source src=\"%s\" type=\"video/%s\"/></video>%s")
-         (image-description "<p class=\"%s\">%s</p>")
+         (link-description "<p class=\"%s\">%s</p>")
          (image-tag "<img class=\"%s\" src=\"%s\"/>%s"))
     (cond
      ;; Is the link a video
@@ -1166,10 +1166,12 @@ information."
           (equalp file-extension "3gp"))
       (format video-tag
               org-tailwind-class-video
-              path
+              (if timeline
+                  (format "%s#t=%s" path timeline)
+                path)
               file-extension
               (if description
-                  (format image-description
+                  (format link-description
                           org-tailwind-class-video-description
                           description)
                 "")))
@@ -1186,7 +1188,7 @@ information."
               org-tailwind-class-image
               path
               (if description
-                  (format image-description
+                  (format link-description
                           org-tailwind-class-image-description
                           description)
                 "")))

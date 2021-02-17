@@ -485,7 +485,7 @@ the notes folder.
 border-gray-500" src="./files/weird_cat.gif"/><p class="mx-48 text-center italic border-t border-gray-500">I don't have words...</p>
 </div>
 
-<h4 class="mt-8 mb-6 text-3xl text-gray-700 dark:text-gray-400 border-b hover:text-green-500 dark:hover:text-blue-500 border-gray-500">Videos</h4><div class="my-12 max-w-full max-h-full"><video class="mx-auto mb-2 rounded-md border-2 border-gray-500" controls><source src="./files/cat_treats.mp4" type="video/mp4"/></video><p class="mx-48 text-center italic border-t border-gray-500">What is this?</p>
+<h4 class="mt-8 mb-6 text-3xl text-gray-700 dark:text-gray-400 border-b hover:text-green-500 dark:hover:text-blue-500 border-gray-500">Videos</h4><div class="my-12 max-w-full max-h-full"><video class="mx-auto mb-2 rounded-md border-2 border-gray-500" controls><source src="./files/cat_treats.mp4#t=5" type="video/mp4"/></video><p class="mx-48 text-center italic border-t border-gray-500">What is this?</p>
 </div>
 
 <h3 class="mt-12 mb-6 text-4xl text-gray-700 dark:text-gray-400 border-b hover:text-green-500 dark:hover:text-blue-500 border-gray-500">Formulas</h3><p class="my-2">Inline formulas: \(\sum_{i=0}^n i^2 = \frac{(n^2+n)(2n+1)}{6}\)
@@ -626,6 +626,18 @@ Add another diagram to demo page    : 48h
 </dl>
 <dt class="font-bold border-b mr-72 dark:border-gray-700">Images and Videos</dt><dl class="my-8"><dt class="font-bold border-b mr-72 dark:border-gray-700"><code class="px-2 rounded-md text-green-600 dark:text-yellow-500 bg-gray-300 dark:bg-gray-700">#+NAME</code></dt><dd class="ml-10">the description of the table or image or video
 </dd>
+</dl>
+<dt class="font-bold border-b mr-72 dark:border-gray-700">Videos</dt><dl class="my-8"><dt class="font-bold border-b mr-72 dark:border-gray-700"><code class="px-2 rounded-md text-green-600 dark:text-yellow-500 bg-gray-300 dark:bg-gray-700">#+ATTR_TIMELINE</code></dt><dd class="ml-10">the time of the start and/or end of the video, for
+example:
+</dd>
+
+<ul class="list-disc my-8"><li class="ml-10"><p class="my-2"><code class="px-2 rounded-md text-green-600 dark:text-yellow-500 bg-gray-300 dark:bg-gray-700">#+ATTR_TIMELINE: 5</code>
+</p>
+</li>
+<li class="ml-10"><p class="my-2"><code class="px-2 rounded-md text-green-600 dark:text-yellow-500 bg-gray-300 dark:bg-gray-700">#+ATTR_TIMELINE: 5,9</code>
+</p>
+</li>
+</ul>
 </dl>
 <dt class="font-bold border-b mr-72 dark:border-gray-700">Blockquotes</dt><dl class="my-8"><dt class="font-bold border-b mr-72 dark:border-gray-700"><code class="px-2 rounded-md text-green-600 dark:text-yellow-500 bg-gray-300 dark:bg-gray-700">#+NAME</code></dt><dd class="ml-10">the name of the author
 </dd>
