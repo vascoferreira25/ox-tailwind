@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <title>Notes & Guides</title>
   <!-- Tailwind CSS -->
-<link href="./css/tailwind.min.css" rel="stylesheet"/>
+<link href="./css/tailwind.css" rel="stylesheet"/>
 
 <!-- Prism Css -->
 <link href="./css/prism.css" rel="stylesheet" />
@@ -29,11 +29,10 @@ MathJax = {
 <script src="./js/toc_tree.js"></script>
 
 </head>
-<body class="flex flex-col h-screen
-text-gray-800">
+<body class="flex flex-col h-screen text-gray-700 dark:bg-darkgray dark:text-gray-400">
 
 <div id="header" class="w-full border-b border-gray-500
-bg-purple-900 shadow-md items-center h-16 text-white">
+shadow-md items-center h-16">
 <nav class="flex items-center justify-between flex-wrap p-4">
   <div class="flex items-center flex-no-shrink mr-6">
     <span class="font-semibold text-xl tracking-tight">
@@ -42,43 +41,44 @@ bg-purple-900 shadow-md items-center h-16 text-white">
   </div>
   <div class="block flex-grow lg:flex lg:items-center lg:w-auto">
     <div class="text-sm lg:flex-grow">
-      <a href="#top" class="float-right tracking-tight font-bold mt-1">
+      <a href="#top" class="absolute right-0 bottom-0 mb-8 mr-24 z-100 bg-gray-500 hover:bg-gray-700 text-white font-bold rounded-full h-12 w-12 flex items-center justify-center">
         Top
       </a>
       <input id="search-bar" onkeyup="search()"
       onfocusin='showResults()'
-      class="float-right mx-4 w-1/6 rounded-lg px-4 py-1 border-solid border border-purple-900 bg-purple-800 text-gray-800 focus:text-white" placeholder="Search..."/>
+      class="float-right mx-4 w-1/6 rounded-lg px-4 py-1 border-solid border-2 border-gray-700 dark:border-gray-500 text-gray-400 dark:text-gray-900 focus:border-green-500 dark:focus:border-blue-500 focus:text-gray-500 dark:focus:text-gray-500 dark:bg-midgray" placeholder="Search..."/>
       <ul id="search-bar-results"
-      class="z-50 absolute w-5/6 sm:w-4/6 md:w-3/6 lg:w-2/6 xl:w-1/6 right-0 mt-12 mr-20 bg-white p-4 shadow-lg border border-indigo-700 rounded-md text-gray-800" style="display: none;"></ul>
+      class="z-50 absolute w-5/6 sm:w-4/6 md:w-3/6 lg:w-2/6 xl:w-1/6
+right-0 mt-12 mr-20 bg-white dark:bg-midgray p-4 shadow-lg border
+border-solid border-gray-500 rounded-md" style="display: none;"></ul>
+      <button type="button" class="float-right rounded-lg px-4 py-1 border-2 bg-black text-gray-300 bg-gray-500 dark:bg-gray-300 dark:text-gray-700" onclick="toggleLight()">Toggle dark-mode</button>
     </div>
   </div>
 </nav>
 </div>
 
 <div id="content" class="top flex flex-col lg:flex-row overflow-y-auto" onclick="hideResults()">
-  <div id="sidebar" class="px-24 py-12 bg-gray-100
-lg:border-r-4 lg:border-gray-300 lg:fixed lg:pt-2 lg:w-64 lg:px-2
-lg:overflow-y-auto lg:inset-y-0 lg:mt-16">
+  <div id="sidebar" class="bg-gray-200 dark:bg-midgray md:shadow-2xl md:rounded-md md:mt-12 md:mx-12 md:px-24 md:py-12 lg:m-0 lg:rounded-none lg:border-r lg:border-gray-500 lg:fixed lg:pt-2 lg:w-64 lg:px-2 lg:overflow-y-auto lg:inset-y-0 lg:mt-16">
   <div id="toc"></div>
   </div>
 
-  <div id="content-container" class="flex-grow px-4 py-12 sm:px-8 md:px-12 lg:ml-64 lg:px-24 lg:overflow-x-auto xl:px-56" onscroll="scrollSpy()">
+  <div id="content-container" class="flex-grow px-8 py-12 sm:px-12 md:px-16 lg:ml-64 lg:px-20
+lg:overflow-x-auto xl:px-56" onscroll="scrollSpy()">
     <div id="top"></div>
-    <div id="file-name" class="flex rounded-t border border-gray-300 bg-gray-100 py-2 pl-4 font-bold">
+    <div id="file-name" class="flex rounded-t border border-gray-300 dark:border-gray-700 bg-gray-100 dark:bg-midgray py-2 pl-4 font-bold">
       <img class="w-6 h-6 mr-2" src="./icons/folders.png">
       <p>subjects.org</p>
     </div>
-    <div id="inner-container" class="px-20 pb-24 mb-12 border border-gray-300">
-      <h1 class="mt-32 mb-6 text-4xl text-gray-800
-border-b hover:text-blue-500 border-gray-500">Subjects</h1><h2 class="mt-20 mb-6 text-3xl text-gray-800
-border-b hover:text-blue-500 border-gray-500">Pages</h2><p class="my-2"><a class="text-blue-700 hover:text-blue-800 hover:underline" href="file:./subjects_economics.html">Economics</a>
+    <div id="inner-container" class="px-20 py-12 pb-32 mb-12 shadow-2xl rounded-md">
+      <h1 class="mt-32 mb-6 text-6xl text-gray-700 dark:text-gray-400 border-b hover:text-green-500 dark:hover:text-blue-500 border-gray-500">Subjects</h1><h2 class="mt-20 mb-6 text-5xl text-gray-700 dark:text-gray-400 border-b hover:text-green-500 dark:hover:text-blue-500 border-gray-500">Pages</h2><p class="my-2"><a class="text-blue-500 hover:text-blue-900" href="file:./subjects_economics.html">Economics</a>
 </p>
 
     </div>
   </div>
 </div>
 
-<div id="footer" class="hidden fixed bottom-0 w-full border-t border-solid border-gray-500 h-8 text-center bg-gray-900">
+<div id="footer" class="hidden fixed bottom-0 w-full border-t border-solid border-gray-500
+h-8 text-center bg-white">
 <p>Exported with org-tailwind</p>
 </div>
 
@@ -113,7 +113,7 @@ function createTOC() {
 	let top = document.createElement('a');
 	top.innerHTML = 'Top';
 	top.href = '#top';
-	top.className += 'top float-right tracking-tight font-bold mt-1';
+	top.className += 'top absolute right-0 bottom-0 mb-8 mr-24 z-100 bg-gray-500 hover:bg-gray-700 text-white font-bold rounded-full h-12 w-12 flex items-center justify-center';
 
     // The tags with the headlines
 	let headlines = getElementsByTagNames('h1,h2,h3');
@@ -137,12 +137,12 @@ function createTOC() {
 
         // Tailwind.css classes
 		tocHeader.className = 'px-2 py-1';
-        tocHeader.className += ' text-sm hover:bg-gray-500';
+        tocHeader.className += ' text-sm my-1 hover:bg-gray-300 dark:hover:bg-darkgray dark:border-gray-500';
 
         // Make the first header active
         // This will be used for the scroll spy
         if (i == 0) {
-            tocHeader.className += ' bg-gray-400 border-r-4 border-indigo-900';
+            tocHeader.className += ' border-r-4 border-green-500 dark:border-blue-500 bg-gray-300 dark:bg-darkgray';
         }
 	
         // Add the header to the table of contents
@@ -235,7 +235,7 @@ for(let i = 0; i < tocTree.length; i++) {
     let item = document.createElement('li')
     let link = document.createElement('a')
     link.href = heading.file + '#toc-link-' + heading.index
-    link.className = "p-2 block rounded hover:bg-gray-500"
+    link.className = "p-2 block rounded-md hover:bg-gray-300 dark:hover:bg-darkgray"
     link.style.display = 'none'
 
     if (heading.name === heading.parent) {
@@ -316,7 +316,7 @@ function scrollSpy () {
   let headingsTopOffsets = {};
   let i = 0;
 
-  let selectedClassName = "bg-gray-400 border-r-4 border-indigo-900";
+  let selectedClassName = "border-r-4 border-green-500 dark:border-blue-500 bg-gray-300 dark:bg-darkgray";
 
   Array.prototype.forEach.call(headings, function(s) {
     headingsTopOffsets[s.id] = s.offsetTop;
@@ -342,6 +342,24 @@ function scrollSpy () {
   }
 
 };
+
+// Manage dark theme
+// On page load or when changing themes, best to add inline in `head` to avoid FOUC
+if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+  document.documentElement.classList.add('dark')
+} else {
+  document.documentElement.classList.remove('dark')
+}
+
+function toggleLight() {
+  if (localStorage.theme === 'light') {
+    localStorage.setItem('theme', 'dark');
+  } else {
+    localStorage.setItem('theme', 'light');
+  }
+  location.reload();
+  return false;
+}
 
 </script>
 
