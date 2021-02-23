@@ -1260,7 +1260,7 @@ It has two format places:
   <div class=\"bg-red-500 my-2 ml-2 mr-1 h-4 w-4 rounded-full\"></div>
   <div class=\"bg-yellow-500 my-2 ml-1 mr-1 h-4 w-4 rounded-full\"></div>
   <div class=\"bg-green-500 my-2 ml-1 mr-1 h-4 w-4 rounded-full\"></div>
-  <p class=\"ml-2 mr-16 my-1 w-full text-center\">%s</p>
+  <p class=\"ml-2 mr-16 my-1 w-full text-center dark:text-gray-700\">%s</p>
 </div>"
   "Make it look like the code is in a mac OS code editor.")
 
