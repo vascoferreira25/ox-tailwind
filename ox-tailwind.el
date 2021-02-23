@@ -89,7 +89,7 @@
     (footnote-definition . org-html-footnote-definition)
     (footnote-reference . org-html-footnote-reference)
     (headline . org-tailwind-headline)
-    (horizontal-rule . org-html-horizontal-rule)
+    (horizontal-rule . org-tailwind-horizontal-rule)
     (inline-src-block . org-html-inline-src-block)
     (inlinetask . org-html-inlinetask)
     (inner-template . org-tailwind-inner-template)
@@ -298,6 +298,11 @@ single `\\' at the end."
   "border-r-4 border-green-500 dark:border-blue-500 bg-gray-300 \
 dark:bg-darkgray"
   "Tailwind.css classes for the CURRENT HTML Table of Contents item."
+  :type '(string))
+
+(defcustom org-tailwind-class-horizontal-rule
+  "border-b-2 border-gray-300 dark:border-gray-700"
+  "Tailwind.css classes for the HTML horizontal rule."
   :type '(string))
 
 
@@ -1077,14 +1082,23 @@ By not doing anything to the contents, it exports the elements at the root level
 (defun org-tailwind-verbatim (verbatim contents info)
   "Transcode VERBATIM from Org to HTML."
   (let* ((code-text (org-element-property :value verbatim))
-        (escaped-text (let* ((r1 (replace-regexp-in-string "<" "&lt;" code-text))
-                             (r2 (replace-regexp-in-string ">" "&gt;" r1)))
-                        r2)))
+         (escaped-text (let* ((r1 (replace-regexp-in-string "<" "&lt;" code-text))
+                              (r2 (replace-regexp-in-string ">" "&gt;" r1)))
+                         r2)))
     (format "<code class=\"%s\">%s</code>" org-tailwind-class-verbatim escaped-text)))
 
-(defun org-tailwind-plain-text (plain-text info)
-  "Transcode PLAIN-TEXT from Org to HTML."
-  plain-text)
+(defun org-tailwind-verbatim (verbatim contents info)
+  "Transcode VERBATIM from Org to HTML."
+  (let* ((code-text (org-element-property :value verbatim))
+         (escaped-text (let* ((r1 (replace-regexp-in-string "<" "&lt;" code-text))
+                              (r2 (replace-regexp-in-string ">" "&gt;" r1)))
+                         r2)))
+    (format "<code class=\"%s\">%s</code>" org-tailwind-class-verbatim escaped-text)))
+
+(defun org-tailwind-horizontal-rule (_horizontal-rule _contents info)
+  "Transcode HORIZONTAL-RULE from Org to HTML."
+  (format "<hr class=\"%s\">"
+          org-tailwind-class-horizontal-rule))
 
 (defun org-tailwind-checkbox (checkbox)
   "Format a checkbox item into the corresponding HTML tag."
