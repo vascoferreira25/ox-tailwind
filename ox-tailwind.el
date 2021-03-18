@@ -137,8 +137,10 @@
   ;; - (:key-name "PROPERTY-NAME" CONDITION DEFAULT)
   ;; Get the keywords like this:
   ;; - (plist-get (org-export-get-environment 'tailwind) :key-name)
-  '((:title "TITLE" nil "Notes & Guides")
-    (:html-title "HTML-TITLE:" nil "Notes & Guides")))
+  ;; '((:title "TITLE" nil "Notes & Guides")
+  ;;   (:html-title "HTML-TITLE:" nil "Notes & Guides"))
+
+  )
 
 
 ;; tailwind group
@@ -168,52 +170,52 @@ bg-gray-100 dark:bg-midgray py-2 pl-4 font-bold"
 
 ;; Headings
 
+(defcustom org-tailwind-class-title
+  "mt-32 mb-12 text-6xl text-gray-700 dark:text-gray-400 border-b \
+hover:text-green-500 dark:hover:text-blue-500 border-gray-500"
+  "Tailwind.css classes for the Title"
+  :type '(string))
+
 (defcustom org-tailwind-class-h1
-  "mt-32 mb-6 text-6xl text-gray-700 dark:text-gray-400 border-b \
+  "mt-20 mb-6 text-5xl text-gray-700 dark:text-gray-400 border-b \
 hover:text-green-500 dark:hover:text-blue-500 border-gray-500"
   "Tailwind.css classes for Heading 1"
   :type '(string))
 
 (defcustom org-tailwind-class-h2
-  "mt-20 mb-6 text-5xl text-gray-700 dark:text-gray-400 border-b \
+  "mt-12 mb-6 text-4xl text-gray-700 dark:text-gray-400 border-b \
 hover:text-green-500 dark:hover:text-blue-500 border-gray-500"
   "Tailwind.css classes for Heading 2"
   :type '(string))
 
 (defcustom org-tailwind-class-h3
-  "mt-12 mb-6 text-4xl text-gray-700 dark:text-gray-400 border-b \
+  "mt-12 mb-6 text-3xl text-gray-700 dark:text-gray-400 border-b \
 hover:text-green-500 dark:hover:text-blue-500 border-gray-500"
   "Tailwind.css classes for Heading 3"
   :type '(string))
 
 (defcustom org-tailwind-class-h4
-  "mt-8 mb-6 text-3xl text-gray-700 dark:text-gray-400 border-b \
+  "mt-6 mb-6 text-2xl text-gray-700 dark:text-gray-400 border-b \
 hover:text-green-500 dark:hover:text-blue-500 border-gray-500"
   "Tailwind.css classes for Heading 4"
   :type '(string))
 
 (defcustom org-tailwind-class-h5
-  "mt-6 mb-6 text-2xl text-gray-700 dark:text-gray-400 border-b \
+  "mt-4 mb-6 text-xl text-gray-700 dark:text-gray-400 border-b \
 hover:text-green-500 dark:hover:text-blue-500 border-gray-500"
   "Tailwind.css classes for Heading 5"
   :type '(string))
 
 (defcustom org-tailwind-class-h6
-  "mt-4 mb-6 text-xl text-gray-700 dark:text-gray-400 border-b \
+  "mt-2 mb-6 text-lg text-gray-700 dark:text-gray-400 border-b \
 hover:text-green-500 dark:hover:text-blue-500 border-gray-500"
   "Tailwind.css classes for Heading 6"
   :type '(string))
 
 (defcustom org-tailwind-class-h7
-  "mt-2 mb-6 text-lg text-gray-700 dark:text-gray-400 border-b \
+  "mt-2 mb-6 text-base text-gray-700 dark:text-gray-400 border-b \
 hover:text-green-500 dark:hover:text-blue-500 border-gray-500"
   "Tailwind.css classes for Heading 7."
-  :type '(string))
-
-(defcustom org-tailwind-class-h8
-  "mt-1 mb-6 text-base text-gray-700 dark:text-gray-400 border-b \
-hover:text-green-500 dark:hover:text-blue-500 border-gray-500"
-  "Tailwind.css classes for Heading 8 and beyond."
   :type '(string))
 
 
@@ -284,6 +286,14 @@ border-gray-500"
 (defcustom org-tailwind-class-video-description
   "mx-48 text-center italic border-t border-gray-500"
   "Tailwind.css classes for the HTML video DESCRIPTION."
+  :type '(string))
+
+(defcustom org-tailwind-class-toc-title
+  "text-sm my-2 hover:bg-gray-300 dark:hover:bg-darkgray \
+block dark:border-gray-500"
+  "Tailwind.css classes for the HTML Table of Contents title.
+Do not break the line with while inserting a `newline'. Use a
+single `\\' at the end."
   :type '(string))
 
 (defcustom org-tailwind-class-toc-items
@@ -663,12 +673,12 @@ MathJax = {
   :type '(string))
 
 (defcustom org-tailwind-headlines
-  "h1,h2,h3"
+  "h2,h3,h4"
   "The level of the headlines to be included in the toc."
   :type '(string))
 
 (defcustom org-tailwind-javascript
-   "function getElementsByTagNames(list,obj) {
+  "function getElementsByTagNames(list,obj) {
 	if (!obj) var obj = document;
 	var tagNames = list.split(',');
 	var resultArray = new Array();
@@ -708,8 +718,20 @@ function createTOC() {
     // Populate the #toc div
 	let toc = document.getElementById('toc');
 
+    // The title
+	let title = document.getElementById('toc-link-title');
+	let tocTitle = document.createElement('a');
+	tocTitle.className = 'px-2 py-1 %s';
+
+    // Make the title active
+    // This will be used for the scroll spy
+    tocTitle.className += ' %s';
+    tocTitle.innerHTML += '<b>' + title.innerText + '</b> ';
+    tocTitle.id = \"goto-toc-link-title\";
+    tocTitle.href = '#toc-link-title';
+    toc.appendChild(tocTitle);
+
     // Header counts for numbering
-    let header_1 = 0;
     let header_2 = 0;
     let header_3 = 0;
     let header_4 = 0;
@@ -724,78 +746,72 @@ function createTOC() {
 		tocHeader.className = 'px-2 py-1';
         tocHeader.className += ' %s';
 
-        // Make the first header active
-        // This will be used for the scroll spy
-        if (i == 0) {
-            tocHeader.className += ' %s';
-        }
-	
         // Add the header to the table of contents
         toc.appendChild(tocHeader);
 
         switch (headlines[i].nodeName) {
-          case 'H1':
-            tocHeader.className += ' block mt-2 ml-0';
-            header_1 += 1;
-            header_2 = 0;
-            header_3 = 0;
-            header_4 = 0;
-            header_5 = 0;
-            header_6 = 0;
-
-          	// Numbering
-          	tocHeader.innerHTML += '<b>' + header_1 + '.</b> ';
-            
-            break;
-
           case 'H2':
-            tocHeader.className += ' block ml-5';
+            tocHeader.className += ' block mt-2 ml-0';
             header_2 += 1;
             header_3 = 0;
             header_4 = 0;
             header_5 = 0;
             header_6 = 0;
+            header_7 = 0;
 
           	// Numbering
-          	tocHeader.innerHTML += '<b>' + header_1 + '.' + header_2 + '.</b> ';
+          	tocHeader.innerHTML += '<b>' + header_2 + '.</b> ';
+            
             break;
 
           case 'H3':
-            tocHeader.className += ' block ml-12';
+            tocHeader.className += ' block ml-5';
             header_3 += 1;
             header_4 = 0;
             header_5 = 0;
             header_6 = 0;
+            header_7 = 0;
 
           	// Numbering
-          	tocHeader.innerHTML += '<b>' + header_1 + '.' + header_2 + '.' + header_3 + '.</b> ';
+          	tocHeader.innerHTML += '<b>' + header_2 + '.' + header_3 + '.</b> ';
             break;
 
           case 'H4':
-            tocHeader.className += ' block ml-20';
+            tocHeader.className += ' block ml-12';
             header_4 += 1;
             header_5 = 0;
             header_6 = 0;
+            header_7 = 0;
 
           	// Numbering
-          	tocHeader.innerHTML += '<b>' + header_1 + '.' + header_2 + '.' + header_3 + '.' + header_4 + '.</b> ';
+          	tocHeader.innerHTML += '<b>' + header_2 + '.' + header_3 + '.' + header_4 + '.</b> ';
             break;
 
           case 'H5':
-            tocHeader.className += ' block ml-32';
+            tocHeader.className += ' block ml-20';
             header_5 += 1;
             header_6 = 0;
+            header_7 = 0;
 
           	// Numbering
-          	tocHeader.innerHTML += '<b>' + header_1 + '.' + header_2 + '.' + header_3 + '.' + header_4 + '.' + header_5 + '.</b> ';
+          	tocHeader.innerHTML += '<b>' + header_2 + '.' + header_3 + '.' + header_4 + '.' + header_5 + '.</b> ';
             break;
 
           case 'H6':
-            tocHeader.className += ' block ml-48';
+            tocHeader.className += ' block ml-32';
             header_6 += 1;
+            header_7 = 0;
 
           	// Numbering
-          	tocHeader.innerHTML += '<b>' + header_1 + '.' + header_2 + '.' + header_3 + '.' + header_4 + '.' + header_5 + '.' + header_6 + '.</b> ';
+          	tocHeader.innerHTML += '<b>' + header_2 + '.' + header_3 + '.' + header_4 + '.' + header_5 + '.' + header_6 + '.</b> ';
+            break;
+
+          case 'H7':
+            tocHeader.className += ' block ml-48';
+            header_7 += 1;
+
+          	// Numbering
+          	tocHeader.innerHTML += '<b>' + header_2 + '.' + header_3 + '.' + header_4 + '.' + header_5 + '.' + header_6 + '.' + header_7 + '.</b> ';
             break;
         }       
         
@@ -811,6 +827,7 @@ function createTOC() {
 }
 
 createTOC();
+
 
 // Populate search bar
 let searchBar = document.getElementById('search-bar')
@@ -833,15 +850,18 @@ for(let i = 0; i < tocTree.length; i++) {
     searchBarResults.appendChild(item)
 }
 
+
 // Show results on search bar focus
 function showResults(){
     searchBarResults.style.display = ''
 }
 
+
 function hideResults(){
     searchBarResults.style.display = 'none'
     searchBar.value = ''
 }
+
 
 // Search Bar
 function search(){
@@ -885,12 +905,14 @@ DOMTokenList.prototype.addMany = function(classes) {
     }
 }
 
+
 DOMTokenList.prototype.removeMany = function(classes) {
     var array = classes.split(' ');
     for (var i = 0, length = array.length; i < length; i++) {
       this.remove(array[i]);
     }
 }
+
 
 // Scroll Spy
 // Everything is run inside the function because offsets
@@ -906,7 +928,6 @@ function scrollSpy () {
   Array.prototype.forEach.call(headings, function(s) {
     headingsTopOffsets[s.id] = s.offsetTop;
   });
-  
   
   let scrollEl = document.getElementById(\"content-container\");
   let scrollPosition = scrollEl.scrollTop + 150;
@@ -925,8 +946,8 @@ function scrollSpy () {
       }
     }
   }
-
 };
+
 
 // Manage dark theme
 // On page load or when changing themes, best to add inline in `head` to avoid FOUC
@@ -975,6 +996,9 @@ function toggleLight() {
       <p>%s</p>
     </div>
     <div id=\"inner-container\" class=\"%s\">
+      <h1 id=\"toc-link-title\" class=\"%s\">
+      %s
+      </h1>
       %s
     </div>
   </div>
@@ -1025,7 +1049,7 @@ By not doing anything to the contents, it exports the elements at the root level
 (defun org-tailwind-template (contents info)
   "Format the HTML Template and add the CONTENTS of the export."
   (format org-tailwind-html-template
-          (plist-get (org-export-get-environment 'tailwind) :html-title)
+          (-first-item (plist-get info :title))
           org-tailwind-head-files
           org-tailwind-class-body
           org-tailwind-class-header
@@ -1042,15 +1066,21 @@ By not doing anything to the contents, it exports the elements at the root level
           org-tailwind-class-file-name
           (plist-get info :input-buffer)
           org-tailwind-class-inner-container
+
+          ;; Contents go here
+          org-tailwind-class-title
+          (-first-item (plist-get info :title))
           contents
           org-tailwind-class-footer
           org-tailwind-footer
+          
           ;; Generate TOC Javascript
           (format org-tailwind-javascript
                   org-tailwind-class-top-button
                   org-tailwind-headlines
-                  org-tailwind-class-toc-items
+                  org-tailwind-class-toc-title
                   org-tailwind-class-current-toc
+                  org-tailwind-class-toc-items
                   org-tailwind-class-search-bar-results-item
                   org-tailwind-class-current-toc)
           org-tailwind-bottom-files))
@@ -1419,21 +1449,20 @@ There are 4 types of blocks:
 (defun org-tailwind-format-header (level text contents)
   "Return the corresponding HTML heading level of the Org LEVEL."
   (let ((header-contents (if contents contents ""))
-        (header "<h%s class=\"%s\">%s</h%s>%s" ))
+        (header "<h%s class=\"%s\">%s</h%s>%s" )
+        (level (+ level 1)))
     (cond
-     ((eq level 1) (format header level org-tailwind-class-h1
+     ((eq level 1) (format header level org-tailwind-class-h2
                            text level header-contents))
-     ((eq level 2) (format header level org-tailwind-class-h2
+     ((eq level 2) (format header level org-tailwind-class-h3
                            text level header-contents))
-     ((eq level 3) (format header level org-tailwind-class-h3
+     ((eq level 3) (format header level org-tailwind-class-h4
                            text level header-contents))
-     ((eq level 4) (format header level org-tailwind-class-h4
+     ((eq level 4) (format header level org-tailwind-class-h5
                            text level header-contents))
-     ((eq level 5) (format header level org-tailwind-class-h5
+     ((eq level 5) (format header level org-tailwind-class-h6
                            text level header-contents))
-     ((eq level 6) (format header level org-tailwind-class-h6
-                           text level header-contents))
-     ((eq level 7) (format header level org-tailwind-class-h7
+     ((eq level 6) (format header level org-tailwind-class-h7
                            text level header-contents))
      (t (format header level org-tailwind-class-h8 text level
                 header-contents)))))
