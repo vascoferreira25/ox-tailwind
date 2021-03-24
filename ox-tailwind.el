@@ -1462,9 +1462,7 @@ There are 4 types of blocks:
                            text level header-contents))
      ((eq level 5) (format header level org-tailwind-class-h6
                            text level header-contents))
-     ((eq level 6) (format header level org-tailwind-class-h7
-                           text level header-contents))
-     (t (format header level org-tailwind-class-h8 text level
+     (t (format header level org-tailwind-class-h7 text level
                 header-contents)))))
 
 (defun org-tailwind-headline (headline contents info)
