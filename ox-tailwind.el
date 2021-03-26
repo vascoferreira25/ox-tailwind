@@ -1657,8 +1657,15 @@ The JSON format will"
     ;; Start the index count
     ;; this will be used to target the element position in html
     (setq count 0)
+    ;; Get the title
+    (goto-char (point-min))
+    (if (re-search-forward "^#\\+title:\s\\(.*\\)$" nil t)
+        (progn
+          (setq headings (append headings `((,(match-string 1) ,count))))
+          (setq count (+ count 1))))
     ;; Search for the org headings
-    (while (search-forward-regexp
+    (goto-char (point-min))
+    (while (re-search-forward
             (format "^\\*\\{1,%s\\}\s.*$" headings-max-level)
             nil
             t)
