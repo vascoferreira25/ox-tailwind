@@ -673,7 +673,7 @@ MathJax = {
   :type '(string))
 
 (defcustom org-tailwind-headlines
-  "h2,h3,h4"
+  "h1,h2,h3,h4"
   "The level of the headlines to be included in the toc."
   :type '(string))
 
@@ -719,17 +719,12 @@ function createTOC() {
 	let toc = document.getElementById('toc');
 
     // The title
-	let title = document.getElementById('toc-link-title');
-	let tocTitle = document.createElement('a');
-	tocTitle.className = 'px-2 py-1 %s';
+	// let title = document.getElementById('toc-link-title');
+	// let tocTitle = document.createElement('a');
+	// tocTitle.className = 'px-2 py-1 ';
 
-    // Make the title active
-    // This will be used for the scroll spy
-    tocTitle.className += ' %s';
-    tocTitle.innerHTML += '<b>' + title.innerText + '</b> ';
-    tocTitle.id = \"goto-toc-link-title\";
-    tocTitle.href = '#toc-link-title';
-    toc.appendChild(tocTitle);
+    // Set the classes to be used by the title
+    let title_classes = ' %s %s';
 
     // Header counts for numbering
     let header_2 = 0;
@@ -750,6 +745,10 @@ function createTOC() {
         toc.appendChild(tocHeader);
 
         switch (headlines[i].nodeName) {
+          case 'H1':
+            tocHeader.className += title_classes;
+
+            break;
           case 'H2':
             tocHeader.className += ' block mt-2 ml-0';
             header_2 += 1;
