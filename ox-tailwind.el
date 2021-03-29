@@ -1225,6 +1225,7 @@ information."
           (equalp file-extension "tif")
           (equalp file-extension "jpg")
           (equalp file-extension "jpeg")
+          (equalp file-extension "webp")
           (equalp file-extension "gif")
           (equalp file-extension "bmp"))
       (format image-tag
