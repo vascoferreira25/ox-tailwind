@@ -1785,6 +1785,27 @@ Return output file name."
                                   "html"))
                       plist pub-dir))
 
+(defun org-tailwind-publish-to-html-without-toc (plist filename pub-dir)
+  "Publish an org file to HTML without toc to build faster.
+
+FILENAME is the filename of the Org file to be published.  PLIST
+is the property list for the given project.  PUB-DIR is the
+publishing directory.
+
+Return output file name."
+  (org-publish-org-to 'tailwind filename
+                      (concat (when (> (length org-html-extension) 0) ".")
+                              (or (plist-get plist :html-extension)
+                                  org-html-extension
+                                  "html"))
+                      plist pub-dir))
+
+(defun org-tailwind-build-toc ()
+  "Build the toc for the current buffer.
+Open one if the notes and then run this function."
+  (interactive)
+  (org-tailwind--json-toc-all-files (file-name-directory (buffer-file-name)) "./dist/"))
+
 (provide 'ox-tailwind)
 
 ;;; ox-tailwind.el ends here
