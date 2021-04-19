@@ -1,13 +1,11 @@
-;; Debugging purposes
-
 ;; ox-tailwind.el --- Tailwind.css Back-End for Org Export Engine -*- lexical-binding: t -*-
 
 ;; Author: Vasco Ferreira <vasco_mmf@hotmail.com>
 ;; Maintainer: Vasco Ferreira <vasco_mmf@hotmail.com>
 ;; Created: 07 Mar 2020
 ;; Keywords: tailwind.css org-mode html-export
-;; Homepage: TODO: github page
-;; Package-Requires: ((dash "2.17.0") (ox-html))
+;; Homepage: https://github.com/vascoferreira25/ox-tailwind
+;; Package-Requires: ((dash) (ox-html))
 
 ;; This file is not part of GNU Emacs.
 
@@ -30,10 +28,6 @@
 ;; ---------------------------------------------------
 ;; |                      Footer                     |
 ;; ---------------------------------------------------
-;;
-;; HACK: You have to replace the class `.table' in Tailwind.css
-;; as it collides with the `.table' class in Prims.js.
-;; For example, replace `.table' with `.ttable', there is only one occurence.
 ;;
 ;; You can change the look of the exported HTML by redefining the values of the
 ;; classes. All the classes start with `org-tailwind-class-', check this file
@@ -129,19 +123,9 @@
         (?o "As HTML file and open"
             (lambda (a s v b)
               (if a (org-tailwind-export-to-html t s v b)
-                (org-open-file (org-tailwind-export-to-html nil s v b)))))))
-  :options-alist
-  ;; Define keywords like this:
-  ;; - (:key-name "PROPERTY-NAME" CONDITION DEFAULT)
-  ;; Get the keywords like this:
-  ;; - (plist-get (org-export-get-environment 'tailwind) :key-name)
-  ;; '((:title "TITLE" nil "Notes & Guides")
-  ;;   (:html-title "HTML-TITLE:" nil "Notes & Guides"))
+                (org-open-file (org-tailwind-export-to-html nil s v b))))))))
 
-  )
-
-
-;; tailwind group
+;;; tailwind group
 
 (defgroup org-tailwind nil
   "Classes for the html elements."
@@ -149,22 +133,6 @@
 
 
 ;;; Element Classes
-
-;; Other
-;; 
-(defcustom org-tailwind-class-checkbox
-  "form-tick appearance-none h-6 w-6 mr-2 border border-gray-300 \
-rounded-md checked:bg-blue-600 checked:border-transparent \
-focus:outline-none align-text-bottom"
-  "Tailwind.css classes for Checkbox"
-  :type '(string))
-
-(defcustom org-tailwind-class-file-name
-  "flex rounded-t border border-gray-300 dark:border-gray-700 \
-bg-gray-100 dark:bg-midgray py-2 pl-4 font-bold"
-  "Tailwind.css classes for File Name"
-  :type '(string))
-
 
 ;; Headings
 
@@ -595,6 +563,22 @@ border-solid border-gray-500 rounded-md"
   "Tailwind.css classes for the HTML RESULTS ITEM.
 Do not break the line with while inserting a `newline'. Use `\' at
 the end."
+  :type '(string))
+
+
+;; Other elements
+
+(defcustom org-tailwind-class-checkbox
+  "form-tick appearance-none h-6 w-6 mr-2 border border-gray-300 \
+rounded-md checked:bg-blue-600 checked:border-transparent \
+focus:outline-none align-text-bottom"
+  "Tailwind.css classes for Checkbox"
+  :type '(string))
+
+(defcustom org-tailwind-class-file-name
+  "flex rounded-t border border-gray-300 dark:border-gray-700 \
+bg-gray-100 dark:bg-midgray py-2 pl-4 font-bold"
+  "Tailwind.css classes for File Name"
   :type '(string))
 
 
