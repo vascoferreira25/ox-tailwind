@@ -63,8 +63,6 @@
 ;; - filter highlight all
 ;; - treeview
 
-;;; Code:
-
 ;;; Dependencies:
 
 (require 's)
@@ -1786,6 +1784,7 @@ Return output file name."
                                   "html"))
                       plist pub-dir))
 
+;;;###autoload
 (defun org-tailwind-publish-to-html-without-toc (plist filename pub-dir)
   "Publish an org file to HTML without toc to build faster.
 
@@ -1801,6 +1800,7 @@ Return output file name."
                                   "html"))
                       plist pub-dir))
 
+;;;###autoload
 (defun org-tailwind-build-toc ()
   "Build the toc for the current buffer.
 Open one if the notes and then run this function."
@@ -1808,5 +1808,4 @@ Open one if the notes and then run this function."
   (org-tailwind--json-toc-all-files (file-name-directory (buffer-file-name)) "./dist/"))
 
 (provide 'ox-tailwind)
-
 ;;; ox-tailwind.el ends here
