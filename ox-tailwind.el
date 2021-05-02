@@ -137,49 +137,49 @@
 ;; Headings
 
 (defcustom org-tailwind-class-title
-  "mt-32 mb-12 text-6xl text-gray-700 dark:text-gray-400 border-b \
+  "mt-12 mb-12 text-4xl text-gray-700 dark:text-gray-400 border-b \
 hover:text-green-500 dark:hover:text-blue-500 border-gray-500"
   "Tailwind.css classes for the Title"
   :type '(string))
 
 (defcustom org-tailwind-class-h1
-  "mt-20 mb-6 text-5xl text-gray-700 dark:text-gray-400 border-b \
+  "mt-24 mb-6 text-3xl text-gray-700 dark:text-gray-400 border-b \
 hover:text-green-500 dark:hover:text-blue-500 border-gray-500"
   "Tailwind.css classes for Heading 1"
   :type '(string))
 
 (defcustom org-tailwind-class-h2
-  "mt-12 mb-6 text-4xl text-gray-700 dark:text-gray-400 border-b \
+  "mt-18 mb-6 text-2xl text-gray-700 dark:text-gray-400 border-b \
 hover:text-green-500 dark:hover:text-blue-500 border-gray-500"
   "Tailwind.css classes for Heading 2"
   :type '(string))
 
 (defcustom org-tailwind-class-h3
-  "mt-12 mb-6 text-3xl text-gray-700 dark:text-gray-400 border-b \
+  "mt-16 mb-6 text-xl text-gray-700 dark:text-gray-400 border-b \
 hover:text-green-500 dark:hover:text-blue-500 border-gray-500"
   "Tailwind.css classes for Heading 3"
   :type '(string))
 
 (defcustom org-tailwind-class-h4
-  "mt-6 mb-6 text-2xl text-gray-700 dark:text-gray-400 border-b \
+  "mt-14 mb-6 text-lg text-gray-700 dark:text-gray-400 border-b \
 hover:text-green-500 dark:hover:text-blue-500 border-gray-500"
   "Tailwind.css classes for Heading 4"
   :type '(string))
 
 (defcustom org-tailwind-class-h5
-  "mt-4 mb-6 text-xl text-gray-700 dark:text-gray-400 border-b \
+  "mt-12 mb-6 text-lg text-gray-700 dark:text-gray-400 border-b \
 hover:text-green-500 dark:hover:text-blue-500 border-gray-500"
   "Tailwind.css classes for Heading 5"
   :type '(string))
 
 (defcustom org-tailwind-class-h6
-  "mt-2 mb-6 text-lg text-gray-700 dark:text-gray-400 border-b \
+  "mt-10 mb-6 text-base text-gray-700 dark:text-gray-400 border-b \
 hover:text-green-500 dark:hover:text-blue-500 border-gray-500"
   "Tailwind.css classes for Heading 6"
   :type '(string))
 
 (defcustom org-tailwind-class-h7
-  "mt-2 mb-6 text-base text-gray-700 dark:text-gray-400 border-b \
+  "mt-8 mb-6 text-base text-gray-700 dark:text-gray-400 border-b \
 hover:text-green-500 dark:hover:text-blue-500 border-gray-500"
   "Tailwind.css classes for Heading 7."
   :type '(string))
@@ -509,7 +509,7 @@ lg:overflow-x-auto xl:px-56"
   :type '(string))
 
 (defcustom org-tailwind-class-inner-container
-  "px-20 py-12 pb-32 mb-12 shadow-2xl rounded-md"
+  "px-24 py-28 pb-32 mb-12 shadow-2xl rounded-md text-justify"
   "Tailwind.css classes for the HTML inner container."
   :type '(string))
 
@@ -973,7 +973,7 @@ function toggleLight() {
   <div id=\"content-container\" class=\"%s\" onscroll=\"scrollSpy()\">
     <div id=\"top\"></div>
     <div id=\"file-name\" class=\"%s\">
-      <img class=\"w-6 h-6 mr-2\" src=\"./icons/folders.png\">
+      <img class=\"w-6 h-6 mr-2\" src=\"./icons/file_icon.png\">
       <p>%s</p>
     </div>
     <div id=\"inner-container\" class=\"%s\">
