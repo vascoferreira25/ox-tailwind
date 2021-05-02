@@ -152,7 +152,9 @@ To setup automatic export of all my org files I use the following settings:
          :base-extension "org"
          :base-directory "V:/orgmode/"
          :publishing-directory "V:/orgmode/dist/"
-         :publishing-function org-tailwind-publish-to-html)
+         ; or use `org-tailwind-publish-to-html' to generate the toc after each
+         ; file - *note*: it will be slower to parse the whole project
+         :publishing-function org-tailwind-publish-to-html-without-toc) 
         ("images"
          :base-directory "V:/orgmode/img/"
          :base-extension ".*"
@@ -179,6 +181,36 @@ all the notes as html.
 ~dired~ into the notes directory. As this back-end needs to create a ~.js~ file
 based on your ~.org~ files to enable searching, if the Emacs current directory
 isn't in the notes directory, it will fail to create this file.
+
+In order to be faster to parse all your notes, it is advisable to only generate
+the toc file after publishing. Use the following functions instead of the
+~org-export-dispatch~ to automatically generate the toc after publishing:
+
+#+BEGIN_SRC emacs-lisp
+(defun publish-file-and-build-toc ()
+  "Force publish the current org-mode file."
+  (interactive)
+  (org-publish-current-file)
+  (org-tailwind-build-toc))
+
+(defun force-publish-file-and-build-toc ()
+  "Force publish the current org-mode file."
+  (interactive)
+  (org-publish-current-file t)
+  (org-tailwind-build-toc))
+
+(defun publish-all-and-build-toc ()
+  "Force publish all org-mode files."
+  (interactive)
+  (org-publish-all)
+  (org-tailwind-build-toc))
+
+(defun force-publish-all-and-build-toc ()
+  "Force publish all org-mode files."
+  (interactive)
+  (org-publish-all t)
+  (org-tailwind-build-toc))
+#+END_SRC
 
 ** Notes output directory
    
