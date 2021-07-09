@@ -509,7 +509,7 @@ lg:overflow-x-auto xl:px-56"
   :type '(string))
 
 (defcustom org-tailwind-class-inner-container
-  "px-24 py-28 pb-32 mb-12 shadow-2xl rounded-md text-justify"
+  "px-24 py-28 pb-32 mb-12 shadow-2xl rounded-md"
   "Tailwind.css classes for the HTML inner container."
   :type '(string))
 

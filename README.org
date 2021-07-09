@@ -1,4 +1,6 @@
 #+title: Ox-Tailwind Export Back-End
+
+Check the output in [[https://vascoferreira25.github.io/ox-tailwind/][ox-tailwind GitHub docs]].
   
 This back-end has the purpose of allowing easy customization of the HTML
 output. Although it is called ~Tailwind~, the only thing that it does is
