@@ -373,7 +373,7 @@ dark:bg-darkgray"
 ;; Footnotes
 (defcustom org-tailwind-class-footnotes-section
   "<div id=\"footnotes\">
-<h2 class=\"mt-18 mb-6 text-2xl text-gray-700 dark:text-gray-400 border-b \
+<h2 class=\"mt-20 mb-6 text-2xl text-gray-700 dark:text-gray-400 border-b \
 hover:text-green-500 dark:hover:text-blue-500 border-gray-500\">%s</h2>
 <div id=\"text-footnotes\">
 %s
