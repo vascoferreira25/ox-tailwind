@@ -152,7 +152,7 @@ hover:text-green-500 dark:hover:text-blue-500 border-gray-500"
   :type '(string))
 
 (defcustom org-tailwind-class-h2
-  "mt-18 mb-6 text-2xl text-gray-700 dark:text-gray-400 border-b \
+  "mt-20 mb-6 text-2xl text-gray-700 dark:text-gray-400 border-b \
 hover:text-green-500 dark:hover:text-blue-500 border-gray-500"
   "Tailwind.css classes for Heading 2"
   :type '(string))
