@@ -78,7 +78,6 @@
     (export-block . org-html-export-block)
     (export-snippet . org-html-export-snippet)
     (fixed-width . org-html-fixed-width)
-    (footnote-definition . org-html-footnote-definition)
     (footnote-reference . org-html-footnote-reference)
     (headline . org-tailwind-headline)
     (horizontal-rule . org-tailwind-horizontal-rule)
@@ -123,7 +122,11 @@
         (?o "As HTML file and open"
             (lambda (a s v b)
               (if a (org-tailwind-export-to-html t s v b)
-                (org-open-file (org-tailwind-export-to-html nil s v b))))))))
+                (org-open-file (org-tailwind-export-to-html nil s v b)))))))
+  :options-alist
+  '((:html-footnote-format nil nil org-tailwind-class-footnotes-format)
+    (:html-footnote-separator nil nil org-tailwind-class-footnotes-separator)
+    (:html-footnotes-section nil nil org-tailwind-class-footnotes-section)))
 
 ;;; tailwind group
 
@@ -367,6 +370,27 @@ dark:bg-darkgray"
   "Tailwind.css classes for the HTML table EMPTY BODY-CELL."
   :type '(string))
 
+;; Footnotes
+(defcustom org-tailwind-class-footnotes-section
+  "<div id=\"footnotes\">
+<h2 class=\"mt-18 mb-6 text-2xl text-gray-700 dark:text-gray-400 border-b \
+hover:text-green-500 dark:hover:text-blue-500 border-gray-500\">%s</h2>
+<div id=\"text-footnotes\">
+%s
+</div>
+</div>"
+  "Tailwind.css classes for the HTML footnotes section."
+  :type '(string))
+
+(defcustom org-tailwind-class-footnotes-format
+  "<sup>%s</sup>"
+  "Tailwind.css classes for the HTML footnotes format."
+  :type '(string))
+
+(defcustom org-tailwind-class-footnotes-separator
+  "<sup>, </sup>"
+  "Tailwind.css classes for the HTML footnotes separator."
+  :type '(string))
 
 ;; Blocks
 
@@ -1025,7 +1049,7 @@ values, in this order:
 (defun org-tailwind-inner-template (contents info)
   "Define the template for the CONTENTS inside Headings.
 By not doing anything to the contents, it exports the elements at the root level."
-  contents)
+  (concat contents (org-html-footnote-section info)))
 
 (defun org-tailwind-template (contents info)
   "Format the HTML Template and add the CONTENTS of the export."
@@ -1449,9 +1473,10 @@ There are 4 types of blocks:
 
 (defun org-tailwind-headline (headline contents info)
   "Transcode HEADLINE from Org to HTML."
-  (let* ((text (org-element-property :raw-value headline))
-         (level (org-export-get-relative-level headline info)))
-    (org-tailwind-format-header level text contents)))
+  (unless (org-element-property :footnote-section-p headline)
+    (let* ((text (org-element-property :raw-value headline))
+           (level (org-export-get-relative-level headline info)))
+      (org-tailwind-format-header level text contents))))
 
 (defun org-tailwind-table-cell (table-cell contents info)
   "Transcode TABLE-CELL from Org to HTML.
