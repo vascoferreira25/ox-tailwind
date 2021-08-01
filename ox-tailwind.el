@@ -58,10 +58,10 @@
 ;; - treeview
 
 ;;; Dependencies:
-
-(require 's)
-(require 'cl)
+(require 'org)
 (require 'ox-html)
+(require 'cl)
+(require 's)
 (require 'dash)
 
 ;;; Define backend

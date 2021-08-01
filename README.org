@@ -45,6 +45,8 @@ structure for your notes including all the required CSS and JS files. You just
 have to setup ~org-publish-project-alist~ and then use the ~(org-publish-all)~
 command and you are done. Check the ~/notes_example/index.org~ file.
 
+**Make sure to load it after ~org-mode~**
+
 ** Straight Package Management
 
 If you use ~straight~ as your package management, add this to your config file:
