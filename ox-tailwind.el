@@ -5,7 +5,7 @@
 ;; Created: 07 Mar 2020
 ;; Keywords: tailwind.css org-mode html-export
 ;; Homepage: https://github.com/vascoferreira25/ox-tailwind
-;; Package-Requires: ((dash) (org))
+;; Package-Requires: ((dash) (org) (ox-html)
 
 ;; This file is not part of GNU Emacs.
 
@@ -59,6 +59,7 @@
 
 ;;; Dependencies:
 (require 'org)
+(require 'ox-html)
 (require 'cl)
 (require 's)
 (require 'dash)
@@ -1050,6 +1051,7 @@ values, in this order:
 By not doing anything to the contents, it exports the elements at the root level."
   (concat contents (org-html-footnote-section info)))
 
+
 (defun org-tailwind-template (contents info)
   "Format the HTML Template and add the CONTENTS of the export."
   (format org-tailwind-html-template
@@ -1089,21 +1091,26 @@ By not doing anything to the contents, it exports the elements at the root level
                   org-tailwind-class-current-toc)
           org-tailwind-bottom-files))
 
+
 (defun org-tailwind-bold (bold contents info)
   "Transcode BOLD from Org to HTML."
   (format "<strong class=\"%s\">%s</strong>" org-tailwind-class-bold contents))
+
 
 (defun org-tailwind-italic (italic contents info)
   "Transcode ITALIC from Org to HTML."
   (format "<em class=\"%s\">%s</em>" org-tailwind-class-italic contents))
 
+
 (defun org-tailwind-strike-through (strike-through contents info)
   "Transcode STRIKE-THROUGH from Org to HTML."
-  (format "<del class=\"%s\">%s</del>" org-tailwind-class-italic contents))
+  (f
+  ormat "<del class=\"%s\">%s</del>" org-tailwind-class-italic contents))
 
 (defun org-tailwind-underlined (underlined contents info)
   "Transcode UNDERLINED from Org to HTML."
   (format "<span class=\"%s\">%s</span>" org-tailwind-class-underlined contents))
+
 
 (defun org-tailwind-code (code contents info)
   "Transcode CODE from Org to HTML."
@@ -1113,13 +1120,6 @@ By not doing anything to the contents, it exports the elements at the root level
                         r2)))
     (format "<code class=\"%s\">%s</code>" org-tailwind-class-code escaped-text)))
 
-(defun org-tailwind-verbatim (verbatim contents info)
-  "Transcode VERBATIM from Org to HTML."
-  (let* ((code-text (org-element-property :value verbatim))
-         (escaped-text (let* ((r1 (replace-regexp-in-string "<" "&lt;" code-text))
-                              (r2 (replace-regexp-in-string ">" "&gt;" r1)))
-                         r2)))
-    (format "<code class=\"%s\">%s</code>" org-tailwind-class-verbatim escaped-text)))
 
 (defun org-tailwind-verbatim (verbatim contents info)
   "Transcode VERBATIM from Org to HTML."
@@ -1128,11 +1128,22 @@ By not doing anything to the contents, it exports the elements at the root level
                               (r2 (replace-regexp-in-string ">" "&gt;" r1)))
                          r2)))
     (format "<code class=\"%s\">%s</code>" org-tailwind-class-verbatim escaped-text)))
+
+
+(defun org-tailwind-verbatim (verbatim contents info)
+  "Transcode VERBATIM from Org to HTML."
+  (let* ((code-text (org-element-property :value verbatim))
+         (escaped-text (let* ((r1 (replace-regexp-in-string "<" "&lt;" code-text))
+                              (r2 (replace-regexp-in-string ">" "&gt;" r1)))
+                         r2)))
+    (format "<code class=\"%s\">%s</code>" org-tailwind-class-verbatim escaped-text)))
+
 
 (defun org-tailwind-horizontal-rule (_horizontal-rule _contents info)
   "Transcode HORIZONTAL-RULE from Org to HTML."
   (format "<hr class=\"%s\">"
           org-tailwind-class-horizontal-rule))
+
 
 (defun org-tailwind-checkbox (checkbox)
   "Format a checkbox item into the corresponding HTML tag."
@@ -1144,6 +1155,7 @@ By not doing anything to the contents, it exports the elements at the root level
                     org-tailwind-class-checkbox "unchecked"))
       (_ (format checkbox-tag
                  org-tailwind-class-checkbox "unchecked")))))
+
 
 (defun org-tailwind-paragraph (paragraph contents info)
   "Transcode PARAGRAPH from Org to HTML."
@@ -1263,6 +1275,7 @@ information."
                     contents
                   (concat type ":" path)))))))
 
+
 (defun org-tailwind-blockquote (blockquote contents info)
   "Transcode BLOCKQUOTE from Org to HTML."
   (format
@@ -1276,6 +1289,7 @@ information."
                (org-element-property :name blockquote))
      "")))
 
+
 (defvar org-tailwind--src-block-open
   "<div class=\"%s\">%s<pre class=\"%s\" %s>"
   "Opening tag of code block for Prism.js
@@ -1283,12 +1297,14 @@ It has two format places:
 - Tailwind.css classes
 - other attribute.")
 
+
 (defvar org-tailwind--src-block-close
   "<code class=\"language-%s\">%s</code></pre></div>"
   "Closing tag of code block for Prism.js
 It has two format places:
 - language
 - code text")
+
 
 (defvar org-tailwind--src-block-file-name
   "<div class=\"h-8 rounded-t flex %s\">
@@ -1299,9 +1315,11 @@ It has two format places:
 </div>"
   "Make it look like the code is in a mac OS code editor.")
 
+
 (defun org-tailwind--get-attribute (attribute block)
   "Get the ATTRIBUTE from an org BLOCK element."
   (car (org-element-property attribute block)))
+
 
 (defun org-tailwind-command-line-block (src-block contents info)
   "Transcode SRC-BLOCK with command line language to a custom Prism.js code block."
@@ -1338,6 +1356,7 @@ It has two format places:
      (format org-tailwind--src-block-close
              (if (equalp language "ps") "powershell" language)
              code-text))))
+
 
 (defun org-tailwind-src-block (src-block contents info)
   "Transcode SRC-BLOCK from Org to HTML."
@@ -1376,6 +1395,7 @@ It has two format places:
              language
              escaped-text))))
 
+
 (defun org-tailwind-src-block-select (src-block contents info)
   "Transcode SRC-BLOCK from Org to HTML."
   (let* ((language (org-element-property :language src-block)))
@@ -1405,6 +1425,7 @@ It has two format places:
             org-tailwind-class-example
             (if language language "none")
             code-text)))
+
 
 (defun org-tailwind-special-block (special-block contents info)
   "Transcode SPECIAL-BLOCK from Org to HTML.
@@ -1451,6 +1472,7 @@ There are 4 types of blocks:
                    contents))
           (t (org-html-special-block special-block contents info)))))
 
+
 (defun org-tailwind-format-header (level text contents)
   "Return the corresponding HTML heading level of the Org LEVEL."
   (let ((header-contents (if contents contents ""))
@@ -1470,12 +1492,14 @@ There are 4 types of blocks:
      (t (format header level org-tailwind-class-h7 text level
                 header-contents)))))
 
+
 (defun org-tailwind-headline (headline contents info)
   "Transcode HEADLINE from Org to HTML."
   (unless (org-element-property :footnote-section-p headline)
     (let* ((text (org-element-property :raw-value headline))
            (level (org-export-get-relative-level headline info)))
       (org-tailwind-format-header level text contents))))
+
 
 (defun org-tailwind-table-cell (table-cell contents info)
   "Transcode TABLE-CELL from Org to HTML.
@@ -1499,9 +1523,6 @@ cell with `th'. Return `td' otherwise."
                   contents)
         (format "<td class=\"%s\"></td>"
                 org-tailwind-class-table-empty-body-cell)))))
-
-
-;; (message "%s" (org-export-table-cell-alignment table-cell info))
 
 (defun org-tailwind-table-row (table-row contents info)
   "Transcode TABLE-ROW from Org to HTML.
