@@ -59,7 +59,7 @@
 
 ;;; Dependencies:
 (require 'org)
-(require 'ox-html)
+;;(require 'ox-html)
 (require 'cl)
 (require 's)
 (require 'dash)
