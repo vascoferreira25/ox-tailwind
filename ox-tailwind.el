@@ -5,7 +5,7 @@
 ;; Created: 07 Mar 2020
 ;; Keywords: tailwind.css org-mode html-export
 ;; Homepage: https://github.com/vascoferreira25/ox-tailwind
-;; Package-Requires: ((dash) (ox-html))
+;; Package-Requires: ((dash) (org))
 
 ;; This file is not part of GNU Emacs.
 
@@ -59,7 +59,6 @@
 
 ;;; Dependencies:
 (require 'org)
-;;(require 'ox-html)
 (require 'cl)
 (require 's)
 (require 'dash)
