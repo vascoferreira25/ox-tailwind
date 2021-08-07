@@ -45,8 +45,6 @@ structure for your notes including all the required CSS and JS files. You just
 have to setup ~org-publish-project-alist~ and then use the ~(org-publish-all)~
 command and you are done. Check the ~/notes_example/index.org~ file.
 
-**Make sure to load it after ~org-mode~**
-
 ** Straight Package Management
 
 If you use ~straight~ as your package management, add this to your config file:
@@ -54,6 +52,23 @@ If you use ~straight~ as your package management, add this to your config file:
 #+BEGIN_SRC emacs-lisp
 (straight-use-package
  '(ox-tailwind :type git :host github :repo "vascoferreira25/ox-tailwind"))
+#+END_SRC
+
+** Doom
+
+To use this package with Doom Emacs, add the package to ~packages.el~:
+
+#+ATTR_FILENAME: ~/.doom.d/packages.el
+#+BEGIN_SRC elisp
+(package! ox-tailwind
+  :recipe (:host github :repo "vascoferreira25/ox-tailwind"))
+#+END_SRC
+
+And then, load it after ~ox-html~
+
+#+ATTR_FILENAME: ~/.doom.d/config.el
+#+BEGIN_SRC elisp
+(after! ox-html (require 'ox-tailwind))
 #+END_SRC
 
 * Notes structure

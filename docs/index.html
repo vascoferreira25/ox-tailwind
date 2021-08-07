@@ -129,9 +129,6 @@ have to setup <code class="px-2 rounded-md text-green-600 dark:text-yellow-500 b
 command and you are done. Check the <code class="px-2 rounded-md text-green-600 dark:text-yellow-500 bg-gray-300 dark:bg-gray-700">/notes_example/index.org</code> file.
 </p>
 
-<p class="my-2"><strong class=""><strong class="">Make sure to load it after <code class="px-2 rounded-md text-green-600 dark:text-yellow-500 bg-gray-300 dark:bg-gray-700">org-mode</code></strong></strong>
-</p>
-
 <h3 class="mt-14 mb-6 text-lg text-gray-700 dark:text-gray-400 border-b hover:text-green-500 dark:hover:text-blue-500 border-gray-500">Straight Package Management</h3><p class="my-2">If you use <code class="px-2 rounded-md text-green-600 dark:text-yellow-500 bg-gray-300 dark:bg-gray-700">straight</code> as your package management, add this to your config file:
 </p>
 
@@ -142,6 +139,29 @@ command and you are done. Check the <code class="px-2 rounded-md text-green-600 
   <p class="ml-2 mr-16 my-1 w-full text-center dark:text-gray-700"></p>
 </div><pre class="line-numbers rainbow-braces match-braces rounded-b"  ><code class="language-emacs-lisp">(straight-use-package
  '(ox-tailwind :type git :host github :repo "vascoferreira25/ox-tailwind"))
+</code></pre></div>
+
+<h3 class="mt-14 mb-6 text-lg text-gray-700 dark:text-gray-400 border-b hover:text-green-500 dark:hover:text-blue-500 border-gray-500">Doom</h3><p class="my-2">To use this package with Doom Emacs, add the package to <code class="px-2 rounded-md text-green-600 dark:text-yellow-500 bg-gray-300 dark:bg-gray-700">packages.el</code>:
+</p>
+
+<div class="my-12 shadow-xl"><div class="h-8 rounded-t flex bg-gray-400">
+  <div class="bg-red-500 my-2 ml-2 mr-1 h-4 w-4 rounded-full"></div>
+  <div class="bg-yellow-500 my-2 ml-1 mr-1 h-4 w-4 rounded-full"></div>
+  <div class="bg-green-500 my-2 ml-1 mr-1 h-4 w-4 rounded-full"></div>
+  <p class="ml-2 mr-16 my-1 w-full text-center dark:text-gray-700">~/.doom.d/packages.el</p>
+</div><pre class="line-numbers rainbow-braces match-braces rounded-b"  ><code class="language-elisp">(package! ox-tailwind
+  :recipe (:host github :repo "vascoferreira25/ox-tailwind"))
+</code></pre></div>
+
+<p class="my-2">And then, load it after <code class="px-2 rounded-md text-green-600 dark:text-yellow-500 bg-gray-300 dark:bg-gray-700">ox-html</code>
+</p>
+
+<div class="my-12 shadow-xl"><div class="h-8 rounded-t flex bg-gray-400">
+  <div class="bg-red-500 my-2 ml-2 mr-1 h-4 w-4 rounded-full"></div>
+  <div class="bg-yellow-500 my-2 ml-1 mr-1 h-4 w-4 rounded-full"></div>
+  <div class="bg-green-500 my-2 ml-1 mr-1 h-4 w-4 rounded-full"></div>
+  <p class="ml-2 mr-16 my-1 w-full text-center dark:text-gray-700">~/.doom.d/config.el</p>
+</div><pre class="line-numbers rainbow-braces match-braces rounded-b"  ><code class="language-elisp">(after! ox-html (require 'ox-tailwind))
 </code></pre></div>
 
 <h2 class="mt-16 mb-6 text-xl text-gray-700 dark:text-gray-400 border-b hover:text-green-500 dark:hover:text-blue-500 border-gray-500">Notes structure</h2><p class="my-2">In order for the search bar to work, this export backend will search all <code class="px-2 rounded-md text-green-600 dark:text-yellow-500 bg-gray-300 dark:bg-gray-700">.org</code>
