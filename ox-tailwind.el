@@ -1103,8 +1103,8 @@ By not doing anything to the contents, it exports the elements at the root level
 
 (defun org-tailwind-strike-through (strike-through contents info)
   "Transcode STRIKE-THROUGH from Org to HTML."
-  (f
-  ormat "<del class=\"%s\">%s</del>" org-tailwind-class-italic contents))
+  (format "<del class=\"%s\">%s</del>" org-tailwind-class-italic contents))
+
 
 (defun org-tailwind-underlined (underlined contents info)
   "Transcode UNDERLINED from Org to HTML."
