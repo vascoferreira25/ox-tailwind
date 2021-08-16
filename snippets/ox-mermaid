@@ -1,0 +1,9 @@
+# -*- mode: snippet -*-
+# name: ox-tailwind mermaid block
+# key: <ox-mermaid
+# group: ox-tailwind
+# --
+#+NAME: $1 
+#+begin_mermaid
+$0
+#+end_mermaid

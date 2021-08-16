@@ -1,0 +1,9 @@
+# -*- mode: snippet -*-
+# name: ox-tailwind tip block
+# key: <ox-tip
+# group: ox-tailwind
+# --
+#+NAME: $1 
+#+begin_tip org
+$0
+#+end_tip

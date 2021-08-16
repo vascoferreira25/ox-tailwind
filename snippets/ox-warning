@@ -1,0 +1,9 @@
+# -*- mode: snippet -*-
+# name: ox-tailwind warning block
+# key: <ox-warning
+# group: ox-tailwind
+# --
+#+NAME: $1 
+#+begin_warning org
+$0
+#+end_warning

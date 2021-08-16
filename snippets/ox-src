@@ -1,0 +1,14 @@
+# -*- mode: snippet -*-
+# name: ox-tailwind src block
+# key: <ox-src
+# group: ox-tailwind
+# --
+#+ATTR_HIGHLIGHT: ${1:1,2} 
+#+ATTR_USERNAME: ${2:user} 
+#+ATTR_HOSTNAME: ${3:localhost} 
+#+ATTR_FETCH: ${4:github-link}  
+#+ATTR_FILEPATH: ${5:./file.ext} 
+#+ATTR_FILENAME: ${6:./filename.ext}
+#+BEGIN_SRC ${6:org} 
+$0
+#+END_SRC

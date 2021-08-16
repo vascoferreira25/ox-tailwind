@@ -45,6 +45,26 @@ structure for your notes including all the required CSS and JS files. You just
 have to setup ~org-publish-project-alist~ and then use the ~(org-publish-all)~
 command and you are done. Check the ~/notes_example/index.org~ file.
 
+#+NAME: Snippets!
+#+begin_tip org
+If you want snippets so you don't need to remember all the custom attributes,
+just copy the snippets in the ~snippets~ folder into your ~snippets/org~
+folder.
+
+You can trigger all the snippets by starting with ~<ox~.
+
+Available snippets:
+
+- ~<ox-details~ :: insert details block
+- ~<ox-tip~ :: insert tip block
+- ~<ox-warning~ :: insert warning block
+- ~<ox-danger~ :: insert danger block
+- ~<ox-mermaid~ :: insert mermaid diagram block
+- ~<ox-img-video~ :: insert image or video
+- ~<ox-table~ :: insert a table
+- ~<ox-src~ :: insert a source code block
+#+end_tip
+
 ** Straight Package Management
 
 If you use ~straight~ as your package management, add this to your config file:
@@ -71,7 +91,82 @@ And then, load it after ~ox-html~
 (after! ox-html (require 'ox-tailwind))
 #+END_SRC
 
+** Org-Roam
+
+If you use ~org-roam~ and want to show the backlinks of the current file, add
+this function to your config:
+
+#+ATTR_FILENAME: ~/config.el or ~/config.org
+#+BEGIN_SRC elisp
+;; Add backlinks to the export
+(defun collect-backlinks-string (backend)
+  (when (org-roam-node-at-point)
+    (let* ((source-node (org-roam-node-at-point))
+           (source-file (org-roam-node-file source-node))
+           ;; Sort the nodes by the point to avoid errors when inserting the
+           ;; references
+           (nodes-in-file (--sort (< (org-roam-node-point it)
+                                     (org-roam-node-point other))
+                                  (-filter (lambda (node)
+                                             (s-equals?
+                                              (org-roam-node-file node)
+                                              source-file))
+                                           (org-roam-node-list))))
+           ;; Nodes don't store the last position so, get the next node position
+           ;; and subtract one character
+           (nodes-start-position (-map (lambda (node) (org-roam-node-point node))
+                                       nodes-in-file))
+           (nodes-end-position (-concat (-map (lambda (next-node-position)
+                                                (- next-node-position 1))
+                                              (-drop 1 nodes-start-position))
+                                        (list (point-max))))
+           ;; Keep track of the current-node index
+           (current-node 0)
+           ;; Keep track of the amount of text added
+           (character-count 0))
+      (when (and nodes-in-file (s-equals? backend "latex"))
+        (insert "\n\n\\clearpage\n\n"))
+      (dolist (node nodes-in-file)
+        (when (org-roam-backlinks-get node)
+          ;; Go to the end of the node and don't forget about previously inserted
+          ;; text
+          (goto-char (+ (nth current-node nodes-end-position) character-count))
+          ;; Add the references as a subtree of the node
+          (setq heading (format "\n\n%s Backlinks\n"
+                                (s-repeat (+ (org-roam-node-level node) 1) "*")))
+          ;; Count the characters and count the new lines (4)
+          (setq character-count (+ 3 character-count (string-width heading)))
+          (insert heading)
+          ;; Insert properties drawer
+          (setq properties-drawer ":PROPERTIES:\n:HTML_CONTAINER_CLASS: references\n:END:\n")
+          ;; Count the characters and count the new lines (3)
+          (setq character-count (+ 3 character-count (string-width properties-drawer)))
+          (insert properties-drawer)
+          (dolist (backlink (org-roam-backlinks-get node))
+            (let* ((source-node (org-roam-backlink-source-node backlink))
+                   (point (org-roam-backlink-point backlink))
+                   (text (s-replace "\n" " " (org-roam-preview-get-contents
+                                              (org-roam-node-file source-node)
+                                              point)))
+                   (references (format "- [[./%s][%s]]: %s\n\n"
+                                       (file-relative-name (org-roam-node-file source-node))
+                                       (org-roam-node-title source-node)
+                                       text)))
+              ;; Also count the new lines (2)
+              (setq character-count (+ 2 character-count (string-width references)))
+              (insert references))))
+        (setq current-node (+ current-node 1))))))
+
+(add-hook 'org-export-before-processing-hook 'collect-backlinks-string)
+#+END_SRC
+
 * Notes structure
+
+#+NAME: Org-Roam 
+#+begin_tip org
+You can also use Org-Roam to handle all your notes. In that case, don't follow
+the following folder structure.
+#+end_tip
 
 In order for the search bar to work, this export backend will search all ~.org~
 files in the path of your project and store all the headings in a ~.js~ file.
@@ -152,8 +247,8 @@ To setup automatic export of all my org files I use the following settings:
          :base-extension "org"
          :base-directory "V:/orgmode/"
          :publishing-directory "V:/orgmode/dist/"
-         ; or use `org-tailwind-publish-to-html' to generate the toc after each
-         ; file - *note*: it will be slower to parse the whole project
+         ;; or use `org-tailwind-publish-to-html' to generate the toc after each
+         ;; file - *note*: it will be slower to parse the whole project
          :publishing-function org-tailwind-publish-to-html-without-toc) 
         ("images"
          :base-directory "V:/orgmode/img/"
@@ -580,6 +675,7 @@ The following blocks have custom attributes that you can change:
 - Blockquotes ::
   - ~#+NAME~ :: the name of the author
 
+    
 * Known bugs
 
 - It crashes when it encounters a line that ends in ~\\~ - it works if it is

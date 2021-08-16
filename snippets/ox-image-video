@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: ox-tailwind image video block
+# key: <ox-img-vid
+# group: ox-tailwind
+# --
+#+NAME: ${1:image/video description}
+[[${0:./img/file.png}]]

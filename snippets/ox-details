@@ -1,0 +1,9 @@
+# -*- mode: snippet -*-
+# name: ox-tailwind details block
+# key: <ox-details
+# group: ox-tailwind
+# --
+#+NAME: $1 
+#+begin_details org
+$0
+#+end_details

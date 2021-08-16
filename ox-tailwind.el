@@ -205,18 +205,17 @@ hover:text-green-500 dark:hover:text-blue-500 border-gray-500"
   :type '(string))
 
 (defcustom org-tailwind-class-code
-  "px-2 rounded-md text-green-600 dark:text-yellow-500 \
-bg-gray-300 dark:bg-gray-700"
+  "px-2 rounded-md text-green-500 bg-gray-200 dark:bg-gray-600 dark:text-yellow-500"
   "Tailwind.css classes for the HTML UNDERLINE attribute."
   :type '(string))
 
 (defcustom org-tailwind-class-verbatim
-  "px-2 rounded-md text-red-600 bg-gray-300 dark:bg-gray-700"
+  "px-2 rounded-md text-red-400 bg-gray-200 dark:bg-gray-600 dark:text-red-500"
   "Tailwind.css classes for the HTML VERBATIM attribute."
   :type '(string))
 
 (defcustom org-tailwind-class-link
-  "text-blue-500 hover:text-blue-900"
+  "text-blue-500 hover:underline dark:text-blue-400"
   "Tailwind.css classes for the HTML LINK attribute."
   :type '(string))
 
@@ -426,7 +425,7 @@ This makes it look like the code is in an editor on mac OS."
 
 (defcustom org-tailwind-class-blockquote
   "my-2 mx-20 px-4 border-l-8 rounded-md border border-gray-500 \
-bg-gray-300 dark:bg-gray-600"
+bg-gray-300 dark:bg-gray-600 dark:text-gray-300"
   "Tailwind.css classes for the HTML BLOCKQUOTE block."
   :type '(string))
 
@@ -471,7 +470,7 @@ shadow-xl"
   :type '(string))
 
 (defcustom org-tailwind-class-tip-title
-  "text-teal-500 font-bold"
+  "text-blue-500 font-bold"
   "Tailwind.css classes for the HTML tip block TITLE."
   :type '(string))
 
