@@ -9,7 +9,7 @@ barebones HTML (It does not create as many ~divs~ and ~sections~ as the normal
 HTML export back-end). Instead of using Tailwind.css you can just name the
 classes of the elements and import your own css (or edit ~./css/style.css~).
 
-**Note**: Although you can export any ~.org~ file as html by using ~C-c C-e x
+*Note*: Although you can export any ~.org~ file as html by using ~C-c C-e x
 h~ (through ~org-export-dispatcher~), this method won't create the file inside
 the ~dist~ folder where you have all the required ~js~ and ~css~ files. If you
 open this file on a browser and open the console you will notice there are
