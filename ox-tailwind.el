@@ -453,19 +453,23 @@ bg-gray-300 dark:bg-gray-600 dark:text-gray-300"
   :type '(string))
 
 (defcustom org-tailwind-class-details-block
-  "my-4 p-1 rounded-md border-l-8 border border-purple-500 \
-shadow-xl "
-  "Tailwind.css classes for the HTML DETAILS block."
-  :type '(string))
-
-(defcustom org-tailwind-class-anki-block
-  "mt-1 mb-4 p-1 rounded-md border-l-8 border border-gray-100 \
-text-xs text-gray-300 dark:text-gray-600 dark:border-gray-800"
+  "my-4 py-2 px-8 rounded-md border-l-8 border border-gray-300 \
+dark:border-gray-600"
   "Tailwind.css classes for the HTML DETAILS block."
   :type '(string))
 
 (defcustom org-tailwind-class-details-title
-  "text-purple-500 font-bold"
+  "text-gray-500 font-bold"
+  "Tailwind.css classes for the HTML details block TITLE."
+  :type '(string))
+
+(defcustom org-tailwind-class-anki-block
+  "mb-2 px-10 text-xs"
+  "Tailwind.css classes for the HTML DETAILS block."
+  :type '(string))
+
+(defcustom org-tailwind-class-anki-title
+  "text-gray-300 dark:text-gray-600"
   "Tailwind.css classes for the HTML details block TITLE."
   :type '(string))
 
@@ -1453,13 +1457,13 @@ There are 4 types of blocks:
           ((equalp type "ANKI")
            (format "<details class=\"%s\"><summary class=\"%s\">%s</summary>%s</details>"
                    org-tailwind-class-anki-block
-                   org-tailwind-class-paragraph
+                   org-tailwind-class-anki-title
                    (if name name "Anki Card")
                    contents))
           ((equalp type "details")
            (format "<details class=\"%s\"><summary class=\"%s\">%s</summary>%s</details>"
                    org-tailwind-class-details-block
-                   org-tailwind-class-paragraph
+                   org-tailwind-class-details-title
                    (if name name "Details")
                    contents))
           ((equalp type "tip")
