@@ -453,8 +453,14 @@ bg-gray-300 dark:bg-gray-600 dark:text-gray-300"
   :type '(string))
 
 (defcustom org-tailwind-class-details-block
-  "my-12 p-8 rounded-md border-l-8 border border-purple-500 \
-shadow-xl"
+  "my-4 p-1 rounded-md border-l-8 border border-purple-500 \
+shadow-xl "
+  "Tailwind.css classes for the HTML DETAILS block."
+  :type '(string))
+
+(defcustom org-tailwind-class-anki-block
+  "mt-1 mb-4 p-1 rounded-md border-l-8 border border-gray-100 \
+text-xs text-gray-300 dark:text-gray-600 dark:border-gray-800"
   "Tailwind.css classes for the HTML DETAILS block."
   :type '(string))
 
@@ -1444,6 +1450,12 @@ There are 4 types of blocks:
                    org-tailwind-class-mermaid-block-title
                    (if name name "")))
           ;; TODO: process title as summary
+          ((equalp type "ANKI")
+           (format "<details class=\"%s\"><summary class=\"%s\">%s</summary>%s</details>"
+                   org-tailwind-class-anki-block
+                   org-tailwind-class-paragraph
+                   (if name name "Anki Card")
+                   contents))
           ((equalp type "details")
            (format "<details class=\"%s\"><summary class=\"%s\">%s</summary>%s</details>"
                    org-tailwind-class-details-block
