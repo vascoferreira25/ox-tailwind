@@ -3,7 +3,7 @@
 ;; Author: Vasco Ferreira <vasco_mmf@hotmail.com>
 ;; Maintainer: Vasco Ferreira <vasco_mmf@hotmail.com>
 ;; Created: 07 Mar 2020
-;; Version: 0.3
+;; Version: 0.4
 ;; Keywords: tailwind.css org-mode html-export
 ;; Homepage: https://github.com/vascoferreira25/ox-tailwind
 ;; Package-Requires: ((org) (ox-html) (dash) (s))
