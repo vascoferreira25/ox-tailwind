@@ -399,7 +399,7 @@ npx tailwindcss-cli@latest init
 To build the css file run:
 
 #+BEGIN_SRC powershell
-npx tailwindcss-cli@latest build -o tailwind.css
+npx tailwindcss-cli@latest build -o ./tailwindcss/tailwind.css
 #+END_SRC
 
 ** Prism.js

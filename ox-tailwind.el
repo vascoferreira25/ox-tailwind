@@ -3,6 +3,7 @@
 ;; Author: Vasco Ferreira <vasco_mmf@hotmail.com>
 ;; Maintainer: Vasco Ferreira <vasco_mmf@hotmail.com>
 ;; Created: 07 Mar 2020
+;; Version: 0.3
 ;; Keywords: tailwind.css org-mode html-export
 ;; Homepage: https://github.com/vascoferreira25/ox-tailwind
 ;; Package-Requires: ((org) (ox-html) (dash) (s))
@@ -205,12 +206,14 @@ hover:text-green-500 dark:hover:text-blue-500 border-gray-500"
   :type '(string))
 
 (defcustom org-tailwind-class-code
-  "px-2 rounded-md text-green-500 bg-gray-200 dark:bg-gray-600 dark:text-yellow-500"
+  "px-2 rounded-md text-green-500 bg-gray-200 dark:bg-gray-600 \
+dark:text-yellow-500"
   "Tailwind.css classes for the HTML UNDERLINE attribute."
   :type '(string))
 
 (defcustom org-tailwind-class-verbatim
-  "px-2 rounded-md text-red-400 bg-gray-200 dark:bg-gray-600 dark:text-red-500"
+  "px-2 rounded-md text-red-400 bg-gray-200 dark:bg-gray-600 \
+dark:text-red-500"
   "Tailwind.css classes for the HTML VERBATIM attribute."
   :type '(string))
 
@@ -230,7 +233,7 @@ hover:text-green-500 dark:hover:text-blue-500 border-gray-500"
   :type '(string))
 
 (defcustom org-tailwind-class-image
-  "mx-auto mb-2 max-w-full max-h-full rounded-md border-2
+  "mx-auto mb-2 max-w-full max-h-full rounded-md border
 border-gray-500"
   "Tailwind.css classes for the HTML IMAGE."
   :type '(string))
@@ -246,7 +249,7 @@ border-gray-500"
   :type '(string))
 
 (defcustom org-tailwind-class-video
-  "mx-auto mb-2 rounded-md border-2 border-gray-500"
+  "mx-auto mb-2 rounded-md border border-gray-500"
   "Tailwind.css classes for the HTML VIDEO."
   :type '(string))
 
@@ -256,7 +259,7 @@ border-gray-500"
   :type '(string))
 
 (defcustom org-tailwind-class-toc-title
-  "text-sm my-2 hover:bg-gray-300 dark:hover:bg-darkgray \
+  "text-md my-2 hover:bg-gray-300 dark:hover:bg-darkgray \
 block dark:border-gray-500"
   "Tailwind.css classes for the HTML Table of Contents title.
 Do not break the line with while inserting a `newline'. Use a
@@ -264,7 +267,7 @@ single `\\' at the end."
   :type '(string))
 
 (defcustom org-tailwind-class-toc-items
-  "text-sm my-1 hover:bg-gray-300 dark:hover:bg-darkgray \
+  "text-md my-1 p-1 hover:bg-gray-100 dark:hover:bg-darkgray \
 dark:border-gray-500"
   "Tailwind.css classes for the HTML Table of Contents items.
 Do not break the line with while inserting a `newline'. Use a
@@ -272,7 +275,7 @@ single `\\' at the end."
   :type '(string))
 
 (defcustom org-tailwind-class-current-toc
-  "border-r-4 border-green-500 dark:border-blue-500 bg-gray-300 \
+  "border-l-4 border-blue-400 dark:border-blue-500 bg-gray-100 \
 dark:bg-darkgray"
   "Tailwind.css classes for the CURRENT HTML Table of Contents item."
   :type '(string))
@@ -372,7 +375,7 @@ dark:bg-darkgray"
 (defcustom org-tailwind-class-footnotes-section
   "<div id=\"footnotes\">
 <h2 class=\"mt-20 mb-6 text-2xl text-gray-700 dark:text-gray-400 border-b \
-hover:text-green-500 dark:hover:text-blue-500 border-gray-500\">%s</h2>
+hover:text-green-500 dark:hover:text-blue-500 border-gray-500\">%s</h2> \
 <div id=\"text-footnotes\">
 %s
 </div>
@@ -408,7 +411,7 @@ hover:text-green-500 dark:hover:text-blue-500 border-gray-500\">%s</h2>
   :type '(string))
 
 (defcustom org-tailwind-class-src-window
-  "bg-gray-400"
+  "bg-gray-300"
   "Tailwind.css classes for the HTML SRC-BLOCK WINDOW.
 This makes it look like the code is in an editor on mac OS."
   :type '(string))
@@ -522,10 +525,9 @@ shadow-md items-center h-16"
   :type '(string))
 
 (defcustom org-tailwind-class-sidebar
-  "bg-gray-200 dark:bg-midgray md:shadow-2xl md:rounded-md md:mt-12 md:mx-12 \
-md:px-24 md:py-12 lg:m-0 lg:rounded-none lg:border-r \
-lg:border-gray-500 lg:fixed lg:pt-2 lg:w-64 lg:px-2 \
-lg:overflow-y-auto lg:inset-y-0 lg:mt-16"
+  "mx-12 md:mx-16 shadow-2xl rounded-md mt-12 p-12 md:p-16 lg:m-0 \
+lg:rounded-none lg:border-r lg:border-gray-500 lg:fixed lg:pt-2 \
+lg:w-80 lg:px-2 lg:overflow-y-auto lg:inset-y-0 lg:mt-16"
   "Tailwind.css classes for the HTML SIDEBAR."
   :type '(string))
 
@@ -535,25 +537,26 @@ lg:overflow-y-auto lg:inset-y-0 lg:mt-16"
   :type '(string))
 
 (defcustom org-tailwind-class-content-container
-  "flex-grow px-8 py-12 sm:px-12 md:px-16 lg:ml-64 lg:px-20
-lg:overflow-x-auto xl:px-56"
+  "flex-grow px-8 py-12 sm:px-12 md:px-16 lg:ml-80 lg:px-20 \
+lg:overflow-x-auto xl:px-32 2xl:px-48"
   "Tailwind.css classes for the HTML contents CONTAINER."
   :type '(string))
 
 (defcustom org-tailwind-class-inner-container
-  "px-24 py-28 pb-32 mb-12 shadow-2xl rounded-md"
+  "relative -top-16 p-16 pb-32 mb-12 shadow-2xl rounded-md \
+xl:p-24"
   "Tailwind.css classes for the HTML inner container."
   :type '(string))
 
 (defcustom org-tailwind-class-footer
-  "hidden fixed bottom-0 w-full border-t border-solid border-gray-500
-h-8 text-center bg-white"
+  "hidden fixed bottom-0 w-full border-t border-solid \
+border-gray-500 h-8 text-center bg-white"
   "Tailwind.css classes for the HTML FOOTER."
   :type '(string))
 
 (defcustom org-tailwind-class-toggle-button
-  "float-right rounded-lg px-4 py-1 border-2 bg-black \
-text-gray-300 bg-gray-500 dark:bg-gray-300 dark:text-gray-700"
+  "float-right rounded-lg px-4 py-1 border-2 bg-black bg-gray-100 \
+dark:bg-gray-300 dark:text-gray-700"
   "Tailwind.css classes for the HTML go to Toggle dark-mode button.
 There are already some prefixed classes:
 - p-2
@@ -563,9 +566,9 @@ There are already some prefixed classes:
   :type '(string))
 
 (defcustom org-tailwind-class-top-button
-  "absolute right-0 bottom-0 mb-8 mr-24 z-100 bg-gray-500 \
-hover:bg-gray-700 text-white font-bold rounded-full h-12 w-12 \
-flex items-center justify-center"
+  "absolute right-0 bottom-0 mb-2 mr-8 z-50 bg-gray-500 \
+bg-opacity-80 hover:bg-gray-700 text-white font-bold rounded-xl \
+h-10 w-16 flex items-center justify-center"
   "Tailwind.css classes for the HTML go to TOP button.
 There are already some prefixed classes:
 - p-2
@@ -608,8 +611,7 @@ focus:outline-none align-text-bottom"
   :type '(string))
 
 (defcustom org-tailwind-class-file-name
-  "flex rounded-t border border-gray-300 dark:border-gray-700 \
-bg-gray-100 dark:bg-midgray py-2 pl-4 font-bold"
+  "relative top-10 flex rounded-t py-4 px-16 text-sm xl:px-24"
   "Tailwind.css classes for File Name"
   :type '(string))
 
@@ -972,9 +974,11 @@ if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.match
 
 function toggleLight() {
   if (localStorage.theme === 'light') {
-    localStorage.setItem('theme', 'dark');
+    //localStorage.setItem('theme', 'dark');
+    localStorage.theme = 'dark'
   } else {
-    localStorage.setItem('theme', 'light');
+    //localStorage.setItem('theme', 'light');
+    localStorage.theme = 'light'
   }
   location.reload();
   return false;
@@ -1005,7 +1009,7 @@ function toggleLight() {
   <div id=\"content-container\" class=\"%s\" onscroll=\"scrollSpy()\">
     <div id=\"top\"></div>
     <div id=\"file-name\" class=\"%s\">
-      <img class=\"w-6 h-6 mr-2\" src=\"./icons/file_icon.png\">
+      <img class=\"hidden w-6 h-6 mr-2\" src=\"./icons/file_icon.png\">
       <p>%s</p>
     </div>
     <div id=\"inner-container\" class=\"%s\">

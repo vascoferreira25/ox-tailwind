@@ -11,7 +11,8 @@ pre[class*="language-"] {
 }
 
 #content {
-	scrollbar-color: #131516 #a0aec0;
+	scrollbar-color: #808080 #d7d7d7;
+	scrollbar-width: thin;
 }
 
 input[class*="form-tick"][checked] {
