@@ -393,6 +393,7 @@ build the ~css~ file. Then you just need to copy the output file to the
 To create a config file you need to run:
 
 #+BEGIN_SRC powershell
+cd ./tailwindcss
 npx tailwindcss-cli@latest init
 #+END_SRC
 
