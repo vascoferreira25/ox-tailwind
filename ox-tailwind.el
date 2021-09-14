@@ -3,7 +3,7 @@
 ;; Author: Vasco Ferreira <vasco_mmf@hotmail.com>
 ;; Maintainer: Vasco Ferreira <vasco_mmf@hotmail.com>
 ;; Created: 07 Mar 2020
-;; Version: 0.4
+;; Version: 0.41
 ;; Keywords: tailwind.css org-mode html-export
 ;; Homepage: https://github.com/vascoferreira25/ox-tailwind
 ;; Package-Requires: ((org) (ox-html) (dash) (s))
@@ -1321,9 +1321,9 @@ It has two format places:
 
 (defvar org-tailwind--src-block-file-name
   "<div class=\"h-8 rounded-t flex %s\">
-  <div class=\"bg-red-500 my-2 ml-2 mr-1 h-4 w-4 rounded-full\"></div>
-  <div class=\"bg-yellow-500 my-2 ml-1 mr-1 h-4 w-4 rounded-full\"></div>
-  <div class=\"bg-green-500 my-2 ml-1 mr-1 h-4 w-4 rounded-full\"></div>
+  <div class=\"bg-red-500 my-2 ml-2 mr-1 h-4 w-5 rounded-full\"></div>
+  <div class=\"bg-yellow-500 my-2 ml-1 mr-1 h-4 w-5 rounded-full\"></div>
+  <div class=\"bg-green-500 my-2 ml-1 mr-1 h-4 w-5 rounded-full\"></div>
   <p class=\"ml-2 mr-16 my-1 w-full text-center dark:text-gray-700\">%s</p>
 </div>"
   "Make it look like the code is in a mac OS code editor.")
