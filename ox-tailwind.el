@@ -259,24 +259,22 @@ border-gray-500"
   :type '(string))
 
 (defcustom org-tailwind-class-toc-title
-  "text-md my-2 hover:bg-gray-300 dark:hover:bg-darkgray \
+  "text-md my-2 hover:bg-gray-300 dark:hover:bg-gray-600 \
 block dark:border-gray-500"
   "Tailwind.css classes for the HTML Table of Contents title.
-Do not break the line with while inserting a `newline'. Use a
-single `\\' at the end."
+Use a single `\\' if you have line breaks in the string."
   :type '(string))
 
 (defcustom org-tailwind-class-toc-items
-  "text-md my-1 p-1 hover:bg-gray-100 dark:hover:bg-darkgray \
+  "text-md my-1 p-1 hover:bg-gray-100 dark:hover:bg-gray-600 \
 dark:border-gray-500"
   "Tailwind.css classes for the HTML Table of Contents items.
-Do not break the line with while inserting a `newline'. Use a
-single `\\' at the end."
+Use a single `\\' if you have line breaks in the string."
   :type '(string))
 
 (defcustom org-tailwind-class-current-toc
   "border-l-4 border-blue-400 dark:border-blue-500 bg-gray-100 \
-dark:bg-darkgray"
+  dark:bg-gray-600"
   "Tailwind.css classes for the CURRENT HTML Table of Contents item."
   :type '(string))
 
@@ -289,7 +287,7 @@ dark:bg-darkgray"
 ;; Lists
 
 (defcustom org-tailwind-class-ordered-list
-  "list-decimal my-8"
+  "list-decimal my-2"
   "Tailwind.css classes for the HTML ORDERED list."
   :type '(string))
 
@@ -299,7 +297,7 @@ dark:bg-darkgray"
   :type '(string))
 
 (defcustom org-tailwind-class-unordered-list
-  "list-disc my-8"
+  "list-disc my-2"
   "Tailwind.css classes for the HTML UNORDERED list."
   :type '(string))
 
@@ -309,7 +307,7 @@ dark:bg-darkgray"
   :type '(string))
 
 (defcustom org-tailwind-class-description-list
-  "my-8"
+  "my-2 ml-8"
   "Tailwind.css classes for the HTML DESCRIPTION list."
   :type '(string))
 
@@ -342,7 +340,8 @@ dark:bg-darkgray"
   :type '(string))
 
 (defcustom org-tailwind-class-table-header-row
-  "text-gray-600 border-b-2 border-gray-400"
+  "text-gray-600 border-b-2 border-gray-400 bg-gray-100 \
+  dark:text-gray-400 dark:bg-gray-600"
   "Tailwind.css classes for the HTML table HEADER-ROW."
   :type '(string))
 
@@ -352,12 +351,12 @@ dark:bg-darkgray"
   :type '(string))
 
 (defcustom org-tailwind-class-table-body-row
-  "hover:bg-green-200"
+  "hover:bg-blue-100 dark:hover:bg-gray-600"
   "Tailwind.css classes for the HTML table BODY-ROW."
   :type '(string))
 
 (defcustom org-tailwind-class-table-last-body-row
-  "border-b-2 border-gray-400 hover:bg-green-200"
+  "border-b-2 border-gray-400 hover:bg-blue-100 dark:hover:bg-gray-600"
   "Tailwind.css classes for the HTML table BODY-ROW."
   :type '(string))
 
@@ -374,12 +373,12 @@ dark:bg-darkgray"
 ;; Footnotes
 (defcustom org-tailwind-class-footnotes-section
   "<div id=\"footnotes\">
-<h2 class=\"mt-20 mb-6 text-2xl text-gray-700 dark:text-gray-400 border-b \
-hover:text-green-500 dark:hover:text-blue-500 border-gray-500\">%s</h2> \
-<div id=\"text-footnotes\">
-%s
-</div>
-</div>"
+  <h2 class=\"mt-20 mb-6 text-2xl text-gray-700 dark:text-gray-400 border-b \
+  hover:text-green-500 dark:hover:text-blue-500 border-gray-500\">%s</h2> \
+  <div id=\"text-footnotes\">
+  %s
+  </div>
+  </div>"
   "Tailwind.css classes for the HTML footnotes section."
   :type '(string))
 
@@ -413,7 +412,7 @@ hover:text-green-500 dark:hover:text-blue-500 border-gray-500\">%s</h2> \
 (defcustom org-tailwind-class-src-window
   "bg-gray-300"
   "Tailwind.css classes for the HTML SRC-BLOCK WINDOW.
-This makes it look like the code is in an editor on mac OS."
+  This makes it look like the code is in an editor on mac OS."
   :type '(string))
 
 (defcustom org-tailwind-class-pre
@@ -428,7 +427,7 @@ This makes it look like the code is in an editor on mac OS."
 
 (defcustom org-tailwind-class-blockquote
   "mx-8 my-2 px-4 border-l-8 rounded border border-gray-500 \
-bg-gray-300 dark:bg-gray-600 dark:text-gray-300"
+  bg-gray-300 dark:bg-gray-600 dark:text-gray-300"
   "Tailwind.css classes for the HTML BLOCKQUOTE block."
   :type '(string))
 
@@ -447,7 +446,7 @@ bg-gray-300 dark:bg-gray-600 dark:text-gray-300"
 
 (defcustom org-tailwind-class-mermaid-block
   "mx-auto my-2 max-w-full max-h-full bg-white rounded border \
-border-gray-500"
+  border-gray-500"
   "Tailwind.css classes for the HTML MERMAID block."
   :type '(string))
 
@@ -458,7 +457,7 @@ border-gray-500"
 
 (defcustom org-tailwind-class-details-block
   "my-4 py-2 px-8 rounded border-l-8 border border-gray-300 \
-dark:border-gray-600"
+  dark:border-gray-600"
   "Tailwind.css classes for the HTML DETAILS block."
   :type '(string))
 
@@ -479,7 +478,7 @@ dark:border-gray-600"
 
 (defcustom org-tailwind-class-tip-block
   "my-12 p-8 rounded border-l-8 border border-blue-500 \
-shadow-xl"
+  shadow-xl"
   "Tailwind.css classes for the HTML TIP block."
   :type '(string))
 
@@ -490,7 +489,7 @@ shadow-xl"
 
 (defcustom org-tailwind-class-warning-block
   "my-12 p-8 rounded border-l-8 border border-yellow-500 \
-shadow-xl"
+  shadow-xl"
   "Tailwind.css classes for the HTML WARNING block."
   :type '(string))
 
@@ -501,7 +500,7 @@ shadow-xl"
 
 (defcustom org-tailwind-class-danger-block
   "my-12 p-8 rounded border-l-8 border border-red-500 \
-shadow-xl"
+  shadow-xl"
   "Tailwind.css classes for the HTML DANGER block."
   :type '(string))
 
@@ -515,20 +514,20 @@ shadow-xl"
 
 (defcustom org-tailwind-class-body
   "flex flex-col h-screen text-gray-700 dark:bg-darkgray \
-dark:text-gray-400"
+  dark:text-gray-400"
   "Tailwind.css classes for the HTML BODY."
   :type '(string))
 
 (defcustom org-tailwind-class-header
   "w-full border-b border-gray-500
-shadow-md items-center h-16"
+  shadow-md items-center h-16"
   "Tailwind.css classes for the HTML HEADER."
   :type '(string))
 
 (defcustom org-tailwind-class-sidebar
   "mx-12 md:mx-16 shadow-2xl rounded mt-12 p-12 md:p-16 lg:m-0 \
-lg:border-r lg:border-gray-500 lg:fixed lg:pt-2 lg:w-80 lg:px-2 \
-lg:overflow-y-auto lg:inset-y-0 lg:mt-16"
+  lg:border-r lg:border-gray-500 lg:fixed lg:pt-2 lg:w-80 lg:px-2 \
+  lg:overflow-y-auto lg:inset-y-0 lg:mt-16"
   "Tailwind.css classes for the HTML SIDEBAR."
   :type '(string))
 
@@ -539,66 +538,66 @@ lg:overflow-y-auto lg:inset-y-0 lg:mt-16"
 
 (defcustom org-tailwind-class-content-container
   "flex-grow px-8 py-12 sm:px-12 md:px-16 lg:ml-80 lg:px-20 \
-lg:overflow-x-auto xl:px-32 2xl:px-48"
+  lg:overflow-x-auto xl:px-32 2xl:px-48"
   "Tailwind.css classes for the HTML contents CONTAINER."
   :type '(string))
 
 (defcustom org-tailwind-class-inner-container
   "relative -top-16 p-16 pb-32 mb-12 shadow-2xl rounded \
-xl:p-24"
+  xl:p-24"
   "Tailwind.css classes for the HTML inner container."
   :type '(string))
 
 (defcustom org-tailwind-class-footer
   "hidden fixed bottom-0 w-full border-t border-solid \
-border-gray-500 h-8 text-center bg-white"
+  border-gray-500 h-8 text-center bg-white"
   "Tailwind.css classes for the HTML FOOTER."
   :type '(string))
 
 (defcustom org-tailwind-class-toggle-button
   "float-right rounded px-4 py-1 border bg-black bg-gray-100 \
-dark:bg-gray-300 dark:text-gray-700"
+  dark:bg-gray-300 dark:text-gray-700"
   "Tailwind.css classes for the HTML go to Toggle dark-mode button.
-There are already some prefixed classes:
-- p-2
-- block
-- mt-2
-- ml-0"
+  There are already some prefixed classes:
+  - p-2
+  - block
+  - mt-2
+  - ml-0"
   :type '(string))
 
 (defcustom org-tailwind-class-top-button
   "absolute right-0 bottom-0 mb-2 mr-8 z-50 bg-gray-500 \
-bg-opacity-80 hover:bg-gray-700 text-white font-bold rounded \
-h-10 w-16 flex items-center justify-center"
+  bg-opacity-80 hover:bg-gray-700 text-white font-bold rounded \
+  h-10 w-16 flex items-center justify-center"
   "Tailwind.css classes for the HTML go to TOP button.
-There are already some prefixed classes:
-- p-2
-- block
-- mt-2
-- ml-0"
+  There are already some prefixed classes:
+  - p-2
+  - block
+  - mt-2
+  - ml-0"
   :type '(string))
 
 (defcustom org-tailwind-class-search-bar
   "float-right mx-4 w-1/6 rounded px-4 py-1 border-solid \
-border border-gray-700 dark:border-gray-500 text-gray-400 \
-dark:text-gray-900 focus:border-green-500 \
-dark:focus:border-blue-500 focus:text-gray-500 \
-dark:focus:text-gray-500 dark:bg-midgray"
+  border border-gray-700 dark:border-gray-500 text-gray-400 \
+  dark:text-gray-900 focus:border-green-500 \
+  dark:focus:border-blue-500 focus:text-gray-500 \
+  dark:focus:text-gray-500 dark:bg-midgray"
   "Tailwind.css classes for the HTML SEARCH BAR."
   :type '(string))
 
 (defcustom org-tailwind-class-search-bar-results-list
   "z-50 absolute w-5/6 sm:w-4/6 md:w-3/6 lg:w-2/6 xl:w-1/6
-right-0 mt-12 mr-20 bg-white dark:bg-midgray p-4 shadow-lg border
-border-solid border-gray-500 rounded"
+  right-0 mt-12 mr-20 bg-white dark:bg-midgray p-4 shadow-lg border
+  border-solid border-gray-500 rounded"
   "Tailwind.css classes for the HTML RESULTS LIST."
   :type '(string))
 
 (defcustom org-tailwind-class-search-bar-results-item
   "p-2 block rounded hover:bg-gray-300 dark:hover:bg-darkgray"
   "Tailwind.css classes for the HTML RESULTS ITEM.
-Do not break the line with while inserting a `newline'. Use `\' at
-the end."
+  Do not break the line with while inserting a `newline'. Use `\' at
+  the end."
   :type '(string))
 
 
@@ -606,8 +605,8 @@ the end."
 
 (defcustom org-tailwind-class-checkbox
   "form-tick appearance-none h-6 w-6 mr-2 border border-gray-300 \
-rounded checked:bg-blue-600 checked:border-transparent \
-focus:outline-none align-text-bottom"
+  rounded checked:bg-blue-600 checked:border-transparent \
+  focus:outline-none align-text-bottom"
   "Tailwind.css classes for Checkbox"
   :type '(string))
 
@@ -621,54 +620,54 @@ focus:outline-none align-text-bottom"
 
 (defcustom org-tailwind-head-files
   "<!-- Tailwind CSS -->
-<link href=\"./css/tailwind.css\" rel=\"stylesheet\"/>
+  <link href=\"./css/tailwind.css\" rel=\"stylesheet\"/>
 
-<!-- Prism Css -->
-<link href=\"./css/prism.css\" rel=\"stylesheet\" />
+  <!-- Prism Css -->
+  <link href=\"./css/prism.css\" rel=\"stylesheet\" />
 
-<!-- Mathjax -->
-<script>
-MathJax = {
+  <!-- Mathjax -->
+  <script>
+  MathJax = {
   tex: {
-  	processEscapes: true
+  processEscapes: true
   }
-}
-</script>
+  }
+  </script>
 
-<script type=\"text/javascript\" async
+  <script type=\"text/javascript\" async
   src=\"./mathjax/tex-mml-chtml.js\">
-</script>
+  </script>
 
-<!-- Your CSS file should come here -->
-<link href=\"./css/style.css\" rel=\"stylesheet\" />
+  <!-- Your CSS file should come here -->
+  <link href=\"./css/style.css\" rel=\"stylesheet\" />
 
-<!-- Toc tree file -->
-<script src=\"./js/toc_tree.js\"></script>
-"
+  <!-- Toc tree file -->
+  <script src=\"./js/toc_tree.js\"></script>
+  "
   "Links to be imported on the head of the HTML file."
   :type '(string))
 
 (defcustom org-tailwind-header
   "<nav class=\"flex items-center justify-between flex-wrap p-4\">
   <div class=\"flex items-center flex-no-shrink mr-6\">
-    <span class=\"font-semibold text-xl tracking-tight\">
-      <a href=\"./index.html\">Notes</a>
-    </span>
+  <span class=\"font-semibold text-xl tracking-tight\">
+  <a href=\"./index.html\">Notes</a>
+  </span>
   </div>
   <div class=\"block flex-grow lg:flex lg:items-center lg:w-auto\">
-    <div class=\"text-sm lg:flex-grow\">
-      <a href=\"#top\" class=\"%s\">
-        Top
-      </a>
-      <input id=\"search-bar\" onkeyup=\"search()\"
-      onfocusin='showResults()'
-      class=\"%s\" placeholder=\"Search...\"/>
-      <ul id=\"search-bar-results\"
-      class=\"%s\" style=\"display: none;\"></ul>
-      <button type=\"button\" class=\"%s\" onclick=\"toggleLight()\">Toggle dark-mode</button>
-    </div>
+  <div class=\"text-sm lg:flex-grow\">
+  <a href=\"#top\" class=\"%s\">
+  Top
+  </a>
+  <input id=\"search-bar\" onkeyup=\"search()\"
+  onfocusin='showResults()'
+  class=\"%s\" placeholder=\"Search...\"/>
+  <ul id=\"search-bar-results\"
+  class=\"%s\" style=\"display: none;\"></ul>
+  <button type=\"button\" class=\"%s\" onclick=\"toggleLight()\">Toggle dark-mode</button>
   </div>
-</nav>"
+  </div>
+  </nav>"
   "Contents of header in HTML."
   :type '(string))
 
@@ -684,8 +683,8 @@ MathJax = {
 
 (defcustom org-tailwind-bottom-files
   "<script src=\"./js/prism.js\"></script>
-<script src=\"./js/mermaid.min.js\"></script>
-<script>mermaid.initialize({startOnLoad:true});</script>"
+  <script src=\"./js/mermaid.min.js\"></script>
+  <script>mermaid.initialize({startOnLoad:true});</script>"
   "Javascript files to be imported at the bottom of the HTML file."
   :type '(string))
 

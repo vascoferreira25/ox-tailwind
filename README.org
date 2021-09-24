@@ -376,9 +376,9 @@ There are multiple classes for all the Html tags. For example, changing the
 theme of a ~h1~ tag:
 
 #+BEGIN_SRC elisp
-(setq org-tailwind-class-h1
-"mt-32 mb-6 text-6xl text-red-500 dark:text-gray-400 border-b \
-hover:text-red-500 dark:hover:text-blue-500 border-gray-500")
+(defcustom org-tailwind-class-h1
+  "mt-24 mb-6 text-3xl text-gray-700 dark:text-gray-400 border-b \
+hover:text-blue-400 dark:hover:text-blue-500 border-gray-500")
 #+END_SRC
 
 You can check all the other Html elements in the ~ox-tailwind.el~ file.
@@ -675,7 +675,6 @@ The following blocks have custom attributes that you can change:
     - ~#+ATTR_TIMELINE: 5,9~
 - Blockquotes ::
   - ~#+NAME~ :: the name of the author
-
     
 * Known bugs
 
