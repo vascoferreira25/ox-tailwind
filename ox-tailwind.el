@@ -611,12 +611,23 @@ Use a single `\\' if you have line breaks in the string."
   :type '(string))
 
 (defcustom org-tailwind-class-file-name
-  "relative top-10 flex rounded-t py-4 px-16 text-sm xl:px-24"
+  "relative top-10 flex rounded-t py-4 px-16 text-sm xl:px-24 z-10"
   "Tailwind.css classes for File Name"
   :type '(string))
 
 
 ;;; Templates
+
+(defcustom org-tailwind-file-name-use-link t
+  "Whether to use a link or a paragraph for the file-name field
+on the top of the page."
+  :type '(boolean))
+
+
+(defcustom org-tailwind-file-name-link "<a href=\"org-protocol://open-file?file=%s\">%s</a>"
+  "The link to open the file in emacs - preferably with org-protocol."
+  :type '(string))
+
 
 (defcustom org-tailwind-head-files
   "<!-- Tailwind CSS -->
@@ -1010,7 +1021,7 @@ function toggleLight() {
     <div id=\"top\"></div>
     <div id=\"file-name\" class=\"%s\">
       <img class=\"hidden w-6 h-6 mr-2\" src=\"./icons/file_icon.png\">
-      <p>%s</p>
+      %s
     </div>
     <div id=\"inner-container\" class=\"%s\">
       <h1 id=\"toc-link-title\" class=\"%s\">
@@ -1058,6 +1069,17 @@ values, in this order:
 
 ;;; Transcode Elements
 
+(defun org-tailwind--file-name-link-or-paragraph (info)
+  "Write the file name as a link or paragraph.
+Depends on the variable `org-tailwind-file-name-use-link'."
+  (if org-tailwind-file-name-use-link
+      (format org-tailwind-file-name-link
+              (plist-get info :input-file)
+              (plist-get info :input-buffer))
+    (format "<p>%s</p>"
+            (plist-get info :input-buffer))))
+
+
 (defun org-tailwind-inner-template (contents info)
   "Define the template for the CONTENTS inside Headings.
 By not doing anything to the contents, it exports the elements at the root level."
@@ -1082,16 +1104,14 @@ By not doing anything to the contents, it exports the elements at the root level
           org-tailwind-class-content-container
           ;; add the file name before the content box
           org-tailwind-class-file-name
-          (plist-get info :input-buffer)
+          (org-tailwind--file-name-link-or-paragraph info)
           org-tailwind-class-inner-container
-
           ;; Contents go here
           org-tailwind-class-title
           (-first-item (plist-get info :title))
           contents
           org-tailwind-class-footer
           org-tailwind-footer
-          
           ;; Generate TOC Javascript
           (format org-tailwind-javascript
                   org-tailwind-class-top-button
