@@ -370,6 +370,110 @@ and folders:
 - all ~.html~ files.
 
 * Customization
+** Link in the top
+
+By default, the file-name on the top of the page is a link for ~org-protocol~.
+
+You can customize the link by changing the variable ~org-tailwind-file-name-link~
+or you can disable the link by changing the variable
+~org-tailwind-file-name-use-link~ to nil.
+
+*** Org-protocol settings
+
+Setup the org-protocol.
+
+#+BEGIN_SRC emacs-lisp
+(server-start)
+(require 'org-protocol)
+
+;; Custom protocols
+(defun my-open-file-protocol-handler (data)
+  (let* ((file-link (plist-get data :file))
+         (file-path (replace-regexp-in-string "^\\(.*\\)#.*" "\\1" file-link)))
+    (message "file-path: %s" file-path)
+    (find-file file-path))
+  ;; it must end in nil or it will create a buffer 
+  nil)
+
+(setq org-protocol-protocol-alist
+      '(("open-file"
+         :protocol "open-file"
+         :function my-open-file-protocol-handler)))
+#+END_SRC
+
+Define a new link type for protocols and the export method:
+
+#+BEGIN_SRC emacs-lisp
+(require 'ol)
+
+(org-link-set-parameters "org-protocol"
+                         :follow #'my-org-protocol-open
+                         :export #'my-org-protocol-export
+                         :store #'my-org-protocol-store-link)
+
+(defun my-org-protocol-open (path _)
+  "Visit the org-protocol on PATH.
+PATH should be a topic that can be thrown at the man command."
+  (browse-url path))
+
+(defun my-org-protocol-store-link ()
+  "Store a link to a man page."
+  (when (memq major-mode '(org-mode))
+    ;; This is a man page, we do make this link.
+    (let* ((file (my-org-protocol-get-file-name))
+           (link (concat "" file))
+           (description (format "org-protocol for %s" file)))
+      (org-link-store-props
+       :type "org-protocol"
+       :link link
+       :description description))))
+
+(defun my-org-protocol-get-page-name ()
+  "Extract the file name from the buffer name."
+  (if (string-match " \\(\\S-+\\)\\*" (buffer-name))
+      (match-string 1 (buffer-name))
+    (error "Cannot create link to this org-protocol file")))
+
+(defun my-org-protocol-export (link description format _)
+  "Export a man page link from Org files."
+  (let ((path (format "org-protocol:%s" link))
+        (desc (or description link)))
+    (pcase format
+      (`html (format "<a href=\"%s\">%s</a>" path desc))
+      (`latex (format "\\href{%s}{%s}" path desc))
+      (`texinfo (format "@uref{%s,%s}" path desc))
+      (`ascii (format "%s (%s)" desc path))
+      (t path))))
+#+END_SRC
+
+Export links to files with a link to open those files in Emacs through the
+protocol:
+
+#+BEGIN_SRC emacs-lisp
+(defun my-open-in-emacs-link (backend)
+  "Add a link to use org-protocol to open a file in emacs."
+  (save-excursion
+    (goto-char (point-min))
+    (while (re-search-forward "\\(\\[\\[file:.*?\\]\\[.*\\]\\]\\)" nil t)
+      (message "MATCHED: %s" (match-string-no-properties 1))
+      (let* ((file-path (replace-regexp-in-string
+                         ".*\\[\\[file:\\(.*?\\)\\]\\[.*"
+                         "\\1"
+                         (match-string-no-properties 1)))
+             (fixed-file-path (replace-regexp-in-string
+                               "\\(.*?\\)\\(::.*\\)?"
+                               "\\1"
+                               file-path)))
+        (message "FILE_PATH: %s" fixed-file-path)
+        (replace-match
+         (format "%s ([[org-protocol://open-file?file=%s][open in Emacs]])"
+                 (match-string-no-properties 1)
+                 fixed-file-path))))))
+
+(add-hook 'org-export-before-processing-hook 'my-open-in-emacs-link)
+#+END_SRC
+
+** Customize Theme
 
 To customize the theme you have to change the ~org-tailwind-class-...~ variables.
 There are multiple classes for all the Html tags. For example, changing the
@@ -383,7 +487,7 @@ hover:text-blue-400 dark:hover:text-blue-500 border-gray-500")
 
 You can check all the other Html elements in the ~ox-tailwind.el~ file.
 
-** TailwindCSS
+*** TailwindCSS
 
 If you want to change TailwindCSS settings you can use the TailwindCSS - CLI
 tool. In the folder ~tailwind~ you can change the ~tailwind.config.js~ and
@@ -403,7 +507,7 @@ To build the css file run:
 npx tailwindcss-cli@latest build -o ./tailwindcss/tailwind.css
 #+END_SRC
 
-** Prism.js
+*** Prism.js
 
 To customize the code blocks, you can just download another theme from the
 [[https://prismjs.com/download.html#themes=prism-tomorrow&languages=markup+css+clike+javascript+abap+abnf+actionscript+ada+agda+al+antlr4+apacheconf+apex+apl+applescript+aql+arduino+arff+asciidoc+aspnet+asm6502+autohotkey+autoit+bash+basic+batch+bbcode+birb+bison+bnf+brainfuck+brightscript+bro+bsl+c+csharp+cpp+cfscript+chaiscript+cil+clojure+cmake+cobol+coffeescript+concurnas+csp+coq+crystal+css-extras+csv+cypher+d+dart+dataweave+dax+dhall+diff+django+dns-zone-file+docker+dot+ebnf+editorconfig+eiffel+ejs+elixir+elm+etlua+erb+erlang+excel-formula+fsharp+factor+false+firestore-security-rules+flow+fortran+ftl+gml+gcode+gdscript+gedcom+gherkin+git+glsl+go+graphql+groovy+haml+handlebars+haskell+haxe+hcl+hlsl+http+hpkp+hsts+ichigojam+icon+icu-message-format+idris+ignore+inform7+ini+io+j+java+javadoc+javadoclike+javastacktrace+jexl+jolie+jq+jsdoc+js-extras+json+json5+jsonp+jsstacktrace+js-templates+julia+keyman+kotlin+kumir+latex+latte+less+lilypond+liquid+lisp+livescript+llvm+log+lolcode+lua+makefile+markdown+markup-templating+matlab+mel+mizar+mongodb+monkey+moonscript+n1ql+n4js+nand2tetris-hdl+naniscript+nasm+neon+nevod+nginx+nim+nix+nsis+objectivec+ocaml+opencl+openqasm+oz+parigp+parser+pascal+pascaligo+psl+pcaxis+peoplecode+perl+php+phpdoc+php-extras+plsql+powerquery+powershell+processing+prolog+promql+properties+protobuf+pug+puppet+pure+purebasic+purescript+python+qsharp+q+qml+qore+r+racket+jsx+tsx+reason+regex+rego+renpy+rest+rip+roboconf+robotframework+ruby+rust+sas+sass+scss+scala+scheme+shell-session+smali+smalltalk+smarty+sml+solidity+solution-file+soy+sparql+splunk-spl+sqf+sql+squirrel+stan+iecst+stylus+swift+t4-templating+t4-cs+t4-vb+tap+tcl+tt2+textile+toml+turtle+twig+typescript+typoscript+unrealscript+uri+v+vala+vbnet+velocity+verilog+vhdl+vim+visual-basic+warpscript+wasm+wiki+xeora+xml-doc+xojo+xquery+yaml+yang+zig&plugins=line-highlight+line-numbers+autolinker+file-highlight+show-language+jsonp-highlight+highlight-keywords+inline-color+previewers+autoloader+keep-markup+command-line+unescaped-markup+normalize-whitespace+data-uri-highlight+toolbar+copy-to-clipboard+download-button+match-braces+diff-highlight+filter-highlight-all+treeview][Prism.js]] website and save both the ~js~ and the ~css~ file in your ~/dist~
@@ -435,7 +539,7 @@ These are the required modules for Prism to work:
 - filter highlight all
 - treeview
 
-** Mathjax
+*** Mathjax
 
 Mathjax has been downloaded from source by running:
 
@@ -445,7 +549,7 @@ git clone https://github.com/mathjax/MathJax.git mathjax
 
 And then copy the files from ~/mathjax/es5~ into the ~/dist/mathjax~ folder.
 
-** Mermaid.js
+*** Mermaid.js
 
 Mermaid has been downloaded from source by running:
 

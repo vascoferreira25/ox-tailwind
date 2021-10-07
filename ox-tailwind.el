@@ -624,7 +624,8 @@ on the top of the page."
   :type '(boolean))
 
 
-(defcustom org-tailwind-file-name-link "<a href=\"org-protocol://open-file?file=%s\">%s</a>"
+(defcustom org-tailwind-file-name-link
+  "<a class=\"%s\" href=\"org-protocol://open-file?file=%s\">%s</a>"
   "The link to open the file in emacs - preferably with org-protocol."
   :type '(string))
 
@@ -1074,6 +1075,7 @@ values, in this order:
 Depends on the variable `org-tailwind-file-name-use-link'."
   (if org-tailwind-file-name-use-link
       (format org-tailwind-file-name-link
+              org-tailwind-class-link
               (plist-get info :input-file)
               (plist-get info :input-buffer))
     (format "<p>%s</p>"
