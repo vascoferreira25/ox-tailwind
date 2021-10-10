@@ -1287,11 +1287,16 @@ information."
                           org-tailwind-class-image-description
                           description)
                 "")))
+     ((equalp type "org-protocol")
+      (format link-tag
+              org-tailwind-class-link
+              raw-link
+              contents))
      ;; Is the link an org file
      ((equalp file-extension "org")
       (format link-tag
               org-tailwind-class-link
-              (concat type ":" (replace-regexp-in-string "\\.org" ".html" path))
+              (concat type ":" (replace-regexp-in-string "\\.org" ".oooohtml" path))
               contents))
      ;; Internal link
      ((equalp type "fuzzy")
