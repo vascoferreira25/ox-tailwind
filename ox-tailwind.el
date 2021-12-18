@@ -1296,7 +1296,7 @@ information."
      ((equalp file-extension "org")
       (format link-tag
               org-tailwind-class-link
-              (concat type ":" (replace-regexp-in-string "\\.org" ".oooohtml" path))
+              (concat type ":" (replace-regexp-in-string "\\.org" ".html" path))
               contents))
      ;; Internal link
      ((equalp type "fuzzy")
