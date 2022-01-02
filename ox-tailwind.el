@@ -1,4 +1,4 @@
-;; ox-tailwind.el --- Tailwind.css Back-End for Org Export Engine -*- lexical-binding: t -*-
+;;; ox-tailwind.el --- Tailwind.css Back-End for Org Export Engine -*- lexical-binding: t -*-
 
 ;; Author: Vasco Ferreira <vasco_mmf@hotmail.com>
 ;; Maintainer: Vasco Ferreira <vasco_mmf@hotmail.com>
@@ -6,7 +6,7 @@
 ;; Version: 0.41
 ;; Keywords: tailwind.css org-mode html-export
 ;; Homepage: https://github.com/vascoferreira25/ox-tailwind
-;; Package-Requires: ((org) (ox-html) (dash) (s))
+;; Package-Requires: ((org) (dash) (s))
 
 ;; This file is not part of GNU Emacs.
 
