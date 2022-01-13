@@ -11,10 +11,10 @@
 ;; This file is not part of GNU Emacs.
 
 ;;; Commentary:
-
-;; This html export backend uses tailwind.css classes to export all the org-mode
-;; elements. This way it is you will be able to quickly and effortlessly change
-;; the layout, colors and look of the website.
+;;
+;; This html export backend uses tailwind.css classes to export all the
+;; org-mode elements.  This way you will be able to quickly and effortlessly
+;; change the layout, colors and look of the website.
 ;;
 ;; The html document has the following default layout:
 ;;
@@ -31,11 +31,22 @@
 ;; ---------------------------------------------------
 ;;
 ;; You can change the look of the exported HTML by redefining the values of the
-;; classes. All the classes start with `org-tailwind-class-', check this file
-;; to know which tailwind.css classes are being used and change them any way
+;; classes.  All the classes start with `org-tailwind-class-', for example:
+;;
+;; - org-tailwind-class-h1
+;; - org-tailwind-class-h2
+;; - org-tailwind-class-header
+;; - org-tailwind-class-footer
+;; - org-tailwind-class-verbatim
+;; - org-tailwind-class-video
+;; - etc...
+;;
+;; Check this file to know more tailwind.css classes and change them any way
 ;; you want.
 ;;
-;; Prism.js needs the following plugins:
+;; Source code blocks use Prism.js.  The Prism.js files included in this repo
+;; use all the available languages and the following plugins:
+;; 
 ;; - line highlight
 ;; - line numbers
 ;; - autolinker
@@ -65,7 +76,6 @@
 (require 'dash)
 
 ;;; Define backend
-
 (org-export-define-backend 'tailwind
   '((bold . org-tailwind-bold)
     (center-block . org-html-center-block)
@@ -142,43 +152,43 @@
 (defcustom org-tailwind-class-title
   "mt-12 mb-12 text-4xl text-gray-700 dark:text-gray-400 border-b \
 hover:text-blue-400 dark:hover:text-blue-500 border-gray-500"
-  "Tailwind.css classes for the Title"
+  "Tailwind.css classes for the Title."
   :type '(string))
 
 (defcustom org-tailwind-class-h1
   "mt-24 mb-6 text-3xl text-gray-700 dark:text-gray-400 border-b \
 hover:text-blue-400 dark:hover:text-blue-500 border-gray-500"
-  "Tailwind.css classes for Heading 1"
+  "Tailwind.css classes for Heading 1."
   :type '(string))
 
 (defcustom org-tailwind-class-h2
   "mt-20 mb-6 text-2xl text-gray-700 dark:text-gray-400 border-b \
 hover:text-blue-400 dark:hover:text-blue-500 border-gray-500"
-  "Tailwind.css classes for Heading 2"
+  "Tailwind.css classes for Heading 2."
   :type '(string))
 
 (defcustom org-tailwind-class-h3
   "mt-16 mb-6 text-xl text-gray-700 dark:text-gray-400 border-b \
 hover:text-blue-400 dark:hover:text-blue-500 border-gray-500"
-  "Tailwind.css classes for Heading 3"
+  "Tailwind.css classes for Heading 3."
   :type '(string))
 
 (defcustom org-tailwind-class-h4
   "mt-14 mb-6 text-lg text-gray-700 dark:text-gray-400 border-b \
 hover:text-blue-400 dark:hover:text-blue-500 border-gray-500"
-  "Tailwind.css classes for Heading 4"
+  "Tailwind.css classes for Heading 4."
   :type '(string))
 
 (defcustom org-tailwind-class-h5
   "mt-12 mb-6 text-lg text-gray-700 dark:text-gray-400 border-b \
 hover:text-blue-400 dark:hover:text-blue-500 border-gray-500"
-  "Tailwind.css classes for Heading 5"
+  "Tailwind.css classes for Heading 5."
   :type '(string))
 
 (defcustom org-tailwind-class-h6
   "mt-10 mb-6 text-base text-gray-700 dark:text-gray-400 border-b \
 hover:text-blue-400 dark:hover:text-blue-500 border-gray-500"
-  "Tailwind.css classes for Heading 6"
+  "Tailwind.css classes for Heading 6."
   :type '(string))
 
 (defcustom org-tailwind-class-h7
@@ -191,12 +201,12 @@ hover:text-blue-400 dark:hover:text-blue-500 border-gray-500"
 ;; Text elements
 
 (defcustom org-tailwind-class-bold
-  ""
-  "Tailwind.css classes for the HTML BOLD attribute"
+  "font-bold"
+  "Tailwind.css classes for the HTML BOLD attribute."
   :type '(string))
 
 (defcustom org-tailwind-class-italic
-  ""
+  "italic"
   "Tailwind.css classes for the HTML ITALIC attribute."
   :type '(string))
 
@@ -412,7 +422,7 @@ Use a single `\\' if you have line breaks in the string."
 (defcustom org-tailwind-class-src-window
   "bg-gray-300"
   "Tailwind.css classes for the HTML SRC-BLOCK WINDOW.
-  This makes it look like the code is in an editor on mac OS."
+This makes it look like the code is in an editor on mac OS."
   :type '(string))
 
 (defcustom org-tailwind-class-pre
@@ -558,7 +568,7 @@ Use a single `\\' if you have line breaks in the string."
   "float-right rounded px-4 py-1 border bg-black bg-gray-100 \
   dark:bg-gray-300 dark:text-gray-700"
   "Tailwind.css classes for the HTML go to Toggle dark-mode button.
-  There are already some prefixed classes:
+There are already some prefixed classes:
   - p-2
   - block
   - mt-2
@@ -570,7 +580,7 @@ Use a single `\\' if you have line breaks in the string."
   bg-opacity-80 hover:bg-gray-700 text-white font-bold rounded \
   h-10 w-16 flex items-center justify-center"
   "Tailwind.css classes for the HTML go to TOP button.
-  There are already some prefixed classes:
+There are already some prefixed classes:
   - p-2
   - block
   - mt-2
@@ -596,7 +606,7 @@ Use a single `\\' if you have line breaks in the string."
 (defcustom org-tailwind-class-search-bar-results-item
   "p-2 block rounded hover:bg-gray-300 dark:hover:bg-darkgray"
   "Tailwind.css classes for the HTML RESULTS ITEM.
-  Do not break the line with while inserting a `newline'. Use `\' at
+Do not break the line with while inserting a `newline'.  Use `\' at
   the end."
   :type '(string))
 
@@ -607,26 +617,25 @@ Use a single `\\' if you have line breaks in the string."
   "form-tick appearance-none h-6 w-6 mr-2 border border-gray-300 \
   rounded checked:bg-blue-600 checked:border-transparent \
   focus:outline-none align-text-bottom"
-  "Tailwind.css classes for Checkbox"
+  "Tailwind.css classes for Checkbox."
   :type '(string))
 
 (defcustom org-tailwind-class-file-name
   "relative top-10 flex rounded-t py-4 px-16 text-sm xl:px-24 z-10"
-  "Tailwind.css classes for File Name"
+  "Tailwind.css classes for File Name."
   :type '(string))
 
 
 ;;; Templates
 
 (defcustom org-tailwind-file-name-use-link t
-  "Whether to use a link or a paragraph for the file-name field
-on the top of the page."
+  "Whether to use a link or a paragraph for the file-name field."
   :type '(boolean))
 
 
 (defcustom org-tailwind-file-name-link
   "<a class=\"%s\" href=\"org-protocol://open-file?file=%s\">%s</a>"
-  "The link to open the file in emacs - preferably with org-protocol."
+  "The link to open the file in Emacs - preferably with org-protocol."
   :type '(string))
 
 
@@ -840,7 +849,7 @@ function createTOC() {
           	// Numbering
           	tocHeader.innerHTML += '<b>' + header_2 + '.' + header_3 + '.' + header_4 + '.' + header_5 + '.' + header_6 + '.' + header_7 + '.</b> ';
             break;
-        }       
+        }
         
         // Header title
         tocHeader.innerHTML += headlines[i].innerHTML;
@@ -1331,7 +1340,7 @@ information."
 
 (defvar org-tailwind--src-block-open
   "<div class=\"%s\">%s<pre class=\"%s\" %s>"
-  "Opening tag of code block for Prism.js
+  "Opening tag of code block for Prism.js.
 It has two format places:
 - Tailwind.css classes
 - other attribute.")
@@ -1339,7 +1348,7 @@ It has two format places:
 
 (defvar org-tailwind--src-block-close
   "<code class=\"language-%s\">%s</code></pre></div>"
-  "Closing tag of code block for Prism.js
+  "Closing tag of code block for Prism.js.
 It has two format places:
 - language
 - code text")
@@ -1549,7 +1558,7 @@ There are 4 types of blocks:
 (defun org-tailwind-table-cell (table-cell contents info)
   "Transcode TABLE-CELL from Org to HTML.
 If TABLE-CELL is part of the table header, return the HTML table
-cell with `th'. Return `td' otherwise."
+cell with `th'.  Return `td' otherwise."
   (let* ((header-p (org-export-table-row-in-header-p
                    (org-export-get-parent table-cell) info))
          (text-alignment (org-export-table-cell-alignment
@@ -1572,10 +1581,10 @@ cell with `th'. Return `td' otherwise."
 (defun org-tailwind-table-row (table-row contents info)
   "Transcode TABLE-ROW from Org to HTML.
 First, check the group of the TABLE-ROW, in this case it will be
-either `thead' or `tbody'. Second, check if it is the first row
-of the group. If it is, add the corresponding opening HTML tag.
+either `thead' or `tbody'.  Second, check if it is the first row
+of the group.  If it is, add the corresponding opening HTML tag.
 In the case of being the last row of the group, add the closing
-tag. If it is neither, return the row without group tags."
+tag.  If it is neither, return the row without group tags."
   (let* ((header '("<thead>" . "</thead>"))
          (body '("<tbody>" . "</tbody>"))
          (row '("<tr class=\"%s\">" . "</tr>"))
@@ -1700,8 +1709,7 @@ There are three types of lists:
 
 
 (defun org-tailwind--json-toc-all-items (headings title file)
-  "Transform all the HEADINGS into an object with the heading and
-the TITLE."
+  "Transform all the HEADINGS into an object with the heading and the TITLE."
   (string-join
    (-map
     (lambda (heading)
@@ -1756,7 +1764,7 @@ The JSON format will"
 
 
 (defun org-tailwind--json-toc-all-files (notes-directory output-directory)
-  "Read all the files in the notes directory and create a toc tree."
+  "Read all the files in the NOTES-DIRECTORY and create a toc tree."
   
   (setq files (directory-files notes-directory nil ".org"))
   
