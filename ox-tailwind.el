@@ -75,69 +75,6 @@
 (require 's)
 (require 'dash)
 
-;;; Define backend
-(org-export-define-backend 'tailwind
-  '((bold . org-tailwind-bold)
-    (center-block . org-html-center-block)
-    (clock . org-html-clock)
-    (code . org-tailwind-code)
-    (drawer . org-html-drawer)
-    (dynamic-block . org-html-dynamic-block)
-    (entity . org-html-entity)
-    (example-block . org-tailwind-example-block)
-    (export-block . org-html-export-block)
-    (export-snippet . org-html-export-snippet)
-    (fixed-width . org-html-fixed-width)
-    (footnote-reference . org-html-footnote-reference)
-    (headline . org-tailwind-headline)
-    (horizontal-rule . org-tailwind-horizontal-rule)
-    (inline-src-block . org-html-inline-src-block)
-    (inlinetask . org-html-inlinetask)
-    (inner-template . org-tailwind-inner-template)
-    (italic . org-tailwind-italic)
-    (item . org-tailwind-item)
-    (keyword . org-html-keyword)
-    (latex-environment . org-html-latex-environment)
-    (latex-fragment . org-html-latex-fragment)
-    (line-break . org-html-line-break)
-    (link . org-tailwind-link)
-    (node-property . org-html-node-property)
-    (paragraph . org-tailwind-paragraph)
-    (plain-list . org-tailwind-plain-list)
-    (plain-text . org-tailwind-plain-text)
-    (planning . org-html-planning)
-    (property-drawer . org-html-property-drawer)
-    (quote-block . org-tailwind-blockquote)
-    (radio-target . org-html-radio-target)
-    (section . org-tailwind-section)
-    (special-block . org-tailwind-special-block)
-    (src-block . org-tailwind-src-block-select)
-    (statistics-cookie . org-html-statistics-cookie)
-    (strike-through . org-tailwind-strike-through)
-    (subscript . org-html-subscript)
-    (superscript . org-html-superscript)
-    (table . org-tailwind-table)
-    (table-cell . org-tailwind-table-cell)
-    (table-row . org-tailwind-table-row)
-    (target . org-tailwind-target)
-    (template . org-tailwind-template)
-    (timestamp . org-html-timestamp)
-    (underline . org-tailwind-underlined)
-    (verbatim . org-tailwind-verbatim)
-    (verse-block . org-html-verse-block))
-  :menu-entry
-  '(?x "Export to HTML with org-tailwind Back-End"
-       ((?H "As HTML buffer" org-tailwind-export-as-html)
-        (?h "As HTML file" org-tailwind-export-to-html)
-        (?o "As HTML file and open"
-            (lambda (a s v b)
-              (if a (org-tailwind-export-to-html t s v b)
-                (org-open-file (org-tailwind-export-to-html nil s v b)))))))
-  :options-alist
-  '((:html-footnote-format nil nil org-tailwind-class-footnotes-format)
-    (:html-footnote-separator nil nil org-tailwind-class-footnotes-separator)
-    (:html-footnotes-section nil nil org-tailwind-class-footnotes-section)))
-
 ;;; tailwind group
 
 (defgroup org-tailwind nil
@@ -1233,7 +1170,7 @@ By not doing anything to the contents, it exports the elements at the root level
               (org-tailwind-checkbox checkbox)
               contents))
      ;; Normal paragraph
-     (t (format "<p class=\"%s\">%s</p>"
+     (t (format "<p class=\"%s\">\n%s</p>"
                 org-tailwind-class-paragraph
                 contents)))))
 
@@ -1891,3 +1828,44 @@ Open one if the notes and then run this function."
 
 (provide 'ox-tailwind)
 ;;; ox-tailwind.el ends here
+
+;;; Define backend
+(org-export-define-derived-backend 'tailwind 'html
+  :translate-alist '((bold . org-tailwind-bold)
+                     (code . org-tailwind-code)
+                     (example-block . org-tailwind-example-block)
+                     (headline . org-tailwind-headline)
+                     (horizontal-rule . org-tailwind-horizontal-rule)
+                     (inline-src-block . org-html-inline-src-block)
+                     (inner-template . org-tailwind-inner-template)
+                     (italic . org-tailwind-italic)
+                     (item . org-tailwind-item)
+                     (link . org-tailwind-link)
+                     (paragraph . org-tailwind-paragraph)
+                     (plain-list . org-tailwind-plain-list)
+                     (plain-text . org-tailwind-plain-text)
+                     (quote-block . org-tailwind-blockquote)
+                     (section . org-tailwind-section)
+                     (special-block . org-tailwind-special-block)
+                     (src-block . org-tailwind-src-block-select)
+                     (strike-through . org-tailwind-strike-through)
+                     (table . org-tailwind-table)
+                     (table-cell . org-tailwind-table-cell)
+                     (table-row . org-tailwind-table-row)
+                     (target . org-tailwind-target)
+                     (template . org-tailwind-template)
+                     (underline . org-tailwind-underlined)
+                     (verbatim . org-tailwind-verbatim))
+  :menu-entry
+  '(?x "Export to HTML with org-tailwind Back-End"
+       ((?H "As HTML buffer" org-tailwind-export-as-html)
+        (?h "As HTML file" org-tailwind-export-to-html)
+        (?o "As HTML file and open"
+            (lambda (a s v b)
+              (if a (org-tailwind-export-to-html t s v b)
+                (org-open-file (org-tailwind-export-to-html nil s v b)))))))
+  :options-alist
+  '((:html-footnote-format nil nil org-tailwind-class-footnotes-format)
+    (:html-footnote-separator nil nil org-tailwind-class-footnotes-separator)
+    (:html-footnotes-section nil nil org-tailwind-class-footnotes-section)))
+
