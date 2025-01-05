@@ -1144,14 +1144,14 @@ By not doing anything to the contents, it exports the elements at the root level
          (ancestor (org-element-property :parent parent))
          (ancestor-type (org-element-property :type ancestor))
          (checkbox (org-element-property :checkbox parent))
-         (is-checkbox-p (unless (equalp checkbox nil) t))
+         (is-checkbox-p (unless (cl-equalp checkbox nil) t))
          (is-image-p (string-match-p "<img " contents))
 		 (is-video-p (string-match-p "<video " contents)))
     (cond
      ;; For Mermaid.js return raw text
-     ((equalp parent-type "mermaid") contents)
+     ((cl-equalp parent-type "mermaid") contents)
      ;; For Descriptive types, surround with `dd' tag
-     ((equalp ancestor-type 'descriptive)
+     ((cl-equalp ancestor-type 'descriptive)
       (format "<dd class=\"%s\">%s</dd>"
               org-tailwind-class-description-list-item
               contents))
@@ -1198,12 +1198,12 @@ information."
          (image-tag "<img class=\"%s\" src=\"%s\"/>%s"))
     (cond
      ;; Is the link a video
-     ((or (equalp file-extension "mp4")
-          (equalp file-extension "avi")
-          (equalp file-extension "mkv")
-          (equalp file-extension "webm")
-          (equalp file-extension "mpeg4")
-          (equalp file-extension "3gp"))
+     ((or (cl-equalp file-extension "mp4")
+          (cl-equalp file-extension "avi")
+          (cl-equalp file-extension "mkv")
+          (cl-equalp file-extension "webm")
+          (cl-equalp file-extension "mpeg4")
+          (cl-equalp file-extension "3gp"))
       (format video-tag
               org-tailwind-class-video
               (if timeline
@@ -1216,15 +1216,15 @@ information."
                           description)
                 "")))
      ;; Is the link an image
-     ((or (equalp file-extension "png")
-          (equalp file-extension "svg")
-          (equalp file-extension "tiff")
-          (equalp file-extension "tif")
-          (equalp file-extension "jpg")
-          (equalp file-extension "jpeg")
-          (equalp file-extension "webp")
-          (equalp file-extension "gif")
-          (equalp file-extension "bmp"))
+     ((or (cl-equalp file-extension "png")
+          (cl-equalp file-extension "svg")
+          (cl-equalp file-extension "tiff")
+          (cl-equalp file-extension "tif")
+          (cl-equalp file-extension "jpg")
+          (cl-equalp file-extension "jpeg")
+          (cl-equalp file-extension "webp")
+          (cl-equalp file-extension "gif")
+          (cl-equalp file-extension "bmp"))
       (format image-tag
               org-tailwind-class-image
               path
@@ -1233,19 +1233,19 @@ information."
                           org-tailwind-class-image-description
                           description)
                 "")))
-     ((equalp type "org-protocol")
+     ((cl-equalp type "org-protocol")
       (format link-tag
               org-tailwind-class-link
               raw-link
               contents))
      ;; Is the link an org file
-     ((equalp file-extension "org")
+     ((cl-equalp file-extension "org")
       (format link-tag
               org-tailwind-class-link
               (concat type ":" (replace-regexp-in-string "\\.org" ".html" path))
               contents))
      ;; Internal link
-     ((equalp type "fuzzy")
+     ((cl-equalp type "fuzzy")
       (format link-tag
               org-tailwind-class-link
               (concat "#" raw-link)
@@ -1339,7 +1339,7 @@ It has two format places:
                 "")
               ))
      (format org-tailwind--src-block-close
-             (if (equalp language "ps") "powershell" language)
+             (if (cl-equalp language "ps") "powershell" language)
              code-text))))
 
 
@@ -1386,11 +1386,11 @@ It has two format places:
   (let* ((language (org-element-property :language src-block)))
     (cond
      ;; If it is a command line language,
-     ((or (equalp language "sh")
-          (equalp language "shell")
-          (equalp language "bash")
-          (equalp language "ps")
-          (equalp language "powershell"))
+     ((or (cl-equalp language "sh")
+          (cl-equalp language "shell")
+          (cl-equalp language "bash")
+          (cl-equalp language "ps")
+          (cl-equalp language "powershell"))
       (org-tailwind-command-line-block src-block contents info))
      ;; If it is a programming language
      (t (org-tailwind-src-block src-block contents info)))))
@@ -1423,7 +1423,7 @@ There are 4 types of blocks:
   ;; type is `mermaid', change the paragraph block directly
   (let* ((type (org-element-property :type special-block))
          (name (org-element-property :name special-block)))
-    (cond ((equalp type "mermaid")
+    (cond ((cl-equalp type "mermaid")
            (format "<div class=\"%s\"><div class=\"mermaid %s\">%s</div><p class=\"%s\">%s</p></div>"
                    org-tailwind-class-mermaid-container
                    org-tailwind-class-mermaid-block
@@ -1431,31 +1431,31 @@ There are 4 types of blocks:
                    org-tailwind-class-mermaid-block-title
                    (if name name "")))
           ;; TODO: process title as summary
-          ((equalp type "ANKI")
+          ((cl-equalp type "ANKI")
            (format "<details class=\"%s\"><summary class=\"%s\">%s</summary>%s</details>"
                    org-tailwind-class-anki-block
                    org-tailwind-class-anki-title
                    (if name name "Anki Card")
                    contents))
-          ((equalp type "details")
+          ((cl-equalp type "details")
            (format "<details class=\"%s\"><summary class=\"%s\">%s</summary>%s</details>"
                    org-tailwind-class-details-block
                    org-tailwind-class-details-title
                    (if name name "Details")
                    contents))
-          ((equalp type "tip")
+          ((cl-equalp type "tip")
            (format "<div class=\"tip %s\"><p class=\"%s\">%s</p>%s</div>"
                    org-tailwind-class-tip-block
                    org-tailwind-class-tip-title
                    (if name name "")
                    contents))
-          ((equalp type "warning")
+          ((cl-equalp type "warning")
            (format "<div class=\"warning %s\"><p class=\"%s\">%s</p>%s</div>"
                    org-tailwind-class-warning-block
                    org-tailwind-class-warning-title
                    (if name name "")
                    contents))
-          ((equalp type "danger")
+          ((cl-equalp type "danger")
            (format "<div class=\"danger %s\"><p class=\"%s\">%s</p>%s</div>"
                    org-tailwind-class-danger-block
                    org-tailwind-class-danger-title
@@ -1595,9 +1595,9 @@ There are three types of lists:
                  (other (error "Unknown HTML list type: %s" other)))))
     (format "<%s class=\"%s\">%s</%s>"
             type
-            (cond ((equalp type "ol") org-tailwind-class-ordered-list)
-                  ((equalp type "ul") org-tailwind-class-unordered-list)
-                  ((equalp type "dl") org-tailwind-class-description-list))
+            (cond ((cl-equalp type "ol") org-tailwind-class-ordered-list)
+                  ((cl-equalp type "ul") org-tailwind-class-unordered-list)
+                  ((cl-equalp type "dl") org-tailwind-class-description-list))
             contents
             type)))
 
@@ -1605,13 +1605,13 @@ There are three types of lists:
 					   &optional term-counter-id headline)
   "Format a list item into the corresponding HTML tag."
   (cond
-   ((equalp type `ordered)
+   ((cl-equalp type `ordered)
     (format "<li class=\"%s\">%s</li>"
             org-tailwind-class-ordered-list-item contents))
-   ((equalp type `unordered)
+   ((cl-equalp type `unordered)
     (format "<li class=\"%s\">%s</li>"
             org-tailwind-class-unordered-list-item contents))
-   ((equalp type `descriptive)
+   ((cl-equalp type `descriptive)
     (format "<dt class=\"%s\">%s</dt>%s"
             org-tailwind-class-description-list-title
             term-counter-id
